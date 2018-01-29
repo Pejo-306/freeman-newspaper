@@ -1,0 +1,76 @@
+require 'test_helper'
+
+class UserTest < ActiveSupport::TestCase
+  setup do
+    @user = users(:john)
+  end
+
+  test 'should be valid' do
+    assert @user.valid?
+  end
+
+  test 'name should be present' do
+    @user.name = '  '
+    assert_not @user.valid?, 'Name is blank'
+  end
+  
+  test 'name should not be longer than 50 characters' do
+    @user.name = 'a' * 50
+    assert @user.valid?
+    @user.name += 'a'
+    assert_not @user.valid?, 'A name longer than 50 letters is accepted'
+  end
+
+  test 'surname should be present' do
+    @user.surname = ''
+    assert_not @user.valid?, 'Surname is blank'
+  end
+
+  test 'surname should not be longer than 50 characters' do
+    @user.surname = 'a' * 50
+    assert @user.valid?
+    @user.surname += 'a'
+    assert_not @user.valid?, 'A surname longer than 50 letters is accepted'
+  end
+
+  test 'email should be present' do
+    @user.email = ''
+    assert_not @user.valid?, 'Email is blank'
+  end 
+
+  test 'email should not be longer than 255 characters' do
+    @user.email = 'a' * 243 + '@example.com'
+    assert @user.valid?
+    @user.email = 'a' + @user.email
+    assert_not @user.valid?, 'An email longer than 255 letters is accepted'
+  end
+
+  test 'valid email addresses should be accepted' do
+    valid_emails = %w[
+      user@example.com USER@example.com A-US_ER@foo.bar.org
+      first.last@foo.jp pejo+pesho@spam.com
+    ]
+    valid_emails.each do |email|
+      @user.email = email
+      assert @user.valid?, "Valid email (#{email}) address is not accepted"
+    end
+  end
+
+  test 'invalid email addresses should be accepted' do
+    invalid_emails = %w[
+      user@example,com user_at_example.com user.name@example.
+      foo@bar_baz.com foo@bar..com foo@bar+baz.com
+    ]
+    invalid_emails.each do |email|
+      @user.email = email
+      assert_not @user.valid?, "Invalid email (#{email}) address is accepted"
+    end
+  end
+
+  test 'email should be unique' do
+    duplicate_user = @user.dup
+    @user.save
+    assert_not duplicate_user.valid?
+  end
+end
+
