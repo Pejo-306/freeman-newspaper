@@ -3,6 +3,7 @@ require 'test_helper'
 class SessionsHelperTest < ActionView::TestCase
   setup do
     @user = users(:john)
+    @other = users(:michael)
   end
 
   test 'logged_in? returns true if the user is logged in' do
@@ -27,6 +28,16 @@ class SessionsHelperTest < ActionView::TestCase
     remember @user
     @user.update_attribute(:remember_digest, User.digest(User.new_token))
     assert_nil current_user
+  end
+
+  test 'current_user? returns false if the given user is not the current user' do
+    log_in_as @user
+    assert current_user?(@user)
+  end
+
+  test 'current_user? returns true if the given user is the current user' do
+    log_in_as @other
+    assert_not current_user?(@user)
   end
 end
 

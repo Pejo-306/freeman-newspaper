@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
+
   def show
     @user = User.find(params[:id])
   end
@@ -37,6 +40,20 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :surname, :email,
                                  :password, :password_confirmation)
+  end
+
+  def require_login
+    unless logged_in?
+      store_location
+      flash[:danger] = 'Please log in'
+      redirect_to login_url
+    end
+  end
+
+  # Forbid an arbitrary user from editting any other users' information
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_url unless current_user?(@user)
   end
 end
 

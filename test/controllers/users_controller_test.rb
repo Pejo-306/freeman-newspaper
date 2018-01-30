@@ -3,10 +3,11 @@ require 'test_helper'
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:john)
+    @other = users(:michael)
   end
 
   test 'should get show' do
-    get user_path @user
+    get user_path(@user)
     assert_response :success
     assert_template 'users/show'
   end
@@ -17,10 +18,49 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'users/new'
   end
 
-  test 'should get edit' do
-    get edit_user_path @user
+  test 'should get edit when user is logged in' do
+    log_in_as @user
+    get edit_user_path(@user)
     assert_response :success
     assert_template 'users/edit'
+  end
+
+  test 'should redirect edit when user is not logged in' do
+    get edit_user_path(@user)
+    assert_response :redirect
+    assert_redirected_to login_url
+    assert_not flash.empty?
+    assert_equal 'Please log in', flash[:danger]
+  end
+
+  test 'should redirect update when user is not logged in' do
+    patch user_path(@user), params: { user: { name: @user.name,
+                                              surname: @user.surname,
+                                              email: @user.email } }
+    assert_response :redirect
+    assert_redirected_to login_url
+    assert_not flash.empty?
+    assert_equal 'Please log in', flash[:danger]
+    assert_equal @user, @user.reload # user has not been changed
+  end
+
+  test 'should redirect edit when logged in as the wrong user' do
+    log_in_as @other
+    get edit_user_path(@user)
+    assert flash.empty?
+    assert_response :redirect
+    assert_redirected_to root_url
+  end
+
+  test 'should redirect update when logged in as the wrong user' do
+    log_in_as @other
+    patch user_path(@user), params: { user: { name: @user.name,
+                                              surname: @user.surname,
+                                              email: @user.email } }
+    assert flash.empty?
+    assert_response :redirect
+    assert_redirected_to root_url
+    assert_equal @user, @user.reload # user has not been changed
   end
 
   test 'should create a new user when valid information is posted' do
@@ -44,25 +84,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update user when invalid information is posted' do
-    updated_at = @user.updated_at
+    log_in_as @user
     patch user_path(@user), params: { user: { name: '', surname: '',
                                               email: '',
                                               password: 'wrong',
                                               password_confirmation: 'pass' } }
-    @user.reload
-    assert_equal updated_at, @user.updated_at
+    assert_equal @user, @user.reload
   end
 
   test 'should update user when valid information is posted' do
+    log_in_as @user
     name = 'Albert'
     surname = 'Einstein'
-    previously_updated = @user.updated_at
-    patch user_path(@user), params: { user: { name: name, surname: surname,
-                                              email: @user.email,
-                                              password:              '',
-                                              password_confirmation: '' } }
+    patch user_path(@user), params: { user: { name: name, surname: surname } }
     @user.reload
-    assert_not_equal previously_updated, @user.updated_at
     assert_equal name, @user.name
     assert_equal surname, @user.surname
   end
