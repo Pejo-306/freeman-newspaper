@@ -1,12 +1,6 @@
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
-  test 'singup page layout' do
-    get signup_path
-    assert_template 'users/new'
-    assert_select 'form[action="/signup"]'
-  end
-
   test 'invalid signup data' do
     get signup_path
     assert_no_difference 'User.count' do
@@ -16,6 +10,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                           password_confirmation: 'long' } }
     end
     assert_template 'users/new'
+    assert_select 'form[action="/signup"]'
     assert_select 'div#error-explanation div.alert', 'The form contains 5 errors.' 
   end
 
@@ -29,6 +24,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+    assert logged_in?
     assert_not flash.empty?
     assert_equal flash[:success], 'Your account has successfully been created.'
   end
