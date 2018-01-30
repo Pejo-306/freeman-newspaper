@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: [:index, :edit, :update]
+  before_action :require_login, only: [:index, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
+  before_action :require_admin_status, only: :destroy
 
   def index
     @users = User.paginate(page: params[:page])
@@ -39,6 +40,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:succes] = 'User deleted'
+    redirect_to users_url
+  end
+
   private
 
   def user_params
@@ -57,7 +64,12 @@ class UsersController < ApplicationController
   # Forbid an arbitrary user from editting any other users' information
   def correct_user
     @user = User.find(params[:id])
-    redirect_to root_url unless current_user?(@user)
+    redirect_to(root_url) unless current_user?(@user)
+  end
+
+  # Ensure only admins can delete users
+  def require_admin_status
+    redirect_to(root_url) unless current_user.admin?
   end
 end
 

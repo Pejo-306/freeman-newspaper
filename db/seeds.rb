@@ -1,6 +1,7 @@
 if Rails.env.development?
   User.create!(name: 'Albert', surname: 'Einstein', email: 'genius@example.com',
-               password: 'password', password_confirmation: 'password')
+               password: 'password', password_confirmation: 'password',
+               admin: true)
 
   99.times do |n|
     name = Faker::Name.first_name
