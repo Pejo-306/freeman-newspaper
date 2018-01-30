@@ -6,6 +6,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @other = users(:michael)
   end
 
+  test 'should redirect index when not logged in' do
+    get users_path
+    assert_response :redirect
+    assert_redirected_to login_url
+  end
+
+  test 'should get index when logged in' do
+    log_in_as @user
+    get users_path
+    assert_response :success
+    assert_template 'users/index'
+  end
+
   test 'should get show' do
     get user_path(@user)
     assert_response :success

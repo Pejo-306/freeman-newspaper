@@ -95,5 +95,10 @@ class UserTest < ActiveSupport::TestCase
   test 'authenticated? should return false for a user with nil digest' do
     assert_not @user.authenticated?('')
   end
+
+  test 'full_name returns a concatenation of the first and last names' do
+    full_name = "#{@user.name} #{@user.surname}"
+    assert_equal full_name, @user.full_name
+  end
 end
 

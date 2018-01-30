@@ -28,6 +28,11 @@ class User < ApplicationRecord
     end
   end
 
+  # Return the user's full name
+  def full_name
+    "#{name} #{surname}"
+  end
+
   # Remember a user in the database for use in persistant sessions
   def remember
     self.remember_token = User.new_token
