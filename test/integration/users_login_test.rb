@@ -22,6 +22,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     post login_path, params: { session: { email: @user.email,
                                           password: 'password' } }
     assert logged_in?
+    assert_response :redirect
     assert_redirected_to @user
     follow_redirect!
     assert_template 'users/show'
@@ -29,10 +30,12 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     # Log out
     delete logout_path
     assert_not logged_in?
+    assert_response :redirect
     assert_redirected_to root_url
 
     # Simulate a user clicking logout in a second window
     delete logout_path
+    assert_response :redirect
     follow_redirect!
   end
 
