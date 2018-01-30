@@ -15,14 +15,22 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert flash.empty?
   end
 
-  test 'login with valid data' do
+  test 'login with valid data and then logout' do
+    # Log in
     get login_path
     assert_template 'sessions/new'
     post login_path, params: { session: { email: @user.email,
                                           password: 'password' } }
+    assert logged_in?
     assert_redirected_to @user
     follow_redirect!
     assert_template 'users/show'
+
+    # Log out
+    delete logout_path
+    assert_not logged_in?
+    assert_redirected_to root_url
+    follow_redirect!
   end
 end
 
