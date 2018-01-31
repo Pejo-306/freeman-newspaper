@@ -1,0 +1,10 @@
+<h1>Freeman's newspaper</h1>
+
+<p><%= @greeting %> <%= @user.full_name %>,</p>
+
+<p>TODO: fill this account activation email later</p>
+
+<p>Click to activate your account: </p>
+<%= link_to 'Activate', edit_account_activation_url(@user.activation_token,
+                                                    @user.email) %>
+

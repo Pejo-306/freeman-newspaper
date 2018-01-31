@@ -1,0 +1,7 @@
+<%= @greeting %> <%= @user.full_name %>,
+
+TODO: fill this account activation email later
+
+Click to activate your account:
+<%= edit_account_activation_url(@user.activation_token, @user.email) %>
+

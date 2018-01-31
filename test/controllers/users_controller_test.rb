@@ -19,10 +19,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'users/index'
   end
 
+  test 'should display only activated users on index page' do
+    @other_user.update_attribute(:activated, false)
+    log_in_as @user
+    get users_path
+    assert_select 'a', text: @other_user.full_name, count: 0
+  end
+
   test 'should get show' do
     get user_path(@user)
     assert_response :success
     assert_template 'users/show'
+  end
+
+  test 'should redirect show page for inactivated account' do
+    @other_user.update_attribute(:activated, false)
+    get user_path(@other_user)
+    assert_response :redirect
+    assert_redirected_to root_url
   end
 
   test 'should get new' do
