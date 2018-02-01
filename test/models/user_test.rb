@@ -100,5 +100,30 @@ class UserTest < ActiveSupport::TestCase
     full_name = "#{@user.name} #{@user.surname}"
     assert_equal full_name, @user.full_name
   end
+
+  test 'reset token should expire after two hours' do
+    @user.create_reset_digest
+    assert_not @user.password_reset_expired?
+    travel 2.hours
+    assert_not @user.password_reset_expired?
+    travel 1.seconds
+    assert @user.password_reset_expired?
+  end
+  
+  test 'should be able to send an activation email' do
+    clear_deliveries
+    @user.send(:create_activation_digest)
+    assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+      @user.send_activation_email
+    end
+  end
+
+  test 'should be able to send a password reset email' do
+    clear_deliveries
+    @user.create_reset_digest
+    assert_difference 'ActionMailer::Base.deliveries.size', 1 do
+      @user.send_password_reset_email
+    end
+  end
 end
 

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   root 'users#new' # TODO: change the root path
   get    '/signup', to: 'users#new'
   post   '/signup', to: 'users#create'
@@ -7,5 +11,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   resources :users, except: [:new, :create]
   resources :account_activations, only: :edit
+  resources :password_resets, only: [:new, :edit, :create, :update]
 end
 

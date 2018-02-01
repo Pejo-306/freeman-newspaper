@@ -16,6 +16,11 @@ class ActiveSupport::TestCase
   def logged_in?
     !session[:user_id].nil?
   end
+
+  # Clear all ActionMailer deliveries
+  def clear_deliveries
+    ActionMailer::Base.deliveries.clear
+  end
 end
 
 class ActionDispatch::IntegrationTest
