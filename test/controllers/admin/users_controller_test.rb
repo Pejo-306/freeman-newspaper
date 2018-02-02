@@ -57,6 +57,15 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get new_admin_user_path
     assert_select 'form[action="/admin/users"]'
   end
+
+  test 'should get edit' do
+    get edit_admin_user_path(@user)
+    assert_response :success
+    assert_template 'edit'
+    assert_not flash.empty?
+    warning_msg = 'WARNING: be very careful when altering field values'
+    assert_equal warning_msg, flash[:warning]
+  end
   
   test 'should not create a user with invalid input data' do
     assert_no_difference 'User.count' do

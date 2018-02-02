@@ -11,6 +11,11 @@ class Admin::UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    flash[:warning] = 'WARNING: be very careful when altering field values'
+    @user = User.find(params[:id])
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
