@@ -45,5 +45,31 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get new_admin_user_path
     assert_select 'form[action="/admin/users"]'
   end
+  
+  test 'should not create a user with invalid input data' do
+    assert_no_difference 'User.count' do
+      post admin_users_path, params: { user: { name: '',
+                                               surname: '',
+                                               email: 'email@invalid', 
+                                               password: '',
+                                               password_confirmation: '',
+                                               activated: false, 
+                                               admin: false } }
+    end
+    assert_template 'new'
+  end
+
+  test 'should create a user with valid input data' do
+    assert_difference 'User.count', 1 do
+      post admin_users_path, params: { user: { name: 'Albert',
+                                               surname: 'Einstein',
+                                               email: 'genius@example.com', 
+                                               password: 'password',
+                                               password_confirmation: 'password',
+                                               activated: false, 
+                                               admin: true } }
+    end
+    assert_response :redirect 
+  end
 end
 
