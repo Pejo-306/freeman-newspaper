@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-
-  get 'password_resets/edit'
-
   root 'users#new' # TODO: change the root path
   get    '/signup', to: 'users#new'
   post   '/signup', to: 'users#create'

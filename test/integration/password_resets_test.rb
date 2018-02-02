@@ -37,7 +37,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
 
     # Wrong token (with correct email)
-    get edit_password_reset_path('', email: user.email)
+    get edit_password_reset_path('invalid token', email: user.email)
     assert_response :redirect
     assert_redirected_to root_url
 
