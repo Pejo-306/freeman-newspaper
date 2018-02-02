@@ -1,6 +1,5 @@
 <h1><%= @user.full_name %></h1>
-<% @fields.each do |field| %>
-  <% value = @user.send(field) %>
+<% @user.attributes.each do |field, value| %>
   <p id="<%= field %>"><%= field %>: <%=  value.nil? ? '<null>' : value %></p>
 <% end %>
 

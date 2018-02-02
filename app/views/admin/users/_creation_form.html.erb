@@ -1,4 +1,4 @@
-<%= form_for(user, url: yield(:form_url)) do |f| %>
+<%= form_for(user, url: admin_users_path) do |f| %>
   <%= render 'layouts/error_messages', object: user %>
 
   <%= f.label :name %>
@@ -22,6 +22,6 @@
   <%= f.label :admin %>
   <%= f.check_box :admin, value: false %>
 
-  <%= f.submit yield(:submit_text) %>
+  <%= f.submit 'Create a new user' %>
 <% end %>
 

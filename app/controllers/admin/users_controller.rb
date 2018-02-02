@@ -4,7 +4,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    @fields = displayed_user_attrs
     @user = User.find(params[:id])
   end
 
@@ -23,11 +22,6 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-
-  def displayed_user_attrs
-    [:name, :surname, :email, :created_at, :updated_at,
-     :admin, :activated, :activated_at]
-  end
 
   def user_params
     params.require(:user).permit(:name, :surname, :email, :activated, :admin,
