@@ -117,5 +117,15 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_equal 'User has successfully been updated', flash[:success]
   end
+
+  test 'should destroy user' do
+    assert_difference 'User.count', -1 do
+      delete admin_user_path(@user)
+    end
+    assert_response :redirect
+    assert_redirected_to admin_users_path
+    assert_not flash.empty?
+    assert_equal 'User has successfully been deleted', flash[:success]
+  end
 end
 
