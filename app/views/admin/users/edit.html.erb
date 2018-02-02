@@ -1,3 +1,6 @@
+<% provide(:form_url, admin_user_path(@user)) %>
+<% provide(:submit_text, 'Apply changes') %>
+
 <h1>Edit user <%= @user.full_name %></h1>
-<%= render 'change_form', user: @user %>
+<%= render 'form', user: @user %>
 

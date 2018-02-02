@@ -4,6 +4,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
+    @fields = displayed_user_attrs
     @user = User.find(params[:id])
   end
 
@@ -12,7 +13,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def edit
-    flash[:warning] = 'WARNING: be very careful when altering field values'
+    flash.now[:warning] = 'WARNING: be very careful when altering field values'
     @user = User.find(params[:id])
   end
 
@@ -27,6 +28,11 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+  def displayed_user_attrs
+    [:name, :surname, :email, :activated, :admin,
+     :created_at, :updated_at, :activated_at]
+  end
 
   def user_params
     params.require(:user).permit(:name, :surname, :email, :activated, :admin,
