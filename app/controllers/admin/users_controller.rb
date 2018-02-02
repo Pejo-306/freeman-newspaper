@@ -27,6 +27,16 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = 'User has successfully been updated'
+      redirect_to admin_user_path(@user)
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def displayed_user_attrs

@@ -82,5 +82,40 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_equal 'User has been created', flash[:success]
   end
+
+  test 'should not update user with invalid input data' do
+    travel 1.hours # ensure last time updated is not now
+    assert_no_changes '@user.reload.updated_at' do
+      patch admin_user_path(@user), params: {
+        user: { name: '',
+                surname: '',
+                email: 'email@invalid',
+                password: '',
+                password_confirmation: '',
+                activated: false,
+                admin: false }
+      }
+    end
+    assert_template 'edit'
+  end
+
+  test 'should update user with valid input data' do
+    travel 1.hours # ensure last time updated is not now
+    assert_changes '@user.reload.updated_at' do
+      patch admin_user_path(@user), params: {
+        user: { name: 'Matt',
+                surname: @user.surname,
+                email: @user.email,
+                password: '',
+                password_confirmation: '',
+                activated: @user.activated,
+                admin: @user.admin }
+      }
+    end
+    assert_response :redirect
+    assert_redirected_to admin_user_path(@user)
+    assert_not flash.empty?
+    assert_equal 'User has successfully been updated', flash[:success]
+  end
 end
 
