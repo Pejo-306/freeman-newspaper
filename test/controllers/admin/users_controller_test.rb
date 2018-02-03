@@ -32,6 +32,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'show'
   end
 
+  test 'should link back to index page on show' do
+    get admin_user_path(@user)
+    assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
+  end 
+
   test 'should display user information' do
     get admin_user_path(@user)
     assert_select 'h1', text: @user.full_name
@@ -51,10 +56,22 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template 'new'
   end
 
+  test 'should link to new on index page' do
+    get admin_users_path
+    assert_response :success
+    assert_template 'index'
+    assert_select 'a[href=?]', new_admin_user_path, text: 'New user'
+  end
+
   test 'should render a form for user creation' do
     get new_admin_user_path
     assert_select 'form[action="/admin/users"]'
   end
+
+  test 'should link back to index page on new' do
+    get new_admin_user_path
+    assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
+  end 
 
   test 'should get edit' do
     get edit_admin_user_path(@user)
@@ -65,6 +82,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal warning_msg, flash.now[:warning]
   end
   
+  test 'should link back to index page on edit' do
+    get edit_admin_user_path(@user)
+    assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
+  end 
+
   test 'should not create a user with invalid input data' do
     assert_no_difference 'User.count' do
       post admin_users_path, params: { user: { name: '',

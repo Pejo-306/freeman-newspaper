@@ -3,4 +3,5 @@
   <% value = @user.send(field) %>
   <p id="<%= field %>"><%= field %>: <%=  value.nil? ? '<null>' : value %></p>
 <% end %>
+<%= link_to 'Back to index page', admin_users_path %>
 
