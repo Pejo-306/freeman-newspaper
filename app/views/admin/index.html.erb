@@ -2,6 +2,6 @@
 
 <% @models.each do |model| %>
   <% plural_name = model.name.pluralize %>
-  <%= link_to plural_name, eval("admin_#{plural_name.downcase}_url") %>
+  <%= link_to plural_name, eval("admin_#{plural_name.downcase}_path") %>
 <% end %>
 

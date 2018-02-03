@@ -14,6 +14,16 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should paginate users' do
     get admin_users_path
     assert_select 'div.pagination', count: 2
+    first_page_of_users = User.paginate(page: 1, per_page: 20)
+    assert_select 'body>ul' do
+      assert_select 'li', 20
+    end
+    first_page_of_users.each do |user|
+      assert_select 'a[href=?]', admin_user_path(user), text: user.full_name
+      assert_select 'a[href=?]', edit_admin_user_path(user), text: 'edit'
+      assert_select 'a[href=?][data-method="delete"]', admin_user_path(user),
+                    text: 'delete'
+    end
   end
 
   test 'should get show' do
