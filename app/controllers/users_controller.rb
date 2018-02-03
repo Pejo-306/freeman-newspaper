@@ -56,23 +56,10 @@ class UsersController < ApplicationController
                                  :password, :password_confirmation)
   end
 
-  def require_login
-    unless logged_in?
-      store_location
-      flash[:danger] = 'Please log in'
-      redirect_to login_url
-    end
-  end
-
   # Forbid an arbitrary user from editing any other users' information
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
-  end
-
-  # Ensure only admins can delete users
-  def require_admin_status
-    redirect_to(root_url) unless current_user.admin?
   end
 end
 

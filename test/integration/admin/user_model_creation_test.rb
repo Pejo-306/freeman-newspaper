@@ -1,6 +1,11 @@
 require 'test_helper'
 
-class Admin::UserModelInteractionTest < ActionDispatch::IntegrationTest
+class Admin::UserModelCreationTest < ActionDispatch::IntegrationTest
+  setup do
+    @admin = users(:john)
+    log_in_as @admin
+  end
+
   test 'unsuccessful user creation' do
     get new_admin_user_path
     assert_response :success

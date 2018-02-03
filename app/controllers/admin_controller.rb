@@ -1,4 +1,7 @@
 class AdminController < ApplicationController
+  before_action :require_login
+  before_action :require_admin_status
+
   def index
     Rails.application.eager_load! if Rails.env.development?
     # Retrieve only resources who have been added to the namespace 'admin'

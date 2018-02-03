@@ -2,7 +2,8 @@ require 'test_helper'
 
 class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:john)
+    @admin = users(:john)
+    log_in_as @admin
   end
 
   test 'should get index' do
@@ -27,27 +28,27 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    get admin_user_path(@user)
+    get admin_user_path(@admin)
     assert_response :success
     assert_template 'show'
   end
 
   test 'should link back to index page on show' do
-    get admin_user_path(@user)
+    get admin_user_path(@admin)
     assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
   end 
 
   test 'should display user information' do
-    get admin_user_path(@user)
-    assert_select 'h1', text: @user.full_name
-    assert_select 'p#name', text: "name: #{@user.name}"
-    assert_select 'p#surname', text: "surname: #{@user.surname}"
-    assert_select 'p#email', text: "email: #{@user.email}"
-    assert_select 'p#created_at', text: "created_at: #{@user.created_at}"
-    assert_select 'p#updated_at', text: "updated_at: #{@user.updated_at}"
-    assert_select 'p#admin', text: "admin: #{@user.admin}"
-    assert_select 'p#activated', text: "activated: #{@user.activated}"
-    assert_select 'p#activated_at', text: "activated_at: #{@user.activated_at}"
+    get admin_user_path(@admin)
+    assert_select 'h1', text: @admin.full_name
+    assert_select 'p#name', text: "name: #{@admin.name}"
+    assert_select 'p#surname', text: "surname: #{@admin.surname}"
+    assert_select 'p#email', text: "email: #{@admin.email}"
+    assert_select 'p#created_at', text: "created_at: #{@admin.created_at}"
+    assert_select 'p#updated_at', text: "updated_at: #{@admin.updated_at}"
+    assert_select 'p#admin', text: "admin: #{@admin.admin}"
+    assert_select 'p#activated', text: "activated: #{@admin.activated}"
+    assert_select 'p#activated_at', text: "activated_at: #{@admin.activated_at}"
   end
 
   test 'should get new' do
@@ -74,7 +75,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end 
 
   test 'should get edit' do
-    get edit_admin_user_path(@user)
+    get edit_admin_user_path(@admin)
     assert_response :success
     assert_template 'edit'
     assert_not flash.empty?
@@ -83,7 +84,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
   
   test 'should link back to index page on edit' do
-    get edit_admin_user_path(@user)
+    get edit_admin_user_path(@admin)
     assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
   end 
 
@@ -117,8 +118,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not update user with invalid input data' do
     travel 1.hours # ensure last time updated is not now
-    assert_no_changes '@user.reload.updated_at' do
-      patch admin_user_path(@user), params: {
+    assert_no_changes '@admin.reload.updated_at' do
+      patch admin_user_path(@admin), params: {
         user: { name: '',
                 surname: '',
                 email: 'email@invalid',
@@ -132,27 +133,28 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update user with valid input data' do
-    travel 1.hours # ensure last time updated is not now
-    assert_changes '@user.reload.updated_at' do
-      patch admin_user_path(@user), params: {
-        user: { name: 'Matt',
-                surname: @user.surname,
-                email: @user.email,
-                password: '',
-                password_confirmation: '',
-                activated: @user.activated,
-                admin: @user.admin }
-      }
+    travel 1.hours do 
+      assert_changes '@admin.reload.updated_at' do
+        patch admin_user_path(@admin), params: {
+          user: { name: 'Matt',
+                  surname: @admin.surname,
+                  email: @admin.email,
+                  password: '',
+                  password_confirmation: '',
+                  activated: @admin.activated,
+                  admin: @admin.admin }
+        }
+      end
     end
     assert_response :redirect
-    assert_redirected_to admin_user_path(@user)
+    assert_redirected_to admin_user_path(@admin)
     assert_not flash.empty?
     assert_equal 'User has successfully been updated', flash[:success]
   end
 
   test 'should destroy user' do
     assert_difference 'User.count', -1 do
-      delete admin_user_path(@user)
+      delete admin_user_path(@admin)
     end
     assert_response :redirect
     assert_redirected_to admin_users_path

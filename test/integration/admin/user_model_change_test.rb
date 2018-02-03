@@ -2,27 +2,28 @@ require 'test_helper'
 
 class Admin::UserModelChangeTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:john)
+    @admin = users(:john)
+    log_in_as @admin
   end
 
   test 'unsuccessful user update' do
-    get edit_admin_user_path(@user)
+    get edit_admin_user_path(@admin)
     assert_response :success
     assert_template 'edit'
-    assert_select "form[action=\"/admin/users/#{@user.id}\"]"
+    assert_select "form[action=\"/admin/users/#{@admin.id}\"]"
     travel 1.hours do
-      assert_no_changes '@user.reload.updated_at' do
-        patch admin_user_path(@user), params: { user: { name: '',
+      assert_no_changes '@admin.reload.updated_at' do
+        patch admin_user_path(@admin), params: { user: { name: '',
                                                         surname: '',
                                                         email: 'email@invalid',
                                                         password: '',
                                                         password_confirmation: '',
-                                                        activated: @user.activated,
-                                                        admin: @user.admin } }
+                                                        activated: @admin.activated,
+                                                        admin: @admin.admin } }
       end
     end
     assert_template 'edit'
-    assert_select "form[action=\"/admin/users/#{@user.id}\"]"
+    assert_select "form[action=\"/admin/users/#{@admin.id}\"]"
     assert_select 'div#error-explanation>div.alert',
                   text: 'The form contains 3 errors.'
     assert_select 'div#error-explanation>ul' do
@@ -31,13 +32,13 @@ class Admin::UserModelChangeTest < ActionDispatch::IntegrationTest
   end
 
   test 'successful user update' do
-    get edit_admin_user_path(@user)
+    get edit_admin_user_path(@admin)
     assert_response :success
     assert_template 'edit'
-    assert_select "form[action=\"/admin/users/#{@user.id}\"]"
+    assert_select "form[action=\"/admin/users/#{@admin.id}\"]"
     travel 1.hours do
-      assert_changes '@user.reload.updated_at' do
-        patch admin_user_path(@user), params: { 
+      assert_changes '@admin.reload.updated_at' do
+        patch admin_user_path(@admin), params: { 
           user: { name: 'Albert',
                   surname: 'Einstein',
                   email: 'genius@example.com' }
@@ -45,7 +46,7 @@ class Admin::UserModelChangeTest < ActionDispatch::IntegrationTest
       end
     end
     assert_response :redirect
-    assert_redirected_to admin_user_path(@user)
+    assert_redirected_to admin_user_path(@admin)
     follow_redirect!
     assert_template 'show'
     assert_not flash.empty?
