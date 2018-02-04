@@ -38,6 +38,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
   end 
 
+  test 'should link to edit page on show' do
+    get admin_user_path(@admin)
+    assert_select 'a[href=?]', edit_admin_user_path(@admin), text: 'Edit'
+  end
+
   test 'should display user information' do
     get admin_user_path(@admin)
     assert_select 'h1', text: @admin.full_name
@@ -87,6 +92,11 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get edit_admin_user_path(@admin)
     assert_select 'a[href=?]', admin_users_path, text: 'Back to index page'
   end 
+
+  test 'should link to show page on edit' do
+    get edit_admin_user_path(@admin)
+    assert_select 'a[href=?]', admin_user_path(@admin), text: 'View information'
+  end
 
   test 'should not create a user with invalid input data' do
     assert_no_difference 'User.count' do
