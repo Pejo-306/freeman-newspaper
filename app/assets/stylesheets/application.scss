@@ -19,9 +19,17 @@
 
 @import "utilities/variables";
 
+html {
+  height: 100%;
+}
+
 body {
-  padding-top: 60px; // position containers below header
+  padding-top: 6rem; // position containers below header
   font-family: $font-stack;
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
 }
 
 .container, .row, [class*="col"] {

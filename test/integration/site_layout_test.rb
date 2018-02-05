@@ -42,5 +42,14 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'site footer' do
+    get root_path
+    assert_select 'footer' do
+      travel_to Date.new(2018, 1, 1) do
+        assert_select '#copyright', text: "\u00A9 2018 Pejo-306"
+      end
+    end
+  end
 end
 
