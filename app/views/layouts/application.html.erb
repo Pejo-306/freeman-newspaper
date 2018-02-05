@@ -3,20 +3,19 @@
   <head>
     <title>NewspaperApp</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
-    <div class="container">
+    <main class="container">
       <% flash.each do |message_type, message| %>
         <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
       <% end %>
       <%= yield %>
       <%= debug(params) if Rails.env.development? %>
-    </div>
+    </main>
   </body>
 </html>
 

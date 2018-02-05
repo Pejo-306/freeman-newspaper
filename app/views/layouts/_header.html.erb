@@ -1,21 +1,46 @@
-<header>
+<header class="navbar navbar-fixed-top">
   <div class="container">
-    <div class="row">
-      <div id="logo" class="centered col-md-3">
-        <%= link_to image_tag('temporary_logo.jpeg', alt: 'Website logo'),
-                    root_path %>
+    <div class="row vertical-align">
+      <div class="col-md-4">
+        <!-- TODO: add navigational links here (admin, about, help...) -->
       </div>
-      <div id="title" class="centered col-md-6">
-        <%= link_to root_path do %>
-          <span id="name">The Freeman's</span><br>
-          <span id="newspaper">newspaper</span>
-        <% end %>
+      <div class="col-md-4">
+        <p id="title" class="text-center">
+          <%= link_to "The Freeman's newspaper", root_path %>
+        </p>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <% if logged_in? %>
+              <li class="dropdown">
+                <a href="#"style class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="header-link-text">Account</span>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu ">
+                  <li><%= link_to 'Profile', current_user %></li>
+                  <li><%= link_to 'Settings', edit_user_path(current_user) %></li>
+                  <li class="divider" role="separator"></li>
+                  <li><%= link_to 'Log out', logout_path, method: :delete %></li>
+                </ul>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to content_tag(:span, 'Sign up',
+                                        class: 'header-link-text'),
+                                        signup_path %>
+              </li>
+              <li>
+                <%= link_to content_tag(:span, 'Log in',
+                                        class: 'header-link-text'),
+                                        login_path %>
+              </li>
+            <% end %>
+          </ul>
         </nav>
       </div>
     </div>
   </div>
 </header>
-<hr>
+

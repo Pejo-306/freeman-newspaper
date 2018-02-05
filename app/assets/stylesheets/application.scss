@@ -17,24 +17,28 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-* {
-  font-family: "Century Old Style", Times, serif;
+@import "utilities/variables";
+
+body {
+  padding-top: 60px; // position containers below header
+  font-family: $font-stack;
 }
 
-div.container, div.row, div[class*="col"] {
+.container, .row, [class*="col"] {
   height: 100%;
 }
 
-.centered {
-  position: relative;
+.vertical-align {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
 
-  >* {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 0;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-  }
+.vertical-align > [class^="col-"],
+.vertical-align > [class*=" col-"] {
+  display: flex;
+  align-items: center;     /* Align the flex-items vertically */
+  justify-content: center; /* Optional, to align inner flex-items
+                              horizontally within the column  */
 }
 

@@ -1,16 +1,46 @@
 require 'test_helper'
 
 class SiteLayoutTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:john)
+  end
+
+  test 'site header' do
+    get root_path
+    assert_select 'header' do
+      assert_select '#title a[href=?]', root_path, text: "The Freeman's newspaper"
+      assert_select 'nav ul.nav'
+    end
+  end
+
   test 'site header as anonymous user' do
     get root_path
-    assert_select 'header'
-    assert_select 'header div#logo a[href=?]', root_path
-    assert_select 'header div#title a[href=?]', root_path
-    assert_select 'header div#title a[href=?] span#name', root_path,
-                  text: "The Freeman's"
-    assert_select 'header div#title a[href=?] span#newspaper', root_path,
-                  text: "newspaper"
-    assert_select 'header nav'
+    assert_select 'header' do
+      assert_select 'nav ul.nav li' do
+        assert_select 'a[href=?]', signup_path, text: 'Sign up'
+        assert_select 'a[href=?]', login_path, text: 'Log in'
+      end
+    end
+  end
+
+  test 'site header as logged in user' do
+    log_in_as @user
+    get root_path
+    assert_select 'header' do
+      assert_select 'nav ul.nav' do
+        assert_select 'li.dropdown' do
+          assert_select 'a.dropdown-toggle' do
+            assert_select 'span.header-link-text', text: 'Account'
+          end
+
+          assert_select 'ul.dropdown-menu li' do
+            assert_select 'a[href=?]', user_path(@user), text: 'Profile'
+            assert_select 'a[href=?]', edit_user_path(@user), text: 'Settings'
+            assert_select 'a[href=?]', logout_path, text: 'Log out'
+          end
+        end
+      end
+    end
   end
 end
 

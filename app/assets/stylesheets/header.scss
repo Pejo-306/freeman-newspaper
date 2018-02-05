@@ -1,35 +1,63 @@
-@import "mixins/inner_image_center.scss";
+@import "utilities/variables";
+@import "utilities/mixins";
 
 header {
-  height: 20vh;
-  text-align: center;
-  vertical-align: middle;
+  background-color: white;
+  outline: 3px solid $secondary-color;
 
-  div#logo {
+  #title {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+
     a {
-      @include inner-image-center;
+      font-size: 1.6em;
+      color: black;
+      text-transform: uppercase;
+
+      &:hover, &:active {
+        text-decoration: none;
+      }
     }
   }
 
-  div#title {
-    text-transform: uppercase;
-    font-weight: bold;
+  ul.nav > li {
+    &:first-child > a {
+      border-radius: .5em 0 0 .5em;
+    }
 
-    a {
-      color: black;
+    &:last-child > a {
+      border-radius: 0 .5em .5em 0; 
+    }
 
-      span#name {
-        font-size: 3em;
-      }
+    & > a.dropdown-toggle {
+      border-radius: .5em;
+    }
 
-      span#newspaper {
-        font-size: 2em;
-        border-bottom: .2em solid black;
+    ul.dropdown-menu {
+      a {
+        @include transition(background-color, .4s);
+
+        &:hover, &:active {
+          background-color: $light-secondary-color;
+        }
       }
     }
 
-    a:hover {
-      text-decoration: none; 
+    & > a {
+      color: $secondary-color;
+      background-color: $light-secondary-color !important;
+      @include transition(background-color, .2s);
+      border: 2px solid $light-secondary-color;
+
+      &:hover, &:active {
+        background-color: transparent !important;
+
+        & > span.header-link-text {
+          border-bottom: 2px solid $secondary-color;
+          @include transition(border-bottom, .2s);
+        }
+      }
     }
   }
 }
