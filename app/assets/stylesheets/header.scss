@@ -1,0 +1,36 @@
+@import "mixins/inner_image_center.scss";
+
+header {
+  height: 20vh;
+  text-align: center;
+  vertical-align: middle;
+
+  div#logo {
+    a {
+      @include inner-image-center;
+    }
+  }
+
+  div#title {
+    text-transform: uppercase;
+    font-weight: bold;
+
+    a {
+      color: black;
+
+      span#name {
+        font-size: 3em;
+      }
+
+      span#newspaper {
+        font-size: 2em;
+        border-bottom: .2em solid black;
+      }
+    }
+
+    a:hover {
+      text-decoration: none; 
+    }
+  }
+}
+

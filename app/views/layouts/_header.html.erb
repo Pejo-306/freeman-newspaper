@@ -1,0 +1,21 @@
+<header>
+  <div class="container">
+    <div class="row">
+      <div id="logo" class="centered col-md-3">
+        <%= link_to image_tag('temporary_logo.jpeg', alt: 'Website logo'),
+                    root_path %>
+      </div>
+      <div id="title" class="centered col-md-6">
+        <%= link_to root_path do %>
+          <span id="name">The Freeman's</span><br>
+          <span id="newspaper">newspaper</span>
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <nav>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<hr>

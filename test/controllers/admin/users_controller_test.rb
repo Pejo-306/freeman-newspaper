@@ -16,7 +16,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     get admin_users_path
     assert_select 'div.pagination', count: 2
     first_page_of_users = User.paginate(page: 1, per_page: 20)
-    assert_select 'body>ul' do
+    assert_select 'ul#pagination-items' do
       assert_select 'li', 20
     end
     first_page_of_users.each do |user|

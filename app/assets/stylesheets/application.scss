@@ -13,3 +13,28 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+* {
+  font-family: "Century Old Style", Times, serif;
+}
+
+div.container, div.row, div[class*="col"] {
+  height: 100%;
+}
+
+.centered {
+  position: relative;
+
+  >* {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
