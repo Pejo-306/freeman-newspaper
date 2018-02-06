@@ -7,13 +7,10 @@ header {
 
   #title {
     margin: 0;
-    height: 100%;
-    width: 100%;
 
     a {
-      font-size: 1.6em;
+      font-size: 1.4em;
       color: black;
-      text-transform: uppercase;
 
       &:hover, &:active {
         text-decoration: none;
@@ -21,30 +18,32 @@ header {
     }
   }
 
-  ul.nav > li {
-    &:first-child > a {
+  nav[class*="nav"] {
+    & > :first-child {
       border-radius: .5em 0 0 .5em;
     }
 
-    &:last-child > a {
+    & > :last-child {
       border-radius: 0 .5em .5em 0; 
     }
 
-    & > a.dropdown-toggle {
-      border-radius: .5em;
-    }
+    & > .dropdown {
+      .dropdown-toggle {
+        border-radius: .5em;
+      }
 
-    ul.dropdown-menu {
-      a {
-        @include transition(background-color, .4s);
+      .dropdown-menu {
+        a.dropdown-item {
+          @include transition(background-color, .4s);
 
-        &:hover, &:active {
-          background-color: $light-secondary-color;
+          &:hover, &:active {
+            background-color: $light-secondary-color;
+          }
         }
       }
     }
 
-    & > a {
+    a.nav-link {
       color: $secondary-color;
       background-color: $light-secondary-color !important;
       @include transition(background-color, .2s);

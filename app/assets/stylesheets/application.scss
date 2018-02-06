@@ -10,13 +10,10 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
 
-@import "bootstrap-sprockets";
 @import "bootstrap";
-
+@import "tree";
 @import "utilities/variables";
 
 html {
@@ -24,29 +21,20 @@ html {
 }
 
 body {
+  height: 100%;
   padding-top: 6rem; // position containers below header
   font-family: $font-stack;
-  position: relative;
-  margin: 0;
-  padding-bottom: 6rem;
+}
+
+main {
   min-height: 100%;
-}
-
-.container, .row, [class*="col"] {
+  height: auto !important;
   height: 100%;
+  margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 }
 
-.vertical-align {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-}
-
-.vertical-align > [class^="col-"],
-.vertical-align > [class*=" col-"] {
-  display: flex;
-  align-items: center;     /* Align the flex-items vertically */
-  justify-content: center; /* Optional, to align inner flex-items
-                              horizontally within the column  */
+/* TODO: fix this height */
+footer, .push {
+  height: 142px; /* .push must be the same height as footer */
 }
 
