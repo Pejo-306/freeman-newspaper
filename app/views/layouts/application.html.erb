@@ -12,10 +12,12 @@
     <main class="container">
       <%= render 'layouts/flash_messages', flash: flash %>
       <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
       <div class="push"></div>
     </main>
     <%= render 'layouts/footer' %>
+    <div class="container">
+      <%= debug(params) if Rails.env.development? %>
+    </div>
   </body>
 </html>
 
