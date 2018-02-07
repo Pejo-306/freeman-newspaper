@@ -29,9 +29,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_select 'header' do
       assert_select 'nav.nav' do
         assert_select '.dropdown' do
-          assert_select 'a.dropdown-toggle' do
-            assert_select 'span.header-link-text', text: 'Account'
-          end
+          assert_select 'a.dropdown-toggle' 
 
           assert_select '.dropdown-menu' do
             assert_select 'a[href=?]', user_path(@user), text: 'Profile'

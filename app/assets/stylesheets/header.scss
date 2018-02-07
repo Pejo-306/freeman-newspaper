@@ -2,15 +2,17 @@
 @import "utilities/mixins";
 
 header {
-  background-color: white;
-  outline: 3px solid $secondary-color;
+  background-color: $primary-color;
+  border-bottom: 3px solid $secondary-color;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 
   #title {
     margin: 0;
 
     a {
-      font-size: 1.4em;
-      color: black;
+      font-size: 1.4rem;
+      color: $primary-inverse-color;
 
       &:hover, &:active {
         text-decoration: none;
@@ -18,46 +20,8 @@ header {
     }
   }
 
-  nav[class*="nav"] {
-    & > :first-child {
-      border-radius: .5em 0 0 .5em;
-    }
-
-    & > :last-child {
-      border-radius: 0 .5em .5em 0; 
-    }
-
-    & > .dropdown {
-      .dropdown-toggle {
-        border-radius: .5em;
-      }
-
-      .dropdown-menu {
-        a.dropdown-item {
-          @include transition(background-color, .4s);
-
-          &:hover, &:active {
-            background-color: $light-secondary-color;
-          }
-        }
-      }
-    }
-
-    a.nav-link {
-      color: $secondary-color;
-      background-color: $light-secondary-color !important;
-      @include transition(background-color, .2s);
-      border: 2px solid $light-secondary-color;
-
-      &:hover, &:active {
-        background-color: transparent !important;
-
-        & > span.header-link-text {
-          border-bottom: 2px solid $secondary-color;
-          @include transition(border-bottom, .2s);
-        }
-      }
-    }
+  nav.nav .nav-link {
+    border-radius: 0;
   }
 }
 

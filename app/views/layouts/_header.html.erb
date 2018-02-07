@@ -13,27 +13,24 @@
         <nav class="nav navbar-nav ml-auto justify-content-center">
           <% if logged_in? %>
             <div class="dropdown nav-item">
-              <a href="#" class="dropdown-toggle nav-link"
+              <a href="#" class="nav-link btn btn-primary dropdown-toggle"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="header-link-text">Account</span>
-                <span class="caret"></span>
+                Account<span class="caret"></span>
               </a>
               <div class="dropdown-menu">
                   <%= link_to 'Profile', current_user, class: 'dropdown-item' %>
                   <%= link_to 'Settings', edit_user_path(current_user),
-                      class: 'dropdown-item' %>
+                                          class: 'dropdown-item' %>
                   <div class="dropdown-divider"></div>
                   <%= link_to 'Log out', logout_path, method: :delete,
-                      class: 'dropdown-item' %>
+                                         class: 'dropdown-item' %>
               </div>
             </div>
           <% else %>
-            <%= link_to content_tag(:span, 'Sign up',
-                                    class: 'header-link-text'),
-                                    signup_path, class: 'nav-link' %>
-            <%= link_to content_tag(:span, 'Log in',
-                                    class: 'header-link-text'),
-                                    login_path, class: 'nav-link' %>
+            <%= link_to 'Sign up', signup_path, role: 'button',
+                                   class: 'nav-link btn btn-primary' %>
+            <%= link_to 'Log in', login_path, role: 'button',
+                                   class: 'nav-link btn btn-primary' %>
           <% end %>
         </nav>
       </div>

@@ -1,0 +1,18 @@
+/* Include minor changes to the design of Bootstap 4 components */
+
+@import "utilities/variables";
+
+.btn-primary {
+  border-color: $secondary-color !important;
+  background-color: $secondary-color !important;
+
+  &:hover, &:active, {
+    background-color: $dark-secondary-color !important;
+    border-color: $dark-secondary-color !important;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
