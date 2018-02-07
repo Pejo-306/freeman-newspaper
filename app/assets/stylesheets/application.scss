@@ -30,10 +30,12 @@ main {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto $negative-footer-height; /* the bottom margin is the negative value of the footer's height */
+  margin: 0 auto $negative-footer-height; /*
+                                           * the bottom margin is the negative
+                                           * value of the footer's height
+                                           */
 }
 
-/* TODO: fix this height */
 footer, .push {
   height: $footer-height; /* .push must be the same height as footer */
 }

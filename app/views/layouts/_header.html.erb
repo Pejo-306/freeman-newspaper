@@ -18,7 +18,8 @@
                 Account<span class="caret"></span>
               </a>
               <div class="dropdown-menu">
-                  <%= link_to 'Profile', current_user, class: 'dropdown-item' %>
+                  <%= link_to 'Profile', current_user,
+                                         class: 'dropdown-item' %>
                   <%= link_to 'Settings', edit_user_path(current_user),
                                           class: 'dropdown-item' %>
                   <div class="dropdown-divider"></div>
@@ -30,7 +31,7 @@
             <%= link_to 'Sign up', signup_path, role: 'button',
                                    class: 'nav-link btn btn-primary' %>
             <%= link_to 'Log in', login_path, role: 'button',
-                                   class: 'nav-link btn btn-primary' %>
+                                  class: 'nav-link btn btn-primary' %>
           <% end %>
         </nav>
       </div>

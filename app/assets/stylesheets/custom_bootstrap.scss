@@ -16,3 +16,15 @@
   }
 }
 
+.dropdown .dropdown-item {
+  &:hover {
+    color: $primary-inverse-color;
+    background-color: $light-grey-color;
+  }
+
+  &:active {
+    color: $primary-inverse-color;
+    background-color: $light-secondary-color;
+  }
+}
+
