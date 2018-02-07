@@ -6,5 +6,11 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template 'home'
   end
+
+  test 'should get about' do
+    get about_path
+    assert_response :success
+    assert_template 'about'
+  end
 end
 
