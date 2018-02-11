@@ -1,4 +1,18 @@
 <% provide(:title, 'Reset password') %>
-<h1>Reset password</h1>
-<%= render 'reset_form', user: @user %>
+
+<div class="w-50 container-fluid form-container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <h1>Reset password</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-12">
+      <%= render 'reset_form', user: @user %>
+    </div>
+  </div>
+</div>
 
