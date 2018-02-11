@@ -22,8 +22,11 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test 'should provide the needed css classes for a form submit button' do
-    assert_equal 'btn btn-block', submit_classes 
-    assert_equal 'btn btn-block btn-primary', submit_classes('btn-primary')
+    assert_equal 'btn btn-primary btn-block', submit_classes 
+    assert_equal 'btn btn-primary btn-block css_class_1 css_class_2',
+                  submit_classes('css_class_1', 'css_class_2')
+    assert_equal 'btn btn-secondary btn-block',
+                 submit_classes(btn_style: 'btn-secondary') 
   end
 end
 

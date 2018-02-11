@@ -34,8 +34,8 @@ module ApplicationHelper
   end
 
   # Return the Bootstrap 4 css classes needed to style a form submit button 
-  def submit_classes(*extra_classes)
-    bootstrap_classes = ['btn', 'btn-block']
+  def submit_classes(*extra_classes, btn_style: 'btn-primary')
+    bootstrap_classes = ['btn', btn_style, 'btn-block']
     css_classes = [*bootstrap_classes, *extra_classes]
     css_classes.join(' ')
   end

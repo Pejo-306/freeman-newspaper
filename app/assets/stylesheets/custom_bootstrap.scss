@@ -12,6 +12,7 @@
   }
 
   &:focus {
+    background-color: $dark-secondary-color !important;
     box-shadow: none;
   }
 }
