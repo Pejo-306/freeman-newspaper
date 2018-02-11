@@ -20,6 +20,12 @@ module ApplicationHelper
     Time.zone.now.year
   end
 
+  # Provide the title of a page
+  def site_title(page_title = '', base_title: "The Freeman's newspaper")
+    return base_title if page_title.blank?
+    "#{base_title} | #{page_title}"
+  end
+
   # Return the Bootstrap 4 css classes needed to style a form label
   def label_classes(*extra_classes)
     bootstrap_classes = ['col-sm-2', 'col-form-label']

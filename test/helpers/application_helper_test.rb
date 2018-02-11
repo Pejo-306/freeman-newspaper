@@ -7,6 +7,14 @@ class ApplicationHelperTest < ActionView::TestCase
     end 
   end
 
+  test "should provide the site's base title when no page title is given" do
+    assert_equal "The Freeman's newspaper", site_title
+  end
+
+  test "should provide the site's full title" do
+    assert_equal "The Freeman's newspaper | About", site_title('About')
+  end
+
   test 'should provide the needed css classes for a form label' do
     assert_equal 'col-sm-2 col-form-label', label_classes
     assert_equal 'col-sm-2 col-form-label css_class_1 css_class_2',
