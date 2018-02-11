@@ -1,5 +1,43 @@
 <% provide(:title, @user.full_name) %>
-<%= content_tag(:p, @user.name) %>
-<%= content_tag(:p, @user.surname) %>
-<%= content_tag(:p, @user.email) %>
+
+<div class="row">
+  <div class="col-3">
+    <div class="row">
+      <div class="col-12">
+        <h3>Bio</h3>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-3">
+        <%= content_tag(:span, "Name:") %>
+      </div>
+      <div class="col-9">
+        <%= content_tag(:span, @user.name) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <%= content_tag(:span, "Surname:") %>
+      </div>
+      <div class="col-9">
+        <%= content_tag(:span, @user.surname) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <%= content_tag(:span, "Email:") %>
+      </div>
+      <div class="col-9">
+        <%= content_tag(:span, @user.email) %>
+      </div>
+    </div>
+  </div>
+  <div class="col-9">
+
+  </div>
+</div>
 
