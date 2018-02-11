@@ -19,5 +19,19 @@ module ApplicationHelper
   def current_year
     Time.zone.now.year
   end
+
+  # Return the Bootstrap 4 css classes needed to style a form label
+  def label_classes(*extra_classes)
+    bootstrap_classes = ['col-sm-2', 'col-form-label']
+    css_classes = [*bootstrap_classes, *extra_classes]
+    css_classes.join(' ')
+  end
+
+  # Return the Bootstrap 4 css classes needed to style a form submit button 
+  def submit_classes(*extra_classes)
+    bootstrap_classes = ['btn', 'btn-block']
+    css_classes = [*bootstrap_classes, *extra_classes]
+    css_classes.join(' ')
+  end
 end
 
