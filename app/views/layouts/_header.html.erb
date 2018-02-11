@@ -2,14 +2,11 @@
   <div class="container">
     <div class="row w-100 align-items-center">
       <div class="col-lg-4">
-        <%# TODO: add navigational links here (admin, about, help...) %>
-      </div>
-      <div class="col-lg-4">
         <p id="title" class="text-center text-uppercase">
           <%= link_to "The Freeman's newspaper", root_path %>
         </p>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4 offset-lg-4">
         <nav class="nav navbar-nav ml-auto justify-content-center">
           <% if logged_in? %>
             <div class="dropdown nav-item">

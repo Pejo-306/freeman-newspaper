@@ -1,8 +1,23 @@
 @import "utilities/variables";
 @import "utilities/mixins";
 
+@mixin header-gradient() {
+  /* Permalink - use to edit and share this gradient: */
+  /* http://colorzilla.com/gradient-editor/#ffffff+50,c33cbf+51 */
+  background: $primary-color; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, $primary-color 50%,
+                                           $secondary-color 50%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, $primary-color 50%,
+                                              $secondary-color 50%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, $primary-color 50%,
+                                      $secondary-color 50%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$primary-color',
+                                                     endColorstr='$secondary-color',
+                                                     GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
 header {
-  background-color: $primary-color;
+  @include header-gradient;
   border-bottom: 3px solid $secondary-color;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
