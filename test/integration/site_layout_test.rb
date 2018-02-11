@@ -47,6 +47,19 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
       travel_to Date.new(2018, 1, 1) do
         assert_select '#copyright', text: "\u00A9 2018 Pejo-306"
       end
+
+      assert_select '.breadcrumb' do 
+        assert_select 'a[href=?]', root_path, false
+        assert_select 'a[href=?]', about_path, 'About'
+      end
+    end
+
+    get about_path
+    assert_select 'footer' do
+      assert_select '.breadcrumb' do 
+        assert_select 'a[href=?]', root_path, 'Home' 
+        assert_select 'a[href=?]', about_path, false
+      end
     end
   end
 end

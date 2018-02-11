@@ -8,7 +8,12 @@
         </p>
       </div>
       <div class="col-lg-4 offset-lg-4">
-
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end">
+            <%= breadcrumb_item 'Home', root_path %>
+            <%= breadcrumb_item 'About', about_path %>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
