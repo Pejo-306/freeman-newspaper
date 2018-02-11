@@ -65,3 +65,12 @@ a {
   }
 }
 
+.form-container {
+  background-color: $light-grey-color;
+  border-radius: 1rem;
+
+  & > .row {
+    padding: .75rem;
+  }
+}
+
