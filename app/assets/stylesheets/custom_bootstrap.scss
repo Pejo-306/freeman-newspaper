@@ -36,3 +36,15 @@
   background-color: $primary-color;
 }
 
+/* Remove button highlight via box shadow when clicked */
+.remove-highlight {
+  &.btn.active.focus,
+  &.btn.active:focus,
+  &.btn.focus,
+  &.btn.focus:active,
+  &.btn:active:focus,
+  &.btn:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none  !important;
+  }
+}

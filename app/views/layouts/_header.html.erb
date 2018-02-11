@@ -10,7 +10,7 @@
         <nav class="nav navbar-nav ml-auto justify-content-center">
           <% if logged_in? %>
             <div class="dropdown nav-item">
-              <a href="#" class="nav-link btn btn-primary dropdown-toggle"
+              <a href="#" class="nav-link remove-highlight btn btn-primary dropdown-toggle"
                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account<span class="caret"></span>
               </a>
@@ -26,9 +26,9 @@
             </div>
           <% else %>
             <%= link_to 'Sign up', signup_path, role: 'button',
-                                   class: 'nav-link btn btn-primary' %>
+                                   class: 'nav-link remove-highlight btn btn-primary' %>
             <%= link_to 'Log in', login_path, role: 'button',
-                                  class: 'nav-link btn btn-primary' %>
+                                  class: 'nav-link remove-highlight btn btn-primary' %>
           <% end %>
         </nav>
       </div>
