@@ -24,9 +24,8 @@ class Admin::UserModelChangeTest < ActionDispatch::IntegrationTest
     end
     assert_template 'edit'
     assert_select "form[action=\"/admin/users/#{@admin.id}\"]"
-    assert_select 'div#error-explanation>div.alert',
-                  text: 'The form contains 3 errors.'
-    assert_select 'div#error-explanation>ul' do
+    assert_select '#error-explanation > p', text: 'The form contains 3 errors:'
+    assert_select '#error-explanation > ul' do
       assert_select 'li', count: 3
     end
   end

@@ -22,9 +22,8 @@ class Admin::UserModelCreationTest < ActionDispatch::IntegrationTest
     end
     assert_template 'new'
     assert_select 'form[action="/admin/users"]'
-    assert_select 'div#error-explanation>div.alert',
-                  text: 'The form contains 5 errors.'
-    assert_select 'div#error-explanation>ul' do 
+    assert_select '#error-explanation > p', text: 'The form contains 5 errors:'
+    assert_select '#error-explanation > ul' do 
       assert_select 'li', count: 5
     end
   end

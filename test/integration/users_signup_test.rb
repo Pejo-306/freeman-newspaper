@@ -15,7 +15,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_template 'users/new'
     assert_select 'form[action="/signup"]'
-    assert_select 'div#error-explanation div.alert', 'The form contains 5 errors.' 
+    assert_select '#error-explanation p', 'The form contains 5 errors:' 
   end
 
   test 'signup with valid data and activate account' do
