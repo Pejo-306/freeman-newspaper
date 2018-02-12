@@ -13,7 +13,8 @@
       <div class="col-3">
         <%= content_tag(:span, "Name:") %>
       </div>
-      <div class="col-9">
+      <div class="col-9 text-truncate" data-toggle="tooltip"
+           title="<%= @user.name %>">
         <%= content_tag(:span, @user.name) %>
       </div>
     </div>
@@ -22,7 +23,8 @@
       <div class="col-3">
         <%= content_tag(:span, "Surname:") %>
       </div>
-      <div class="col-9">
+      <div class="col-9 text-truncate" data-toggle="tooltip"
+           title="<%= @user.surname %>">
         <%= content_tag(:span, @user.surname) %>
       </div>
     </div>
@@ -31,11 +33,13 @@
       <div class="col-3">
         <%= content_tag(:span, "Email:") %>
       </div>
-      <div class="col-9">
+      <div class="col-9 text-truncate" data-toggle="tooltip"
+           title="<%= @user.email %>">
         <%= content_tag(:span, @user.email) %>
       </div>
     </div>
   </div>
+
   <div class="col-9">
 
   </div>
