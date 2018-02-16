@@ -71,6 +71,10 @@ a {
 
   & > .row {
     padding: .75rem;
+
+    &:last-child > .col-12 {
+      margin-bottom: .4rem;
+    }
   }
 }
 
