@@ -11,3 +11,14 @@ li.list-group-item {
   }
 }
 
+#fields-row {
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border-left: .1rem solid $secondary-color;
+  border-top: .1rem solid $secondary-color;
+  //background-color: $light-grey-color;
+  border-right: .1rem solid $light-grey-color;
+  border-bottom: .1rem solid $light-grey-color;
+}
+

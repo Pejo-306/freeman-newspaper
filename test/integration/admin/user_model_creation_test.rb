@@ -51,7 +51,7 @@ class Admin::UserModelCreationTest < ActionDispatch::IntegrationTest
     assert_template 'show'
     assert_not flash.empty?
     assert_equal 'User has been created', flash[:success] 
-    assert_select 'h1', text: 'Albert Einstein'
+    assert_select 'h1', text: 'User: Albert Einstein'
     assert_select 'p#name', text: 'name: Albert'
     assert_select 'p#surname', text: 'surname: Einstein'
     assert_select 'p#email', text: 'email: genius@example.com' 

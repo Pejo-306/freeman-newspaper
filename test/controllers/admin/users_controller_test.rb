@@ -45,7 +45,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should display user information' do
     get admin_user_path(@admin)
-    assert_select 'h1', text: @admin.full_name
+    assert_select 'h1', text: "User: #{@admin.full_name}"
     assert_select 'p#name', text: "name: #{@admin.name}"
     assert_select 'p#surname', text: "surname: #{@admin.surname}"
     assert_select 'p#email', text: "email: #{@admin.email}"
