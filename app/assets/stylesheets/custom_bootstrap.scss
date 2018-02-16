@@ -48,3 +48,48 @@
     box-shadow: none  !important;
   }
 }
+
+ul.pagination {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  li.page-item {
+    & > a {
+      color: $secondary-color;
+      @include transition(background-color, .2s);
+
+      &:hover {
+        background-color: $light-grey-color;
+      }
+
+      &:active {
+        background-color: $light-secondary-color;
+      }
+    }
+
+    &.active > a {
+      background-color: $secondary-color;
+      border-color: $secondary-color;
+
+      &:active {
+        background-color: $dark-secondary-color;
+      }
+    }
+  }
+}
+
+.badge {
+  &.badge-primary {
+    background-color: $secondary-color;
+  }
+
+  a {
+    color: $primary-color;
+
+    &:hover, &:active {
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+}
+

@@ -1,7 +1,38 @@
-<li>
-  <%= link_to user.full_name, admin_user_path(user) %> |
-  <%= link_to 'edit', edit_admin_user_path(user) %> |
-  <%= link_to 'delete', admin_user_path(user),
-                        method: :delete, data: { confirm: 'Are you sure?' } %>
+<li class="list-group-item">
+  <div class="row">
+    <div class="col-4">
+      <div class="d-flex h-100 align-items-center">
+        <span><%= link_to user.full_name, admin_user_path(user) %></span>
+        <span class="badge badge-primary">
+          <%= link_to 'edit', edit_admin_user_path(user) %>
+        
+        </span>
+        <span class="badge badge-danger">
+          <%= link_to 'delete', admin_user_path(user),
+                                method: :delete, data: { confirm: 'Are you sure?' } %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-4 offset-4">
+      <div class="row">
+        <div class="col-4">
+          <span>Created</span>
+        </div>
+        <div class="col-8">
+          <span><%= user.created_at %></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <span>Last updated</span>
+        </div>
+        <div class="col-8">
+          <span><%= user.updated_at %></span>
+        </div>
+      </div>
+    </div>
+  </div>
 </li>
 

@@ -1,8 +1,37 @@
-<h1>All users</h1>
-<%= will_paginate @users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
-<ul id="pagination-items">
-  <%= render @users %>
-</ul>
-<%= will_paginate @users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
-<%= link_to 'New user', new_admin_user_path %>
+<div class="row">
+  <div class="col-4">
+    <h1>All users</h1>
+  </div>
+  <div class="col-4 offset-4">
+    <div class="d-flex h-100 justify-content-end align-items-center">
+      <%= link_to 'New user', new_admin_user_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-12">
+    <%= will_paginate @users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ul id="pagination-items" class="list-group">
+      <%= render @users %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <%= will_paginate @users, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+  </div>
+</div>
 
