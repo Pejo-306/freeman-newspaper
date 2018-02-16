@@ -49,8 +49,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def displayed_user_attrs
-    [:name, :surname, :email, :activated, :admin,
-     :created_at, :updated_at, :activated_at]
+    [:name, :surname, :email, :activated, :admin, :activated_at]
   end
 
   def user_params

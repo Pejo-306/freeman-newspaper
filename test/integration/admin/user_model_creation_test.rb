@@ -57,9 +57,9 @@ class Admin::UserModelCreationTest < ActionDispatch::IntegrationTest
     assert_select 'p#email', text: 'email: genius@example.com' 
     assert_select 'p#activated', text: 'activated: false'
     assert_select 'p#admin', text: 'admin: false'
-    assert_select 'p#created_at', text: "created_at: #{Time.zone.now}"
-    assert_select 'p#updated_at', text: "updated_at: #{Time.zone.now}"
     assert_select 'p#activated_at', text: 'activated_at: <null>'
+    assert_select 'span#created_at', text: "#{Time.zone.now}"
+    assert_select 'span#updated_at', text: "#{Time.zone.now}"
   end
 end
 

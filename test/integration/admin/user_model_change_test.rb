@@ -54,7 +54,7 @@ class Admin::UserModelChangeTest < ActionDispatch::IntegrationTest
     assert_select 'p#name', text: 'name: Albert'
     assert_select 'p#surname', text: 'surname: Einstein'
     assert_select 'p#email', text: 'email: genius@example.com' 
-    assert_select 'p#updated_at', text: "updated_at: #{Time.zone.now + 1.hours}"
+    assert_select 'span#updated_at', text: "#{Time.zone.now + 1.hours}"
   end
 end
 
