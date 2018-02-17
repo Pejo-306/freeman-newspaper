@@ -24,6 +24,11 @@
                                          class: 'dropdown-item' %>
               </div>
             </div>
+
+            <% if current_user.admin? %>
+              <%= link_to 'Admin', admin_path, role: 'button',
+                                   class: 'nav-link remove-highlight btn btn-primary' %>
+            <% end %>
           <% else %>
             <%= link_to 'Sign up', signup_path, role: 'button',
                                    class: 'nav-link remove-highlight btn btn-primary' %>

@@ -2,7 +2,8 @@ require 'test_helper'
 
 class SiteLayoutTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:john)
+    @admin = users(:john)
+    @user = users(:michael)
   end
 
   test 'site header' do
@@ -39,6 +40,17 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
         end
       end
     end
+  end
+
+  test 'hyperlink to admin page in site header' do
+    # There shouldn't be a link to the admin page for non-admin users
+    log_in_as @user
+    get root_path
+    assert_select 'a[href=?]', admin_path, false
+    # There should be a link to the admin page for admin users
+    log_in_as @admin
+    get root_path
+    assert_select 'a[href=?]', admin_path, text: 'Admin'
   end
 
   test 'site footer' do
