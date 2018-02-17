@@ -42,15 +42,32 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'hyperlink to admin page in site header' do
+  test "hyperlink to admin page in site's header" do
+    # Non-logged in users should not be displayed a link to admin page
+    get root_path
+    assert_select 'header' do
+      assert_select 'nav.nav' do
+        assert_select 'a[href=?]', admin_path, false
+      end
+    end
+
     # There shouldn't be a link to the admin page for non-admin users
     log_in_as @user
     get root_path
-    assert_select 'a[href=?]', admin_path, false
+    assert_select 'header' do
+      assert_select 'nav.nav' do
+        assert_select 'a[href=?]', admin_path, false
+      end
+    end
+
     # There should be a link to the admin page for admin users
     log_in_as @admin
     get root_path
-    assert_select 'a[href=?]', admin_path, text: 'Admin'
+    assert_select 'header' do
+      assert_select 'nav.nav' do
+        assert_select 'a[href=?]', admin_path, text: 'Admin'
+      end
+    end
   end
 
   test 'site footer' do
@@ -71,6 +88,34 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
       assert_select '.breadcrumb' do 
         assert_select 'a[href=?]', root_path, 'Home' 
         assert_select 'a[href=?]', about_path, false
+      end
+    end
+  end
+
+  test "hyperlink to admin page in site's footer" do
+    # Non-logged in users should not be displayed a link to admin page
+    get root_path
+    assert_select 'footer' do
+      assert_select 'nav[aria-label="breadcrumb"]' do
+        assert_select 'a[href=?]', admin_path, false
+      end
+    end
+
+    # There shouldn't be a link to the admin page for non-admin users
+    log_in_as @user
+    get root_path
+    assert_select 'footer' do
+      assert_select 'nav[aria-label="breadcrumb"]' do
+        assert_select 'a[href=?]', admin_path, false
+      end
+    end
+
+    # There should be a link to the admin page for admin users
+    log_in_as @admin
+    get root_path
+    assert_select 'footer' do
+      assert_select 'nav[aria-label="breadcrumb"]' do
+        assert_select 'a[href=?]', admin_path, text: 'Admin'
       end
     end
   end

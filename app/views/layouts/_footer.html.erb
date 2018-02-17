@@ -12,6 +12,9 @@
           <ol class="breadcrumb justify-content-end">
             <%= breadcrumb_item 'Home', root_path %>
             <%= breadcrumb_item 'About', about_path %>
+            <% if logged_in? && current_user.admin? %>
+              <%= breadcrumb_item 'Admin', admin_path  %>
+            <% end %>
           </ol>
         </nav>
       </div>
