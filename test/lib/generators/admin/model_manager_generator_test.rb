@@ -17,3 +17,4 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
     assert_file 'app/controllers/admin/articles_controller.rb'
   end
 end
+
