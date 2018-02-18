@@ -8,13 +8,13 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
 
   test 'generator runs without errors' do
     assert_nothing_raised do
-      run_generator ["article"]
+      run_generator ["user"]
     end
   end
 
   test 'generator invokes controller generator' do
-    run_generator ["article"]
-    assert_file 'app/controllers/admin/articles_controller.rb'
+    run_generator ["user"]
+    assert_file 'app/controllers/admin/users_controller.rb'
   end
 end
 
