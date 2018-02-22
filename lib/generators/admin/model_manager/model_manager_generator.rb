@@ -23,5 +23,13 @@ class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
                "app/views/admin/#{file_name.pluralize}/#{action}.html.erb"
     end
   end
+
+  def create_view_partials
+    partials = { form: 'form', object: @record_name }
+    partials.each do |template_name, partial|
+      template "_#{template_name}.html.erb.erb",
+               "app/views/admin/#{file_name.pluralize}/_#{partial}.html.erb"
+    end
+  end
 end
 

@@ -8,21 +8,27 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
 
   test 'generator runs without errors' do
     assert_nothing_raised do
-      run_generator ["user"]
+      run_generator ['user']
     end
   end
 
   test 'generator creates a model controller' do
-    run_generator ["user"]
+    run_generator ['user']
     assert_file 'app/controllers/admin/users_controller.rb'
   end
 
   test 'generator creates views for every RESTful action' do
-    run_generator ["user"]
+    run_generator ['user']
     assert_file 'app/views/admin/users/index.html.erb'
     assert_file 'app/views/admin/users/show.html.erb'
     assert_file 'app/views/admin/users/new.html.erb'
     assert_file 'app/views/admin/users/edit.html.erb'
+  end
+
+  test 'generator creates the partials required by the views' do
+    run_generator ['user']
+    assert_file 'app/views/admin/users/_form.html.erb'
+    assert_file 'app/views/admin/users/_user.html.erb'
   end
 end
 
