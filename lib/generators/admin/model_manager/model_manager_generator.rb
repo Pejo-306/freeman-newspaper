@@ -11,5 +11,13 @@ class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
     template 'controller.rb.erb',
              "app/controllers/admin/#{file_name.pluralize}_controller.rb"
   end
+
+  def create_controller_views
+    restful_actions = ['index', 'show', 'new', 'edit']
+    restful_actions.each do |action|
+      template "#{action}.html.erb.erb",
+               "app/views/admin/#{file_name.pluralize}/#{action}.html.erb"
+    end
+  end
 end
 

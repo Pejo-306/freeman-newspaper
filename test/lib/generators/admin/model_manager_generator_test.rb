@@ -12,9 +12,17 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
     end
   end
 
-  test 'generator invokes controller generator' do
+  test 'generator creates a model controller' do
     run_generator ["user"]
     assert_file 'app/controllers/admin/users_controller.rb'
+  end
+
+  test 'generator creates views for every RESTful action' do
+    run_generator ["user"]
+    assert_file 'app/views/admin/users/index.html.erb'
+    assert_file 'app/views/admin/users/show.html.erb'
+    assert_file 'app/views/admin/users/new.html.erb'
+    assert_file 'app/views/admin/users/edit.html.erb'
   end
 end
 
