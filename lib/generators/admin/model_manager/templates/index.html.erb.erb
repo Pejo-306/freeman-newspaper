@@ -1,2 +1,33 @@
-<h1>index</h1>
+<div class="row">
+  <div class="col-4">
+    <h1>All <%= @record_name.pluralize %></h1>
+  </div>
+  <div class="col-4 offset-4">
+    <div class="d-flex h-100 justify-content-end align-items-center">
+      <%%= link_to 'New <%= @record_name %>', new_admin_<%= @record_name %>_path,
+                 class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-12">
+    <%%= will_paginate @<%= @record_name.pluralize %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ul id="pagination-items" class="list-group">
+      <%%= render @<%= @record_name.pluralize %> %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <%%= will_paginate @<%= @record_name.pluralize %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+  </div>
+</div>
 
