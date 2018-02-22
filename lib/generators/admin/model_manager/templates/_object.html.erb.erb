@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-4">
       <div class="d-flex h-100 align-items-center">
-        <span><%%= link_to <%= @record_name %>.<%= @display_method %>,
+        <span><%%= link_to <%= @record_name %>.<%= options['display-method'] %>,
                           admin_<%= @record_name %>_path(<%= @record_name %>) %></span>
         <span class="badge badge-primary">
           <%%= link_to 'edit', edit_admin_<%= @record_name %>_path(<%= @record_name %>) %>

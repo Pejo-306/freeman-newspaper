@@ -50,7 +50,6 @@ class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
   def create_view_partials
     return if !valid_input_data?
 
-    @display_method = options['display-method']
     partials = { form: 'form', object: @record_name }
     partials.each do |template_name, partial|
       template "_#{template_name}.html.erb.erb",
