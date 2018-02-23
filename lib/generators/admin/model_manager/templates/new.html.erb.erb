@@ -1,2 +1,29 @@
-<h1>new</h1>
+<%% provide(:form_url, admin_<%= @record_name.pluralize %>_path) %>
+<%% provide(:button_text, 'Create a new <%= @record_name %>') %>
+
+<div class="w-50 container-fluid form-container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <h1>Create a new <%= @record_name %></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <%%= render 'form', <%= @record_name %>: @<%= @record_name %> %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <span>
+          <%%= link_to 'Back to index page', admin_<%= @record_name.pluralize %>_path %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
