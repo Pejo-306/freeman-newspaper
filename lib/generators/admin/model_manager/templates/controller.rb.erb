@@ -12,6 +12,7 @@ class <%= @controller_name.pluralize %>Controller < ApplicationController
   end
 
   def new
+    @fields = displayed_<%= @record_name %>_attrs
     @<%= @record_name %> = <%= @controller_name %>.new
   end
 

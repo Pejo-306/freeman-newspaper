@@ -1,0 +1,19 @@
+<%%= form_for(<%= @record_name %>, url: yield(:form_url)) do |f| %>
+  <%%= render 'layouts/error_messages', object: <%= @record_name %> %>
+
+  <%% @fields.each do |field| %>
+    <%% value = <%= @record_name %>.send(field) %>
+    <%% if value == !!value # field is of boolean  type %>
+      <%%= form_check(field) %>
+    <%% else %>
+      <%%= form_field(field, "#{field}_field" %>
+    <%% end %>
+  <%% end %>
+  
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <%%= f.submit yield(:button_text), class: submit_classes %>
+    </div>
+  </div>
+<%% end %>
+
