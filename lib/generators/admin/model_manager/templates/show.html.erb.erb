@@ -36,7 +36,7 @@
 
 <div id="fields-row" class="row">
   <div class="col-12">
-    <%% @fields.each do |field| %>
+    <%% @fields.each do |field, _| %>
       <%% value = @<%= @record_name %>.send(field) %>
       <p id="<%%= field %>">
         <strong><%%= field %></strong>: <%%=  value.nil? ? '<null>' : value %>

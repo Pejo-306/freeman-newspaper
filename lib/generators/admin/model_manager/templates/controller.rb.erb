@@ -50,7 +50,10 @@ class <%= @controller_name.pluralize %>Controller < ApplicationController
   private
 
   def displayed_<%= @record_name %>_attrs
-     [<%= @model_fields.join(', ') %>]
+    <% fields_with_placeholders = @model_fields.map { |field| "#{field}: nil" } %>
+    {
+      <%= fields_with_placeholders.join(",\n") %>
+    }
   end
 
   def <%= @record_name %>_params
