@@ -3,7 +3,7 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
   before_action :require_admin_status
 
   def index
-    @<%= @record_name.pluralize %> = <%= @controller_name %>.all
+    @<%= @record_name.pluralize %> = <%= @controller_name %>.paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -48,11 +48,10 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
   end
 
   private
-
+  <% fields_with_placeholders = @model_fields.map { |field| "#{field[1..-1]}: nil" } %>
   def displayed_<%= @record_name %>_attrs
-    <% fields_with_placeholders = @model_fields.map { |field| "#{field}: nil" } %>
     {
-      <%= fields_with_placeholders.join(",\n") %>
+      <%= fields_with_placeholders.join(",\n#{"\t" * 3}") %>
     }
   end
 
