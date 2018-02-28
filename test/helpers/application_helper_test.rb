@@ -12,7 +12,7 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "should provide the site's full title" do
-    assert_equal "The Freeman's newspaper | About", site_title('About')
+    assert_equal "About | The Freeman's newspaper", site_title('About')
   end
 end
 

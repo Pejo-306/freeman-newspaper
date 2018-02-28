@@ -23,7 +23,7 @@ module ApplicationHelper
   # Provide the title of a page
   def site_title(page_title = '', base_title: "The Freeman's newspaper")
     return base_title if page_title.blank?
-    "#{base_title} | #{page_title}"
+    "#{page_title} | #{base_title}"
   end
 end
 
