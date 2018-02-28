@@ -18,6 +18,7 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
 
   def edit
     flash.now[:warning] = 'WARNING: be very careful when altering field values'
+    @fields = displayed_<%= @record_name %>_attrs
     @<%= @record_name %> = <%= @controller_name %>.find(params[:id])
   end
 
