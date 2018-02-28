@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     # e.g.: 'resources :<model>'
     # Note: all controller actions for a model must be implemented
     # Note: do not use any additional options for the resources helpers
+    # WARNING: the admin:model_manager generator depends on the comment bellow
+    #          UNDER NO CIRCUMSTANCES should you alter said comment
+    # -- INCLUDE RESOURCE ROUTES UNDER THIS LINE --
     resources :users
   end
 end

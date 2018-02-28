@@ -1,3 +1,5 @@
+require 'fileutils'
+
 require 'test_helper'
 require 'generators/admin/model_manager/model_manager_generator'
 
@@ -5,6 +7,21 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
   tests Admin::ModelManagerGenerator
   destination Rails.root.join('tmp/generators')
   setup :prepare_destination
+
+  setup do
+    if !Dir.exists?(Rails.root.join('tmp/generators/config/'))
+      FileUtils::mkdir_p Rails.root.join('tmp/generators/config/')
+    end
+
+    @config_filepath = Rails.root.join('tmp/generators/config/routes.rb')
+    File.open(@config_filepath, 'w') do |f|
+      f.write("# -- INCLUDE RESOURCE ROUTES UNDER THIS LINE --\n")
+    end
+  end
+
+  teardown do
+    FileUtils.rm(@config_filepath) 
+  end
 
   test 'generator runs without errors' do
     assert_nothing_raised do
@@ -42,6 +59,13 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
     run_generator ['user']
     assert_file 'app/views/admin/users/_form.html.erb'
     assert_file 'app/views/admin/users/_user.html.erb'
+  end
+
+  test 'generator writes resource routes to config file' do
+    run_generator ['user']
+    File.open(@config_filepath, 'r') do |f|
+      assert f.readlines.any? { |line| line.include?('resources :users') }
+    end
   end
 end
 
