@@ -29,5 +29,13 @@ module ApplicationHelper
     return base_title if page_title.blank?
     "#{page_title} | #{base_title}"
   end
+
+  # Get a form field type from an attribute name
+  def get_form_field_type(attribute_type)
+    case attribute_type
+    when :string, 'string' then 'text_field'
+    when :integer, 'integer' then 'number_field'
+    end
+  end
 end
 

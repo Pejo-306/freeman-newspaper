@@ -4,9 +4,11 @@
   <%% @fields.each do |field, placeholder| %>
     <%% value = <%= @record_name %>.send(field) %>
     <%% if value == !!value # field is of boolean  type %>
-      <%%= form_check(field) %>
+      <%%= render 'layouts/form_check', f: f, field: field %>
     <%% else %>
-      <%%= form_field(field, "#{field}_field", placeholder) %>
+      <%%= render 'layouts/form_field', f: f, field: field,
+                  field_type: get_form_field_type(<%= @controller_name %>.columns_hash[field.to_s].type),
+                  placeholder: placeholder %>
     <%% end %>
   <%% end %>
   
