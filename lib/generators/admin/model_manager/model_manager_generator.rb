@@ -42,7 +42,7 @@ class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
 
     restful_actions = ['index', 'show', 'new', 'edit']
     restful_actions.each do |action|
-      template "#{action}.html.erb.erb",
+      template "views/#{action}.html.erb.erb",
                "app/views/admin/#{file_name.pluralize}/#{action}.html.erb"
     end
   end
@@ -52,7 +52,7 @@ class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
 
     partials = { form: 'form', object: @record_name }
     partials.each do |template_name, partial|
-      template "_#{template_name}.html.erb.erb",
+      template "views/_#{template_name}.html.erb.erb",
                "app/views/admin/#{file_name.pluralize}/_#{partial}.html.erb"
     end
   end
