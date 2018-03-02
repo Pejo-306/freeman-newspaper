@@ -3,40 +3,40 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
   before_action :require_admin_status
 
   def index
-    @<%= @record_name.pluralize %> = <%= @controller_name %>.paginate(page: params[:page], per_page: 20)
+    <%= "@#{@record_name.pluralize}" %> = <%= @controller_name %>.paginate(page: params[:page], per_page: 20)
   end
 
   def show
     @fields = displayed_<%= @record_name %>_attrs
-    @<%= @record_name %> = <%= @controller_name %>.find(params[:id])
+    <%= "@#{@record_name}" %> = <%= @controller_name %>.find(params[:id])
   end
 
   def new
     @fields = displayed_<%= @record_name %>_attrs
-    @<%= @record_name %> = <%= @controller_name %>.new
+    <%= "@#{@record_name}" %> = <%= @controller_name %>.new
   end
 
   def edit
     flash.now[:warning] = 'WARNING: be very careful when altering field values'
     @fields = displayed_<%= @record_name %>_attrs
-    @<%= @record_name %> = <%= @controller_name %>.find(params[:id])
+    <%= "@#{@record_name}" %> = <%= @controller_name %>.find(params[:id])
   end
 
   def create
-    @<%= @record_name %> = <%= @controller_name %>.new(<%= @record_name %>_params)
-    if @<%= @record_name %>.save
+    <%= "@#{@record_name}" %> = <%= @controller_name %>.new(<%= @record_name %>_params)
+    if <%= "@#{@record_name}" %>.save
       flash[:success] = '<%= @controller_name %> has been created'
-      redirect_to admin_<%= @record_name %>_path(@<%= @record_name %>)
+      redirect_to admin_<%= @record_name %>_path(<%= "@#{@record_name}" %>)
     else
       render 'new'
     end
   end
 
   def update
-    @<%= @record_name %> = <%= @controller_name %>.find(params[:id])
-    if @<%= @record_name %>.update_attributes(<%= @record_name %>_params)
+    <%= "@#{@record_name}" %> = <%= @controller_name %>.find(params[:id])
+    if <%= "@#{@record_name}" %>.update_attributes(<%= @record_name %>_params)
       flash[:success] = '<%= @controller_name %> has successfully been updated'
-      redirect_to admin_<%= @record_name %>_path(@<%= @record_name %>)
+      redirect_to admin_<%= @record_name %>_path(<%= "@#{@record_name}" %>)
     else
       render 'edit'
     end

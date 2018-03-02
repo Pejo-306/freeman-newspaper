@@ -15,21 +15,21 @@
 
 <div class="row">
   <div class="col-12">
-    <%%= will_paginate @<%= @record_name.pluralize %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    <%%= will_paginate <%= "@#{@record_name.pluralize}" %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-12">
     <ul id="pagination-items" class="list-group">
-      <%%= render @<%= @record_name.pluralize %> %>
+      <%%= render <%= "@#{@record_name.pluralize}" %> %>
     </ul>
   </div>
 </div>
 
 <div class="row">
   <div class="col-12">
-    <%%= will_paginate @<%= @record_name.pluralize %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    <%%= will_paginate <%= "@#{@record_name.pluralize}" %>, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
   </div>
 </div>
 
