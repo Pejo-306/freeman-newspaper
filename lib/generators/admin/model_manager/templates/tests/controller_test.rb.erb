@@ -6,6 +6,7 @@ class Admin::<%= @controller_name.pluralize %>ControllerTest < ActionDispatch::I
   #       as well as more than 20 (depends on pagination test) other samples
   # NOTE: your model must provide a method named 'display' or whatever you
   #       passed as a display method name when generating the admin:model_manager
+  # NOTE: Please, manually complete the record creation and update tests
 
   setup do
     @admin = users(:john)
@@ -106,6 +107,58 @@ class Admin::<%= @controller_name.pluralize %>ControllerTest < ActionDispatch::I
   test 'should link to show page on edit' do
     get edit_admin_<%= @record_name %>_path(<%= "@#{sample_record}" %>)
     assert_select 'a[href=?]', admin_<%= @record_name %>_path(<%= "@#{sample_record}" %>), text: 'View information'
+  end
+
+  test 'should not create a <%= @record_name %> with invalid input data' do
+    assert_no_difference '<%= @controller_name %>.count' do
+      post admin_<%= @record_name.pluralize %>_path, params: {
+        <%= @record_name %>: {
+          # TODO: add invalid input data here
+        }
+      }
+    end
+    assert_template 'new'
+  end
+
+  test 'should create a user with valid input data' do
+    assert_difference '<%= @controller_name %>.count', 1 do
+      post admin_<%= @record_name.pluralize %>_path, params: {
+        <%= @record_name %>: {
+          # TODO: add valid input data here
+        }
+      }
+    end
+    assert_response :redirect 
+    assert_not flash.empty?
+    assert_equal '<%= @controller_name %> has been created', flash[:success]
+  end
+
+  test 'should not update user with invalid input data' do
+    travel 1.hours # ensure last time updated is not now
+    assert_no_changes '<%= "@#{sample_record}" %>.reload.updated_at' do
+      patch admin_<%= @record_name %>_path(<%= "@#{sample_record}" %>), params: {
+        <%= @record_name %>: {
+          # TODO: add invalid input data here
+        }
+      }
+    end
+    assert_template 'edit'
+  end
+
+  test 'should update user with valid input data' do
+    travel 1.hours do 
+      assert_changes '<%= "@#{sample_record}" %>.reload.updated_at' do
+        patch admin_<%= @record_name %>_path(<%= "@#{sample_record}" %>), params: {
+          <%= @record_name %>: {
+            # TODO: add valid input data here
+          }
+        }
+      end
+    end
+    assert_response :redirect
+    assert_redirected_to admin_<%= @record_name %>_path(<%= "@#{sample_record}"%>)
+    assert_not flash.empty?
+    assert_equal '<%= @controller_name %> has successfully been updated', flash[:success]
   end
 
   test 'should destroy <%= @record_name %>' do
