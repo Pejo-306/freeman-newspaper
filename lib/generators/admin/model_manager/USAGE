@@ -1,8 +1,74 @@
 Description:
-    Explain the generator
+    Stubs out a model controller and its necessary views and tests for an
+    admin system. Pass the name of the model, either CamelCased or
+    under_scored, for which you would wish to generate a manager.
+
+    It is important to note that the model which you would like to manage via
+    the admin system must exist and its corresponding table must be registered
+    in the database.
+
+    This generator adds the necessary routes to 'config/routes.rb' (see
+    requirements below).
+
+    Requirements:
+      - as stated above the model which you wish to manage via the admin
+        system must have its corresponding table registered in the database.
+        This generator will not make any changes if the above condition is
+        not met
+      - your 'config/routes.rb' file must contain a namespace :admin within
+        which all generated routes are added. It is important to note that the
+        aforementioned routes are appended right after the following comment,
+        which you must include inside the :admin namespace:
+
+            # -- INCLUDE RESOURCE ROUTES UNDER THIS LINE --
+
+      - the specified model must implement a method which is used to
+        represent said record. This method can be specified with the
+        '--display-method' option, whose default value is 'display',
+        when invoking the generator. Also, it is recommended that said
+        method return a string
+      - a helper (preferably ApplicationHelper) must include two methods of
+        utmost import - :require_login and :require_admin_status (both are
+        self-explanatory)
+      - the gem 'will_paginate' must be installed in your bundle
+      - Bootstrap 4 is used to generate the templates
+      - an authentication system with a User model must be implemented. Said
+        User model must have an admin attribute of boolean type which
+        distinguishes superusers from normal users. Furthermore, at least
+        on fixture which has admin privileges is required
+      - tests require that you provide a sample record fixture with the name
+        'sample_<model name>'. Furthermore, pagination tests need at least
+        20 other fixtures to pass
+      - some of the generated tests must be completed by hand (TODOs have
+        been left in places which you must provide certain data)
 
 Example:
-    rails generate model_manager Thing
+    `rails generate admin:model_manager Book`
 
-    This will create:
-        what/will/it/create
+        For the record 'Book', which must exist in the database, it creates:
+            
+            Controller: app/controllers/admin/books_controller.rb
+            Views:      app/views/admin/books/index.html.erb
+                        app/views/admin/books/show.html.erb
+                        app/views/admin/books/new.html.erb
+                        app/views/admin/books/edit.html.erb
+                        app/views/admin/books/_form.html.erb
+                        app/views/admin/books/_book.html.erb
+            Routes:     'resource :books', inserted within 'config/routes.rb'
+            Test:       test/controllers/admin/books_controller_test.rb
+    
+    `rails generate admin:model_manager Cat --display-method=cute_face`
+
+        If the record 'Cat' exists and its corresponding model implements
+        the method 'Car#cute_face', it creates:
+
+            Controller: app/controllers/admin/cats_controller.rb
+            Views:      app/views/admin/cats/index.html.erb
+                        app/views/admin/cats/show.html.erb
+                        app/views/admin/cats/new.html.erb
+                        app/views/admin/cats/edit.html.erb
+                        app/views/admin/cats/_form.html.erb
+                        app/views/admin/cats/_cat.html.erb
+            Routes:     'resource :cats', inserted within 'config/routes.rb'
+            Test:       test/controllers/admin/cats_controller_test.rb
+
