@@ -64,5 +64,16 @@ def initialize(*args, **kwargs)
       "#{"\t" * 2}resources :#{@record_name.pluralize}\n"
     end
   end
+
+  def generate_model_controller_tests
+    return if !valid_input_data?
+
+    model = @controller_name.classify.constantize
+    @model_fields = model.attribute_names - ['id', 'created_at', 'updated_at']
+    @model_fields.map! { |field| ":#{field}" }
+
+    template 'tests/controller_test.rb.erb',
+             "test/controllers/admin/#{@record_name.pluralize}_controller_test.rb"
+  end
 end
 

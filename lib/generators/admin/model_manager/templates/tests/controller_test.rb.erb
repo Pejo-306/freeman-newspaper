@@ -1,0 +1,120 @@
+require 'test_helper'
+
+class Admin::<%= @controller_name.pluralize %>ControllerTest < ActionDispatch::IntegrationTest
+  # NOTE: your model fixtures file must include a fixture whose name is
+  #       'sample_<record_name>' (e.g. 'sample_book', 'sample_user', etc.)
+  #       as well as more than 20 (depends on pagination test) other samples
+  # NOTE: your model must provide a method named 'display' or whatever you
+  #       passed as a display method name when generating the admin:model_manager
+
+  setup do
+    @admin = users(:john)
+    log_in_as @admin
+    @<%= "sample_#{@record_name}" %> = <%= @record_name.pluralize %>(:<%= "sample_#{@record_name}" %>)
+  end
+
+  test 'should get index' do
+    get admin_<%= @record_name.pluralize %>_path
+    assert_response :success
+    assert_template 'index'
+  end
+
+  test 'should paginate <%= @record_name.pluralize %>' do
+    get admin_<%= @record_name.pluralize %>_path
+    assert_select 'main nav.pagination', count: 2
+    first_page_of_<%= @record_name.pluralize %> = <%= @controller_name %>.paginate(page: 1, per_page: 20)
+    assert_select 'ul#pagination-items' do
+      assert_select 'li', 20
+    end
+    first_page_of_<%= @record_name.pluralize %>.each do |<%= @record_name %>|
+      assert_select 'a[href=?]',
+                    admin_<%= @record_name %>_path(<%= @record_name %>),
+                    text: <%= @record_name %>.<%= options['display-method'] %>
+      assert_select 'a[href=?]',
+                    edit_admin_<%= @record_name %>_path(<%= @record_name %>),
+                    text: 'edit'
+      assert_select 'a[href=?][data-method="delete"]',
+                    admin_<%= @record_name %>_path(<%= @record_name %>),
+                    text: 'delete'
+    end
+  end
+
+  test 'should get show' do
+    get admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_response :success
+    assert_template 'show'
+  end
+
+  test 'should link back to index page on show' do
+    get admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_select 'a[href=?]', admin_<%= @record_name.pluralize %>_path, text: 'Back to index page'
+  end 
+
+  test 'should link to edit page on show' do
+    get admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_select 'a[href=?]', edit_admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>), text: 'Edit'
+  end
+
+  test 'should display <%= @record_name %> information' do
+    get admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_select 'span#created_at', text: "#{@<%= "sample_#{@record_name}" %>.created_at}"
+    assert_select 'span#updated_at', text: "#{@<%= "sample_#{@record_name}" %>.updated_at}"
+    assert_select 'h1', text: "<%= @controller_name %>: #{@<%= "sample_#{@record_name}" %>.<%= options['display-method'] %>}"
+    <% @model_fields.each do |field| %>
+    assert_select <%= "\"p\##{field[1..-1]}\"" %>, text: <%= "\"#{field[1..-1]}: \#{@sample_#{@record_name}.#{field[1..-1]}}\"" %>
+    <% end %>
+  end
+
+  test 'should get new' do
+    get new_admin_<%= @record_name %>_path
+    assert_response :success
+    assert_template 'new'
+  end
+
+  test 'should link to new on index page' do
+    get admin_<%= @record_name.pluralize %>_path
+    assert_response :success
+    assert_template 'index'
+    assert_select 'a[href=?]', new_admin_<%= @record_name %>_path, text: 'New <%= @record_name %>'
+  end
+
+  test 'should render a form for <%= @record_name %> creation' do
+    get new_admin_<%= @record_name %>_path
+    assert_select 'form[action="/admin/<%= @record_name.pluralize %>"]'
+  end
+
+  test 'should link back to index page on new' do
+    get new_admin_<%= @record_name %>_path
+    assert_select 'a[href=?]', admin_<%= @record_name.pluralize %>_path, text: 'Back to index page'
+  end 
+
+  test 'should get edit' do
+    get edit_admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_response :success
+    assert_template 'edit'
+    assert_not flash.empty?
+    warning_msg = 'WARNING: be very careful when altering field values'
+    assert_equal warning_msg, flash.now[:warning]
+  end
+  
+  test 'should link back to index page on edit' do
+    get edit_admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_select 'a[href=?]', admin_<%= @record_name.pluralize %>_path, text: 'Back to index page'
+  end 
+
+  test 'should link to show page on edit' do
+    get edit_admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    assert_select 'a[href=?]', admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>), text: 'View information'
+  end
+
+  test 'should destroy <%= @record_name %>' do
+    assert_difference '<%= @controller_name %>.count', -1 do
+      delete admin_<%= @record_name %>_path(@<%= "sample_#{@record_name}" %>)
+    end
+    assert_response :redirect
+    assert_redirected_to admin_<%= @record_name.pluralize %>_path
+    assert_not flash.empty?
+    assert_equal '<%= @controller_name %> has successfully been deleted', flash[:success]
+  end
+end
+

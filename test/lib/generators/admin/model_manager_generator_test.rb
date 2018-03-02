@@ -61,6 +61,11 @@ class Admin::ModelManagerGeneratorTest < Rails::Generators::TestCase
     assert_file 'app/views/admin/users/_user.html.erb'
   end
 
+  test 'generator generates some model controller tests' do
+    run_generator ['user']
+    assert_file 'test/controllers/admin/users_controller_test.rb'
+  end
+
   test 'generator writes resource routes to config file' do
     run_generator ['user']
     File.open(@config_filepath, 'r') do |f|
