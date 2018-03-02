@@ -28,6 +28,7 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
       flash[:success] = '<%= @controller_name %> has been created'
       redirect_to admin_<%= @record_name %>_path(<%= "@#{@record_name}" %>)
     else
+      @fields = displayed_<%= @record_name %>_attrs
       render 'new'
     end
   end
@@ -38,6 +39,7 @@ class Admin::<%= @controller_name.pluralize %>Controller < ApplicationController
       flash[:success] = '<%= @controller_name %> has successfully been updated'
       redirect_to admin_<%= @record_name %>_path(<%= "@#{@record_name}" %>)
     else
+      @fields = displayed_<%= @record_name %>_attrs
       render 'edit'
     end
   end
