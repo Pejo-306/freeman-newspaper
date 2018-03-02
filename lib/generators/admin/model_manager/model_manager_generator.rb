@@ -1,7 +1,8 @@
 class Admin::ModelManagerGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('../templates', __FILE__)
   class_option 'display-method', type: :string, default: 'display'
-def initialize(*args, **kwargs)
+
+  def initialize(*args, **kwargs)
     super(*args, **kwargs)
 
     @controller_name = file_name.singularize.capitalize
@@ -11,6 +12,10 @@ def initialize(*args, **kwargs)
       puts 'ERROR: the specified resource does not exist.',
            'Please, ensure that a model with the given name exists.',
            'NOTE: you may want to check if the passed name is namespaced correctly'
+    else
+      @model = @controller_name.classify.constantize
+      @model_fields = @model.attribute_names - ['id', 'created_at', 'updated_at']
+      @model_fields.map! { |field| ":#{field}" }
     end
   end
 
@@ -27,10 +32,6 @@ def initialize(*args, **kwargs)
 
   def create_model_generator
     return if !valid_input_data?
-
-    model = @controller_name.classify.constantize
-    @model_fields = model.attribute_names - ['id', 'created_at', 'updated_at']
-    @model_fields.map! { |field| ":#{field}" }
 
     template 'controller.rb.erb',
              "app/controllers/admin/#{file_name.pluralize}_controller.rb"
@@ -67,10 +68,6 @@ def initialize(*args, **kwargs)
 
   def generate_model_controller_tests
     return if !valid_input_data?
-
-    model = @controller_name.classify.constantize
-    @model_fields = model.attribute_names - ['id', 'created_at', 'updated_at']
-    @model_fields.map! { |field| ":#{field}" }
 
     template 'tests/controller_test.rb.erb',
              "test/controllers/admin/#{@record_name.pluralize}_controller_test.rb"
