@@ -79,6 +79,12 @@ a {
   }
 }
 
+@include media-breakpoint-up(md) {
+  .form-container {
+    width: 75%;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .form-container {
     width: 50%;
