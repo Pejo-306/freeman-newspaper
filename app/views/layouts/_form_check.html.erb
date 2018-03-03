@@ -1,9 +1,11 @@
-<div class="col-sm-12">
-  <div class="form-check">
-    <%= f.label field, class: 'form-check-label' do %>
-      <%= f.check_box field, class: 'form-check-input', value: false %>
-      <span><%= field.capitalize %></span>
-    <% end %>
+<div class="form-group row">
+  <div class="col-12">
+    <div class="form-check">
+      <%= f.label field, class: 'form-check-label' do %>
+        <%= f.check_box field, class: 'form-check-input', value: false %>
+        <span><%= field.capitalize %></span>
+      <% end %>
+    </div>
   </div>
 </div>
 
