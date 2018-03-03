@@ -2,14 +2,14 @@
   <div class="container">
     <hr>
     <div class="row">
-      <div class="col-lg-4">
-        <p id="copyright" class="text-left">
+      <div class="col-12 col-md-4">
+        <p id="copyright" class="text-center text-md-left">
           &copy; <%= current_year %> Pejo-306
         </p>
       </div>
-      <div class="col-lg-4 offset-lg-4">
+      <div class="col-12 col-md-4 offset-md-4">
         <nav aria-label="breadcrumb">
-          <ol class="breadcrumb justify-content-end">
+          <ol class="breadcrumb justify-content-md-end justify-content-center">
             <%= breadcrumb_item 'Home', root_path %>
             <%= breadcrumb_item 'About', about_path %>
             <% if logged_in? && current_user.admin? %>
