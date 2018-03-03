@@ -17,7 +17,6 @@
 }
 
 header {
-  @include header-gradient;
   border-bottom: 3px solid $secondary-color;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -37,6 +36,33 @@ header {
 
   nav.nav .nav-link {
     border-radius: 0;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  header {
+    background-color: $secondary-color;
+    border-bottom: .5em solid $dark-secondary-color;
+    border-top: .2em solid $dark-secondary-color;
+    border-left: .2em solid $dark-secondary-color;
+    border-right: .2em solid $dark-secondary-color;
+
+    #title a {
+      color: $primary-color;
+      font-weight: bold;
+    }
+
+    .dropdown-toggle {
+      #header-dropdown-text {
+        display: none;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  header {
+    @include header-gradient;
   }
 }
 
