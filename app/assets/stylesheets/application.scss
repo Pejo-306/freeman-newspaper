@@ -66,6 +66,7 @@ a {
 }
 
 .form-container {
+  width: 100%;
   background-color: $light-grey-color;
   border-radius: 1rem;
 
@@ -75,6 +76,12 @@ a {
     &:last-child > .col-12 {
       margin-bottom: .4rem;
     }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .form-container {
+    width: 50%;
   }
 }
 
