@@ -1,16 +1,16 @@
 <%= form_for(:password_reset, url: password_resets_path) do |f| %>
   <div class="form-group row">
-    <div class="col-sm-3">
+    <div class="col-12 col-sm-3">
       <%= f.label :email, class: label_classes %>
     </div>
-    <div class="col-sm-9">
+    <div class="col-12 col-sm-9">
       <%= f.email_field :email, class: 'form-control',
                                 placeholder: 'name@example.com' %>
     </div>
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-12">
+    <div class="col-12">
       <%= f.submit 'Submit', class: submit_classes %>
     </div>
   </div>

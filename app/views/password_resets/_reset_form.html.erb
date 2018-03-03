@@ -4,25 +4,25 @@
   <%= hidden_field_tag :email, @user.email %>
 
   <div class="form-group row">
-    <div class="col-sm-3">
+    <div class="col-12 col-sm-3">
       <%= f.label :password, class: label_classes %>
     </div>
-    <div class="col-sm-9">
+    <div class="col-12 col-sm-9">
       <%= f.password_field :password, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-3">
+    <div class="col-12 col-sm-3">
       <%= f.label :password_confirmation, 'Confirmation', class: label_classes %>
     </div>
-    <div class="col-sm-9">
+    <div class="col-12 col-sm-9">
       <%= f.password_field :password_confirmation, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-12">
+    <div class="col-12">
       <%= f.submit 'Update password', class: submit_classes %>
     </div>
   </div>
