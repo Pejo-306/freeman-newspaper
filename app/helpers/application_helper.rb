@@ -16,6 +16,13 @@ module ApplicationHelper
     end
   end
 
+  def require_anonymity
+    if logged_in?
+      flash[:danger] = 'You must log out to view this page'
+      redirect_to root_url
+    end
+  end
+
   def current_year
     Time.zone.now.year
   end

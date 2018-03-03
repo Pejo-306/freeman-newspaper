@@ -6,10 +6,28 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     @user.create_reset_digest
   end
 
-  test 'should get new' do
+  test 'should not get new if logged in' do
+    log_in_as @user
+    get new_password_reset_path
+    assert_response :redirect
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_template 'static_pages/home'
+  end
+
+  test 'should get new if not logged in' do
     get new_password_reset_path
     assert_response :success
     assert_template 'password_resets/new'
+  end
+
+  test 'should not get edit if logged in' do
+    log_in_as @user
+    get edit_password_reset_path(@user.reset_token, email: @user.email)
+    assert_response :redirect
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_template 'static_pages/home'
   end
 
   test 'should not get edit with invalid token' do
@@ -66,6 +84,18 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
       user: { password: '', password_confirmation: '' }
     }
     assert_select 'div#error-explanation'
+  end
+
+  test 'should not update user if logged in' do
+    log_in_as @user
+    patch password_reset_path(@user.reset_token), params: {
+      email: @user.email,
+      user: { password: 'password', password_confirmation: 'password' }
+    }
+    assert_response :redirect
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_template 'static_pages/home'
   end
 
   test 'should not update user if password does not match confirmation' do
