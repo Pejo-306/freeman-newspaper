@@ -1,10 +1,14 @@
 <h1>Freeman's newspaper</h1>
 
-<p><%= @greeting %> <%= @user.full_name %>,</p>
+<h4><%= @greeting %> <%= @user.full_name %>,</h4>
 
-<p>TODO: fill this account activation email later</p>
+<p>
+  You are almost ready to join a free community of both passionate writes and
+  active readers. Which will you choose to be (or maybe you fashion both)?
+  Click the link below to activate your account and complete your registration.
+</p>
 
-<p>Click to activate your account: </p>
 <%= link_to 'Activate', edit_account_activation_url(@user.activation_token,
-                                                    email: @user.email) %>
+                                                    email: @user.email),
+                        class: 'btn btn-primary' %>
 

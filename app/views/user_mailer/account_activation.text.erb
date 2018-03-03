@@ -1,7 +1,8 @@
 <%= @greeting %> <%= @user.full_name %>,
 
-TODO: fill this account activation email later
+You are almost ready to join a free community of both passionate writes and
+active readers. Which will you choose to be (or maybe you fashion both)?
+Click the link below to activate your account and complete your registration.
 
-Click to activate your account:
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
 
