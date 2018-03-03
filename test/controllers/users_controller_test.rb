@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:john) # admin user
+    @admin = users(:admin) # admin user
     @other_user = users(:michael) # non-admin user
   end
 
@@ -13,7 +13,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index when logged in' do
-    log_in_as @user
+    log_in_as @admin
     get users_path
     assert_response :success
     assert_template 'users/index'
@@ -21,13 +21,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should display only activated users on index page' do
     @other_user.update_attribute(:activated, false)
-    log_in_as @user
+    log_in_as @admin
     get users_path
     assert_select 'a', text: @other_user.full_name, count: 0
   end
 
   test 'should get show' do
-    get user_path(@user)
+    get user_path(@admin)
     assert_response :success
     assert_template 'users/show'
   end
@@ -46,14 +46,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get edit when user is logged in' do
-    log_in_as @user
-    get edit_user_path(@user)
+    log_in_as @admin
+    get edit_user_path(@admin)
     assert_response :success
     assert_template 'users/edit'
   end
 
   test 'should redirect edit when user is not logged in' do
-    get edit_user_path(@user)
+    get edit_user_path(@admin)
     assert_response :redirect
     assert_redirected_to login_url
     assert_not flash.empty?
@@ -61,19 +61,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should redirect update when user is not logged in' do
-    patch user_path(@user), params: { user: { name: @user.name,
-                                              surname: @user.surname,
-                                              email: @user.email } }
+    patch user_path(@admin), params: { user: { name: @admin.name,
+                                              surname: @admin.surname,
+                                              email: @admin.email } }
     assert_response :redirect
     assert_redirected_to login_url
     assert_not flash.empty?
     assert_equal 'Please log in', flash[:danger]
-    assert_equal @user, @user.reload # user has not been changed
+    assert_equal @admin, @admin.reload # user has not been changed
   end
 
   test 'should redirect edit when logged in as the wrong user' do
     log_in_as @other_user
-    get edit_user_path(@user)
+    get edit_user_path(@admin)
     assert flash.empty?
     assert_response :redirect
     assert_redirected_to root_url
@@ -81,13 +81,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should redirect update when logged in as the wrong user' do
     log_in_as @other_user
-    patch user_path(@user), params: { user: { name: @user.name,
-                                              surname: @user.surname,
-                                              email: @user.email } }
+    patch user_path(@admin), params: { user: { name: @admin.name,
+                                              surname: @admin.surname,
+                                              email: @admin.email } }
     assert flash.empty?
     assert_response :redirect
     assert_redirected_to root_url
-    assert_equal @user, @user.reload # user has not been changed
+    assert_equal @admin, @admin.reload # user has not been changed
   end
 
   test 'should create a new user when valid information is posted' do
@@ -111,22 +111,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not update user when invalid information is posted' do
-    log_in_as @user
-    patch user_path(@user), params: { user: { name: '', surname: '',
+    log_in_as @admin
+    patch user_path(@admin), params: { user: { name: '', surname: '',
                                               email: '',
                                               password: 'wrong',
                                               password_confirmation: 'pass' } }
-    assert_equal @user, @user.reload
+    assert_equal @admin, @admin.reload
   end
 
   test 'should update user when valid information is posted' do
-    log_in_as @user
+    log_in_as @admin
     name = 'Albert'
     surname = 'Einstein'
-    patch user_path(@user), params: { user: { name: name, surname: surname } }
-    @user.reload
-    assert_equal name, @user.name
-    assert_equal surname, @user.surname
+    patch user_path(@admin), params: { user: { name: name, surname: surname } }
+    @admin.reload
+    assert_equal name, @admin.name
+    assert_equal surname, @admin.surname
   end
 
   test 'should not allow the user to edit the admin attribute' do
@@ -138,7 +138,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should redirect destroy when not logged in' do
     assert_no_difference 'User.count' do
-      delete user_path(@user)
+      delete user_path(@admin)
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -147,14 +147,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should redirect destroy when logged in as a non-admin' do
     log_in_as @other_user
     assert_no_difference 'User.count' do
-      delete user_path(@user)
+      delete user_path(@admin)
     end
     assert_response :redirect
     assert_redirected_to login_url 
   end
 
   test 'should delete a record when logged in as an admin' do
-    log_in_as @user
+    log_in_as @admin
     assert_difference 'User.count', -1 do
       delete user_path(@other_user)
     end

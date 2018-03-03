@@ -1,9 +1,18 @@
+admin:
+  name: Super
+  surname: User
+  email: admin@example.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
 john:
   name: John
   surname: Smith
   email: john@example.com
   password_digest: <%= User.digest('password') %>
-  admin: true
+  admin: false
   activated: true
   activated_at: <%= Time.zone.now %>
 

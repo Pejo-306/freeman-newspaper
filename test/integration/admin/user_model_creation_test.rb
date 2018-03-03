@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Admin::UserModelCreationTest < ActionDispatch::IntegrationTest
   setup do
-    @admin = users(:john)
+    @admin = users(:admin)
     log_in_as @admin
   end
 

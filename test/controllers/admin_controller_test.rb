@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AdminControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @admin = users(:john)
+    @admin = users(:admin)
   end
 
   test 'should require admin status' do

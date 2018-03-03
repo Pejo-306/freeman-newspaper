@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SiteLayoutTest < ActionDispatch::IntegrationTest
   setup do
-    @admin = users(:john)
+    @admin = users(:admin)
     @user = users(:michael)
   end
 
