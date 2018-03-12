@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users, except: [:new, :create]
   resources :account_activations, only: :edit
   resources :password_resets, only: [:new, :edit, :create, :update]
+  resources :articles
 
   # Admin
   get '/admin', to: 'admin#index'

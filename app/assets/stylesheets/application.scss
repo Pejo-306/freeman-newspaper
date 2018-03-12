@@ -41,6 +41,11 @@ footer, .push {
   height: $footer-height; /* .push must be the same height as footer */
 }
 
+.grey-highlight {
+  background-color: $light-grey-color;
+  border-radius: 1rem;
+}
+
 .debug_dump {
   display: block;
   padding: 10px;
