@@ -1,9 +1,4 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+sample_article:
+  title: Hello World
+  content: Hello World!
 
-one:
-  title: MyString
-  content: MyText
-
-two:
-  title: MyString
-  content: MyText
