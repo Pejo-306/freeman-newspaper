@@ -1,0 +1,10 @@
+<% provide(:title, 'Edit article') %>
+<% provide(:form_url, article_path(@article)) %>
+<% provide(:button_text, 'Update article') %>
+
+<article class="row">
+  <div class="col-12">
+    <%= render 'form', article: @article %>
+  </div>
+</article>
+

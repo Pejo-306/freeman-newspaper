@@ -1,4 +1,4 @@
-<%= form_for(article, url: articles_url) do |f| %>
+<%= form_for(article, url: yield(:form_url)) do |f| %>
   <%= render 'layouts/error_messages', object: article %>
 
   <div class="row">
@@ -19,7 +19,9 @@
           <p class="rm-margin">Posted:</p>
         </div>
         <div class="col-6 col-lg-4">
-          <p class="text-right text-lg-left rm-margin">N/A</p>
+          <p class="text-right text-lg-left rm-margin">
+            <%= @article.created_at.nil? ? 'N/A' : @article.created_at %>
+          </p>
         </div>
       </div>
       <div class="row">
@@ -27,7 +29,9 @@
           <p class="rm-margin">Last updated:</p>
         </div>
         <div class="col-6 col-lg-4">
-          <p class="text-right text-lg-left rm-margin">N/A</p>
+          <p class="text-right text-lg-left rm-margin">
+            <%= @article.updated_at.nil? ? 'N/A' : @article.updated_at %>
+          </p>
         </div>
       </div>
     </div>
@@ -43,7 +47,7 @@
   <hr>
   <div class="form-group row">
     <div class="col-12 col-md-4 offset-md-8">
-      <%= f.submit 'Post article', class: submit_classes %>
+      <%= f.submit yield(:button_text), class: submit_classes %>
     </div>
   </div>
 <% end %>
