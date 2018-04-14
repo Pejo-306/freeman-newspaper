@@ -6,3 +6,17 @@ p#content {
   }
 }
 
+article > form {
+  width: 100%;
+
+  input {
+    border: none !important;
+    padding: none !important;
+  }
+}
+
+#title-field {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
