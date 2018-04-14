@@ -33,6 +33,14 @@
         <p id="content" class="rm-margin"><%= @article.content %></p>
       </div>
     </div>
+    <hr>
+    <div class="row">
+      <div class="col-12 col-md-4 offset-md-8">
+        <%= link_to 'Delete', article_path(@article),
+                              method: :delete, data: { confirm: 'Are you sure?' },
+                              class: 'btn btn-primary btn-block' %>
+      </div>
+    </div>
   </div>
 </article>
 
