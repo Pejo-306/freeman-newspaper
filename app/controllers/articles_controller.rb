@@ -21,6 +21,16 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def update
+    @article = Article.find(params[:id])
+    if @article.update_attributes(article_params)
+      flash[:success] = 'Article has successfully been updated'
+      redirect_to article_path(@article)
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def article_params
