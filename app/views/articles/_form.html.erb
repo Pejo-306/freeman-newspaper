@@ -1,0 +1,49 @@
+<%= form_for(article, url: articles_url) do |f| %>
+  <%= render 'layouts/error_messages', object: article %>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <%= f.text_field :title, id: 'title-field',
+                                     class: 'form-control',
+                                     placeholder: 'Article title' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6 col-lg-2">
+          <p class="rm-margin">Posted:</p>
+        </div>
+        <div class="col-6 col-lg-4">
+          <p class="text-right text-lg-left rm-margin">N/A</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 col-lg-2">
+          <p class="rm-margin">Last updated:</p>
+        </div>
+        <div class="col-6 col-lg-4">
+          <p class="text-right text-lg-left rm-margin">N/A</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group row">
+    <div class="col-12">
+      <%= f.text_area :content, id: 'content-field',
+                                class: 'form-control',
+                                placeholder: 'Input your content here' %>
+    </div>
+  </div>
+  <hr>
+  <div class="form-group row">
+    <div class="col-12 col-md-4 offset-md-8">
+      <%= f.submit 'Post article', class: submit_classes %>
+    </div>
+  </div>
+<% end %>
