@@ -1,4 +1,7 @@
 class ArticlesController < ApplicationController
+  before_action :require_login, except: [:index, :show]
+  before_action :require_author_status, except: [:index, :show]
+
   def show
     @article = Article.find(params[:id])
   end
@@ -13,6 +16,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.author = current_author
     if @article.save
       flash[:success] = 'Article has been posted'
       redirect_to articles_url

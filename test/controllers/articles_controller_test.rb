@@ -3,6 +3,7 @@ require 'test_helper'
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @article = articles(:sample_article)
+    @author = authors(:sample_author)
   end
 
   test 'should get show' do
@@ -12,34 +13,39 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get new' do
+    log_in_as @author
     get new_article_path
     assert_response :success
     assert_template 'articles/new'
   end
 
   test 'should get edit' do
+    log_in_as @author
     get edit_article_path(@article)
     assert_response :success
     assert_template 'articles/edit'
   end
 
   test 'should create a new article when valid information is posted' do
+    log_in_as @author
     assert_difference 'Article.count', 1 do
       post articles_path, params: { article: { title: 'Hello World',
-                                              content: 'Sample content' } }
+                                               content: 'Sample content' } }
     end
     assert_response :redirect
   end
 
   test 'should not create a new article when invalid information is posted' do
+    log_in_as @author
     assert_no_difference 'Article.count' do
       post articles_path, params: { article: { title: '',
-                                              content: '' } }
+                                               content: '' } }
     end
     assert_template 'articles/new'
   end
 
   test 'should not update article when invalid information is posted' do
+    log_in_as @author
     title = @article.title
     content = @article.content
     travel 1.hours do
@@ -57,6 +63,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update article when valid information is posted' do
+    log_in_as @author
     travel 1.hours do
       assert_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
@@ -72,6 +79,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should delete article' do
+    log_in_as @author
     assert_difference 'Article.count', -1 do
       delete article_path(@article)
     end

@@ -1,4 +1,5 @@
 sample_article:
   title: Hello World
   content: Hello World!
+  author: sample_author
 
