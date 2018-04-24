@@ -1,0 +1,9 @@
+sample_author:
+  name: Sample
+  surname: Author
+  email: sample_author@example.com
+  password_digest: <%= User.digest('password') %>
+  admin: false
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
