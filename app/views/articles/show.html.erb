@@ -34,13 +34,15 @@
       </div>
     </div>
     <hr>
-    <div class="row">
-      <div class="col-12 col-md-4 offset-md-8">
-        <%= link_to 'Delete', article_path(@article),
-                              method: :delete, data: { confirm: 'Are you sure?' },
-                              class: 'btn btn-primary btn-block' %>
+    <% if !current_user.nil? && current_user.author? %>
+      <div class="row">
+        <div class="col-12 col-md-4 offset-md-8">
+          <%= link_to 'Delete', article_path(@article),
+                                method: :delete, data: { confirm: 'Are you sure?' },
+                                class: 'btn btn-primary btn-block' %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </article>
 
