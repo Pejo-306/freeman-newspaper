@@ -3,7 +3,7 @@ module AuthorsHelper
     unless current_user.author?
       store_location
       flash[:danger] = 'The account you have logged in ' +
-                       'does not have author status.'
+                       'does not have author status'
       redirect_to login_url
     end
   end
