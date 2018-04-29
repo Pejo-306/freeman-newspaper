@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AuthorTest < ActiveSupport::TestCase
   setup do
-    @author = authors(:sample_author)
+    @author = users(:sample_author)
   end
 
   test 'should be valid' do
