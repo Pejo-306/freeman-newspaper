@@ -30,6 +30,12 @@ class TopicsController < ApplicationController
     end
   end
 
+  def destroy
+    Topic.find(params[:id]).destroy
+    flash[:success] = 'Topic has successfully been deleted'
+    redirect_to topics_path
+  end
+
   private
 
   def topic_params

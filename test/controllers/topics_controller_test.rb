@@ -133,5 +133,31 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_redirected_to topic_path(@topic)
   end
+
+  test 'should not delete topic when not logged in' do
+    assert_no_difference 'Topic.count' do
+      delete topic_path(@topic)
+    end
+    assert_response :redirect
+    assert_redirected_to login_url
+  end
+
+  test 'should not delete topic when logged in as an admin' do
+    log_in_as @non_admin
+    assert_no_difference 'Topic.count' do
+      delete topic_path(@topic)
+    end
+    assert_response :redirect
+    assert_redirected_to login_url
+  end
+
+  test 'should delete topic when logged in as an admin' do
+    log_in_as @admin
+    assert_difference 'Topic.count', -1 do
+      delete topic_path(@topic)
+    end
+    assert_response :redirect
+    assert_redirected_to topics_path
+  end
 end
 
