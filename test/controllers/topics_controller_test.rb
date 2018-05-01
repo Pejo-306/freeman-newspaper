@@ -80,5 +80,58 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_template 'topics/new'
   end
+
+  test 'should not update topic when not logged in' do
+    name = @topic.name
+    travel 1.hours do
+      assert_no_changes '@topic.reload.updated_at' do
+        patch topic_path(@topic), params: { topic: { name: 'invalid' } }
+      end
+    end
+    @topic.reload
+    assert_equal name, @topic.name
+    assert_response :redirect
+    assert_redirected_to login_url
+  end
+
+  test 'should not update topic when logged in as a non-admin' do
+    log_in_as @non_admin
+    name = @topic.name
+    travel 1.hours do
+      assert_no_changes '@topic.reload.updated_at' do
+        patch topic_path(@topic), params: { topic: { name: 'invalid' } }
+      end
+    end
+    @topic.reload
+    assert_equal name, @topic.name
+    assert_response :redirect
+    assert_redirected_to login_url
+  end
+
+  test 'should not update topic when invalid information is posted' do
+    log_in_as @admin
+    name = @topic.name
+    travel 1.hours do
+      assert_no_changes '@topic.reload.updated_at' do
+        patch topic_path(@topic), params: { topic: { name: '' } }
+      end
+    end
+    @topic.reload
+    assert_equal name, @topic.name
+    assert_template 'topics/edit'
+  end
+
+  test 'should update topic when valid information is posted' do
+    log_in_as @admin
+    travel 1.hours do
+      assert_changes '@topic.reload.updated_at' do
+        patch topic_path(@topic), params: { topic: { name: 'valid' } }
+      end
+    end
+    @topic.reload
+    assert_equal 'valid', @topic.name
+    assert_response :redirect
+    assert_redirected_to topic_path(@topic)
+  end
 end
 

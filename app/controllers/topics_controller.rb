@@ -20,6 +20,16 @@ class TopicsController < ApplicationController
     end
   end
 
+  def update
+    @topic = Topic.find(params[:id])
+    if @topic.update_attributes(topic_params)
+      flash[:success] = 'Topic has successfully been updated'
+      redirect_to topic_path(@topic)
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def topic_params
