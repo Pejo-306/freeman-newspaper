@@ -1,0 +1,12 @@
+<% provide(:title, 'Add a new topic') %>
+<% provide(:form_url, topics_path) %>
+<% provide(:button_text, 'Add topic') %>
+
+<div class="container-fluid form-container">
+  <div class="row">
+    <div class="col-12">
+      <%= render 'form', topic: @topic %>
+    </div>
+  </div>
+</div>
+
