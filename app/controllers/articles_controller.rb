@@ -49,7 +49,7 @@ class ArticlesController < ApplicationController
     if article.author != current_author
       flash[:danger] = 'You do not have permission to delete this article ' +
                        'because you are not its author'
-      redirect_to root_path
+      redirect_to root_url
     else
       article.destroy
       flash[:success] = 'Article has successfully been deleted'
