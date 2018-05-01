@@ -25,4 +25,11 @@ class ArticleTest < ActiveSupport::TestCase
     @article.content = ''
     assert @article.invalid?, 'Content is not present'
   end
+
+  test 'article should belong to an author' do
+    assert_not_nil @article.author
+    assert @article.valid?
+    @article.author = nil
+    assert_not @article.valid?
+  end
 end
