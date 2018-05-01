@@ -6,7 +6,8 @@ if Rails.env.development?
                password_confirmation: 'password',
                admin: true, 
                activated: true, 
-               activated_at: Time.zone.now)
+               activated_at: Time.zone.now,
+               author: true)
 
   99.times do |n|
     name = Faker::Name.first_name
@@ -20,7 +21,8 @@ if Rails.env.development?
                  password_confirmation: password,
                  admin: false,
                  activated: true, 
-                 activated_at: Time.zone.now)
+                 activated_at: Time.zone.now,
+                 author: false)
   end
 end
 
