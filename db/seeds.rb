@@ -24,5 +24,12 @@ if Rails.env.development?
                  activated_at: Time.zone.now,
                  author: false)
   end
+
+  author = Author.where(author: true).first
+  article = Article.create!(title: 'Hello World',
+                            content: 'This is a sample article',
+                            author: author)
+  topic = Topic.create!(name: 'tutorial')
+  article.topics << topic
 end
 
