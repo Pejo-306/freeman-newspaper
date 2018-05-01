@@ -104,8 +104,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
-          article: { title: '',
-                     content: '' }
+          article: { title: 'invalid',
+                     content: 'invalid' }
         }
       end
     end
@@ -123,8 +123,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
-          article: { title: '',
-                     content: '' }
+          article: { title: 'invalid',
+                     content: 'invalid' }
         }
       end
     end
@@ -142,8 +142,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
-          article: { title: '',
-                     content: '' }
+          article: { title: 'invalid',
+                     content: 'invalid' }
         }
       end
     end
