@@ -18,6 +18,7 @@ class ArticlesController < ApplicationController
                        'because you are not its author'
       redirect_to root_path
     end
+    @topics = Topic.all
   end
 
   def create
@@ -37,6 +38,12 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
+    if params[:topics]
+      topics = []
+      params[:topics].each { |id| topics << Topic.find(id) }
+      @article.topics = topics
+    end
+
     if @article.author != current_author
       flash[:danger] = 'You do not have permission to alter this article ' +
                        'because you are not its author'

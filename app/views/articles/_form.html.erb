@@ -50,7 +50,10 @@
       <% @topics.each do |topic| %>
         <div class="form-check">
           <%= f.label topic.name, class: 'form-check-label' do %>
-            <%= check_box_tag "topics[#{topic.id}]", value: topic.id, class: 'form-check-input' %>
+            <%= check_box_tag "topics[#{topic.id}]",
+                              value = topic.id,
+                              checked = @article.topics.include?(topic),
+                              class: 'form-check-input' %>
             <%= content_tag(:span, topic.name) %>
           <% end %>
           <br>
