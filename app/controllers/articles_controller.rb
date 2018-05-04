@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @topics = Topic.all
   end
 
   def edit
@@ -22,6 +23,10 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.author = current_author
+    if params[:topics]
+      params[:topics].each { |id| @article.topics << Topic.find(id) }
+    end
+
     if @article.save
       flash[:success] = 'Article has been posted'
       redirect_to articles_path
