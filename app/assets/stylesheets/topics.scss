@@ -1,3 +1,38 @@
 // Place all the styles related to the topics controller here.
-// They will automatically be included in application.css.
+// They must be included in tree.scss
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "utilities/mixins";
+@import "utilities/variables";
+
+#topic-field-master {
+  #topic-field-tags {
+    display: inline-block;
+  }
+
+  #topic-field-slave {
+    display: inline-block;
+    width: 100%;
+
+    #topic-field-input {
+      display: inline-block;
+      box-shadow: none;
+    }
+  }
+}
+
+.tag {
+  font-size: 100%;
+  margin-right: .5rem;
+
+  .tag-delete-link {
+    padding: .3rem;
+    color: $primary-inverse-color;
+    @include transition(color, .2s);
+
+    &:hover {
+      color: $danger-color;
+    }
+  }
+}
+

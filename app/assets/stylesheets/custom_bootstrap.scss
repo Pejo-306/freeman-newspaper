@@ -83,6 +83,11 @@ ul.pagination {
     background-color: $secondary-color;
   }
 
+  &.badge-light {
+    background-color: $light-secondary-color;
+    font-weight: normal;
+  }
+
   a {
     color: $primary-color;
 
