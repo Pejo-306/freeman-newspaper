@@ -9,14 +9,22 @@ set_input_field_width = (identifier) ->
   $(identifier).parent().css 'width', "#{new_width - 6}px"
   return
 
-raise_topic_field_errors = () ->
+raise_topic_field_errors = (reason) ->
   $('#topic-field-master').addClass 'input-error'
   if !$('#topic-field-errors').exists()
-    error_element = $('
-      <div id="topic-field-errors" class="alert alert-danger">
-        <p>This topic does not exist.</p>
+    error_message = undefined
+    if reason == 'non-existent'
+      error_message = 'This topic does not exist.'
+    else if reason == 'already included'
+      error_message = 'This topic has already been included.'
+    else
+      error_message = 'Unknown error encountered.'
+
+    error_element = $("
+      <div id=\"topic-field-errors\" class=\"alert alert-danger\">
+        <p>#{error_message}</p>
       </div>
-    ')
+    ")
     error_element.insertBefore $('#topic-field-master')
   return
 
@@ -52,24 +60,30 @@ $(document).on 'turbolinks:load', ->
         # remove input error css class if it has been applied
         suppress_topic_field_errors()
 
-        # add the topic tag
-        $('#topic-field-tags').append(
-          '<span class="tag badge badge-light"></span>'
-        )
-        $('#topic-field-tags span.tag:last-child').append(
-          "<span>#{@value}</span>",
-          '<span class="delimiter"> | </span>',
-          '<a href="#" class="tag-delete-link">x</a>'
-        )
-        set_input_field_width '#topic-field-input'
+        if $('#topic-field-data').val().includes @value
+          # topic has already been inputted
+          suppress_topic_field_errors()
+          raise_topic_field_errors('already included')
+        else
+          # add the topic tag
+          $('#topic-field-tags').append(
+            '<span class="tag badge badge-light"></span>'
+          )
+          $('#topic-field-tags span.tag:last-child').append(
+            "<span>#{@value}</span>",
+            '<span class="delimiter"> | </span>',
+            '<a href="#" class="tag-delete-link">x</a>'
+          )
+          set_input_field_width '#topic-field-input'
 
-        # add topic name to hidden input field
-        $('#topic-field-data').val "#{$('#topic-field-data').val()}#{@value}, "
+          # add topic name to hidden input field
+          $('#topic-field-data').val "#{$('#topic-field-data').val()}#{@value}, "
 
-        # reset field input
-        @value = ''
+          # reset field input
+          @value = ''
       else
-        raise_topic_field_errors()
+        suppress_topic_field_errors()
+        raise_topic_field_errors('non-existent')
     return
 
   set_input_field_width('#topic-field-input')
