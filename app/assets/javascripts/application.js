@@ -17,8 +17,15 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).on('turbolinks:load', function () {
-    // enable Bootstrap 4 tooltips
-    $('[data-toggle="tooltip"]').tooltip();
+/*
+ * check if function element exists (is present in the DOM
+ */
+jQuery.fn.exists = function() { 
+  return this.length > 0 
+}
+
+$(document).on('turbolinks:load', function() {
+  // enable Bootstrap 4 tooltips
+  $('[data-toggle="tooltip"]').tooltip();
 });
 

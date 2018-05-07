@@ -100,3 +100,8 @@ a {
   }
 }
 
+.input-error {
+  border: 1px solid $danger-color !important;
+  box-shadow: 0 0 0 .15rem rgba(255, 0, 0, .5) !important;
+}
+

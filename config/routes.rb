@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :edit, :create, :update]
   resources :articles
   resources :topics
+  get '/topics/exists/:name', to: 'topics#exists'
 
   # Admin
   get '/admin', to: 'admin#index'

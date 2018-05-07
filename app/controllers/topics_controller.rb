@@ -2,6 +2,11 @@ class TopicsController < ApplicationController
   before_action :require_login, except: [:index, :show]
   before_action :require_admin_status, except: [:index, :show]
 
+  def exists
+    output = { exists: !Topic.find_by_name(params[:name]).nil? }
+    render json: output.to_json
+  end
+
   def new
     @topic = Topic.new
   end
