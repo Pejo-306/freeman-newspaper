@@ -53,15 +53,20 @@ $(document).on 'turbolinks:load', ->
         suppress_topic_field_errors()
 
         # add the topic tag
-        $('#topic-field-tags').append \
+        $('#topic-field-tags').append(
           '<span class="tag badge badge-light"></span>'
-        $('#topic-field-tags span.tag:last-child').append \
-          "<span>#{@value}</span>"
-          '<span class="delimiter"> | </span>'
+        )
+        $('#topic-field-tags span.tag:last-child').append(
+          "<span>#{@value}</span>",
+          '<span class="delimiter"> | </span>',
           '<a href="#" class="tag-delete-link">x</a>'
-
+        )
         set_input_field_width '#topic-field-input'
-        # reset field
+
+        # add topic name to hidden input field
+        $('#topic-field-data').val "#{$('#topic-field-data').val()}#{@value}, "
+
+        # reset field input
         @value = ''
       else
         raise_topic_field_errors()
@@ -81,7 +86,14 @@ $(document).on 'turbolinks:load', ->
   return
 
 $(document).on 'click', '.tag-delete-link', (e) ->
+  # prevent link redirect
   e.preventDefault()
+
+  # remove topic's name from the input
+  topic_name = @parentElement.firstChild.innerText
+  $('#topic-field-data').val($('#topic-field-data').val().replace("#{topic_name}, ", ''))
+
+  # remove topic tag
   @parentElement.remove()
   set_input_field_width('#topic-field-input')
   return

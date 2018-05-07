@@ -71,10 +71,7 @@
         </div>
         <div id="topic-field-slave">
           <input type="text" id="topic-field-input" class="form-control" placeholder="add a topic">
-          <%# hidden input %>
-          <%# text_field_tag :topics, nil, id: 'topic-field',
-                                           class: 'form-control', 
-                                           placeholder: 'add to a topic' %>
+          <%= hidden_field_tag :topics, nil, id: 'topic-field-data' %>
         </div>
       </div>
     </div>

@@ -25,7 +25,14 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.author = current_author
     if params[:topics]
-      params[:topics].each { |id| @article.topics << Topic.find(id) }
+      # take from 0 to -3 character because the topic names' string
+      # ends with ', '
+      topic_names = params[:topics][0..-3].split ', '
+      topic_names.each do |name| 
+        topic = Topic.find_by_name(name)
+        raise ActionController::UnpermittedParameters.new [name] if topic.nil?
+        @article.topics << Topic.find_by_name(name)
+      end
     end
 
     if @article.save
