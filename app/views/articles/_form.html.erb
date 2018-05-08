@@ -50,10 +50,21 @@
       <div id="topic-field-master">
         <div id="topic-field-tags">
           <%# topic tags are inserted within this element %>
+          <% if @article.topics.count > 0  # i.e. a saved record %>
+            <% @article.topics.each do |topic| %>
+              <span class="tag badge badge-light">
+                <span><%= topic.name %></span>
+                <span class="delimiter"> | </span>
+                <a href="#" class="tag-delete-link">x</a>
+              </span>
+            <% end %>
+          <% end %>
         </div>
         <div id="topic-field-slave">
           <input type="text" id="topic-field-input" class="form-control" placeholder="add a topic">
-          <%= hidden_field_tag :topics, nil, id: 'topic-field-data' %>
+          <% topics_str = @article.topics.map { |topic| topic.name }.join ', ' %>
+          <% topics_str += ', ' if !topics_str.empty? %>
+          <%= hidden_field_tag :topics, topics_str, id: 'topic-field-data' %>
         </div>
       </div>
     </div>

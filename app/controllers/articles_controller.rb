@@ -17,7 +17,6 @@ class ArticlesController < ApplicationController
                        'because you are not its author'
       redirect_to root_path
     end
-    @topics = Topic.all
   end
 
   def create

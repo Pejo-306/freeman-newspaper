@@ -12,17 +12,17 @@ set_input_field_width = (identifier) ->
 raise_topic_field_errors = (reason) ->
   $('#topic-field-master').addClass 'input-error'
   if !$('#topic-field-errors').exists()
-    error_message = undefined
-    if reason == 'non-existent'
-      error_message = 'This topic does not exist.'
-    else if reason == 'already included'
-      error_message = 'This topic has already been included.'
-    else if reason == 'no topics'
-      error_message = 'Your article must be associated with at least one topic.'
-    else if reason == 'empty input'
-      error_message = 'Input cannot be empty'
-    else
-      error_message = 'Unknown error encountered.'
+    error_message =
+      if reason == 'non-existent'
+        'This topic does not exist.'
+      else if reason == 'already included'
+        'This topic has already been included.'
+      else if reason == 'no topics'
+        'Your article must be associated with at least one topic.'
+      else if reason == 'empty input'
+        'Input cannot be empty'
+      else
+        'Unknown error encountered.'
 
     error_element = $("
       <div id=\"topic-field-errors\" class=\"alert alert-danger\">
@@ -38,12 +38,27 @@ suppress_topic_field_errors = () ->
   $('#topic-field-errors').remove()
   return
 
+add_topic_tag = (name) ->
+  $('#topic-field-tags').append(
+    '<span class="tag badge badge-light"></span>'
+  )
+  $('#topic-field-tags span.tag:last-child').append(
+    "<span>#{name}</span>",
+    '<span class="delimiter"> | </span>',
+    '<a href="#" class="tag-delete-link">x</a>'
+  )
+  set_input_field_width '#topic-field-input'
+
+  # add topic name to hidden input field
+  $('#topic-field-data').val "#{$('#topic-field-data').val()}#{name}, "
+  return
+
 $(document).on 'click', '.tag-delete-link', (e) ->
   # prevent link redirect
   e.preventDefault()
 
   # remove topic's name from the input
-  topic_name = @parentElement.firstChild.innerText
+  topic_name = @parentElement.firstElementChild.innerText
   $('#topic-field-data').val($('#topic-field-data').val().replace("#{topic_name}, ", ''))
 
   # remove topic tag
@@ -52,13 +67,21 @@ $(document).on 'click', '.tag-delete-link', (e) ->
   return
 
 $(document).on 'turbolinks:load', ->
-  $('#new_article').on 'keyup keypress', (e) ->
+  # prevent form submission on enter keypress
+  $('form.new_article').on 'keyup keypress', (e) ->
+    key = e.which or e.keyCode
+    if key == 13
+      e.preventDefault()
+      return false
+    return
+  $('form.edit_article').on 'keyup keypress', (e) ->
     key = e.which or e.keyCode
     if key == 13
       e.preventDefault()
       return false
     return
 
+  # topic input field logic
   $('#topic-field-input').keypress (e) ->
     key = e.which or e.keyCode
     # the enter key code
@@ -90,19 +113,7 @@ $(document).on 'turbolinks:load', ->
           raise_topic_field_errors 'already included'
         else
           # add the topic tag
-          $('#topic-field-tags').append(
-            '<span class="tag badge badge-light"></span>'
-          )
-          $('#topic-field-tags span.tag:last-child').append(
-            "<span>#{@value}</span>",
-            '<span class="delimiter"> | </span>',
-            '<a href="#" class="tag-delete-link">x</a>'
-          )
-          set_input_field_width '#topic-field-input'
-
-          # add topic name to hidden input field
-          $('#topic-field-data').val "#{$('#topic-field-data').val()}#{@value}, "
-
+          add_topic_tag @value
           # reset field input
           @value = ''
       else
@@ -110,8 +121,7 @@ $(document).on 'turbolinks:load', ->
         raise_topic_field_errors 'non-existent'
     return
 
-  set_input_field_width('#topic-field-input')
-
+  # topic field focus
   $('#topic-field-input').focus (e) ->
     $('#topic-field-master').css 'box-shadow', '0 0 0 .15rem #d1d2ff'
     $('#topic-field-master').css 'border', '1px solid #83b0ff'
@@ -122,6 +132,7 @@ $(document).on 'turbolinks:load', ->
     $('#topic-field-master').css 'border', 'none'
     return
 
+  # prevent form submission on empty data field
   $('input[name=commit]').click (e) ->
     if $('#topic-field-data').val().is_blank()
       if $('#topic-field-input').val().is_blank()
@@ -131,5 +142,7 @@ $(document).on 'turbolinks:load', ->
       suppress_topic_field_errors()
       raise_topic_field_errors 'no topics'
     return
+
+  set_input_field_width('#topic-field-input')
   return
 
