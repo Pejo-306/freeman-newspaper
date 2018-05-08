@@ -24,6 +24,10 @@ jQuery.fn.exists = function() {
   return this.length > 0 
 }
 
+String.prototype.is_blank = function() {
+    return (this.length === 0 || !this.trim());
+}
+
 $(document).on('turbolinks:load', function() {
   // enable Bootstrap 4 tooltips
   $('[data-toggle="tooltip"]').tooltip();

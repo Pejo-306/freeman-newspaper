@@ -17,6 +17,10 @@ raise_topic_field_errors = (reason) ->
       error_message = 'This topic does not exist.'
     else if reason == 'already included'
       error_message = 'This topic has already been included.'
+    else if reason == 'no topics'
+      error_message = 'Your article must be associated with at least one topic.'
+    else if reason == 'empty input'
+      error_message = 'Input cannot be empty'
     else
       error_message = 'Unknown error encountered.'
 
@@ -34,6 +38,19 @@ suppress_topic_field_errors = () ->
   $('#topic-field-errors').remove()
   return
 
+$(document).on 'click', '.tag-delete-link', (e) ->
+  # prevent link redirect
+  e.preventDefault()
+
+  # remove topic's name from the input
+  topic_name = @parentElement.firstChild.innerText
+  $('#topic-field-data').val($('#topic-field-data').val().replace("#{topic_name}, ", ''))
+
+  # remove topic tag
+  @parentElement.remove()
+  set_input_field_width('#topic-field-input')
+  return
+
 $(document).on 'turbolinks:load', ->
   $('#new_article').on 'keyup keypress', (e) ->
     key = e.which or e.keyCode
@@ -44,8 +61,15 @@ $(document).on 'turbolinks:load', ->
 
   $('#topic-field-input').keypress (e) ->
     key = e.which or e.keyCode
+    # the enter key code
     if key == 13
-      # the enter key code
+      if @value.is_blank()
+        # input value cannot be empty
+        @value = ''
+        suppress_topic_field_errors()
+        raise_topic_field_errors 'empty input'
+        return
+
       topic_exists = undefined
       $.ajax
         url: "/topics/exists/#{@value}"
@@ -63,7 +87,7 @@ $(document).on 'turbolinks:load', ->
         if $('#topic-field-data').val().includes @value
           # topic has already been inputted
           suppress_topic_field_errors()
-          raise_topic_field_errors('already included')
+          raise_topic_field_errors 'already included'
         else
           # add the topic tag
           $('#topic-field-tags').append(
@@ -83,7 +107,7 @@ $(document).on 'turbolinks:load', ->
           @value = ''
       else
         suppress_topic_field_errors()
-        raise_topic_field_errors('non-existent')
+        raise_topic_field_errors 'non-existent'
     return
 
   set_input_field_width('#topic-field-input')
@@ -97,18 +121,15 @@ $(document).on 'turbolinks:load', ->
     $('#topic-field-master').css 'box-shadow', 'none'
     $('#topic-field-master').css 'border', 'none'
     return
-  return
 
-$(document).on 'click', '.tag-delete-link', (e) ->
-  # prevent link redirect
-  e.preventDefault()
+  $('input[name=commit]').click (e) ->
+    if $('#topic-field-data').val().is_blank()
+      if $('#topic-field-input').val().is_blank()
+        $('#topic-field-input').val ''
 
-  # remove topic's name from the input
-  topic_name = @parentElement.firstChild.innerText
-  $('#topic-field-data').val($('#topic-field-data').val().replace("#{topic_name}, ", ''))
-
-  # remove topic tag
-  @parentElement.remove()
-  set_input_field_width('#topic-field-input')
+      e.preventDefault()
+      suppress_topic_field_errors()
+      raise_topic_field_errors 'no topics'
+    return
   return
 

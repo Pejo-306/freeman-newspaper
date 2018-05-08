@@ -8,7 +8,6 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @topics = Topic.all
   end
 
   def edit
@@ -24,7 +23,10 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.author = current_author
-    if params[:topics]
+    if params[:topics].blank?
+      # user has not associated a topic with this article
+      raise ActionController::ParameterMissing.new :topics
+    else
       # take from 0 to -3 character because the topic names' string
       # ends with ', '
       topic_names = params[:topics][0..-3].split ', '
