@@ -2,3 +2,7 @@ sample_topic:
   id: 1
   name: tutorial
 
+art_topic:
+  id: 2
+  name: Art
+
