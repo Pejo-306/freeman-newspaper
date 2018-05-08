@@ -6,6 +6,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     @author = users(:sample_author)
     @other_author = users(:other_author)
     @normal_user = users(:michael)
+    @sample_topic = topics(:sample_topic)
   end
 
   test 'should get show' do
@@ -63,8 +64,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not create a new article when not logged in' do
     assert_no_difference 'Article.count' do
-      post articles_path, params: { article: { title: '',
-                                               content: '' } }
+      post articles_path, params: { article: { title: 'Hello World',
+                                               content: 'Sample Content' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -73,8 +75,9 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   test 'should not create a new article when logged in as a non-author' do
     log_in_as @normal_user
     assert_no_difference 'Article.count' do
-      post articles_path, params: { article: { title: '',
-                                               content: '' } }
+      post articles_path, params: { article: { title: 'Hello World',
+                                               content: 'Sample Content' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -84,7 +87,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     log_in_as @author
     assert_difference 'Article.count', 1 do
       post articles_path, params: { article: { title: 'Hello World',
-                                               content: 'Sample content' } }
+                                               content: 'Sample content' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_response :redirect
   end
@@ -93,9 +97,28 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     log_in_as @author
     assert_no_difference 'Article.count' do
       post articles_path, params: { article: { title: '',
-                                               content: '' } }
+                                               content: '' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_template 'articles/new'
+  end
+  
+  test 'should raise an error if the topics parameter is missing' do
+    log_in_as @author
+    assert_raises ActionController::ParameterMissing do
+      post articles_path, params: { article: { title: 'Hello World',
+                                               content: 'Sample Content' },
+                                    topics: '' }
+    end
+  end
+
+  test 'should raise an error if the topics parameter contains a topic which does not exist' do
+    log_in_as @author
+    assert_raises ActionController::UnpermittedParameters do
+      post articles_path, params: { article: { title: 'Hello World',
+                                               content: 'Sample Content' },
+                                    topics: 'something very invalid, ' }
+    end
   end
 
   test 'should not update article when not logged in' do

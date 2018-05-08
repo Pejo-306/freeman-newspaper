@@ -4,6 +4,7 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
   setup do
     @author = users(:sample_author)
     @non_author = users(:michael)
+    @sample_topic = topics(:sample_topic)
   end
 
   test 'attempt to access article creation page as an anonymous user' do
@@ -27,7 +28,8 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
   test 'attempt to post an article as an anonymous user' do
     assert_no_difference 'Article.count' do
       post articles_path, params: { article: { title: 'valid',
-                                               content: 'information' } }
+                                               content: 'information' }, 
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -39,7 +41,8 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
     log_in_as @non_author
     assert_no_difference 'Article.count' do
       post articles_path, params: { article: { title: 'valid',
-                                               content: 'information' } }
+                                               content: 'information' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -55,7 +58,8 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
     assert_template 'articles/new'
     assert_no_difference 'Article.count' do
       post articles_path, params: { article: { title: 'Invalid info',
-                                               content: '' } }
+                                               content: '' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     assert_template 'articles/new'
     assert_select 'form[action="/articles"]'
@@ -69,7 +73,8 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
     assert_template 'articles/new'
     assert_difference 'Article.count', 1 do
       post articles_path, params: { article: { title: 'Unique this title it is',
-                                               content: 'And so is this content' } }
+                                               content: 'And so is this content' },
+                                    topics: "#{@sample_topic.name}, " }
     end
     article = Article.last
     assert_equal 'Unique this title it is', article.title
