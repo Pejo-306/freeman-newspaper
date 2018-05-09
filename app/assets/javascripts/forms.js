@@ -42,17 +42,19 @@ $(function() {
     var content_field;
     var min_textarea_height;
 
-    $('#title-field').on('input', expandInputField);
+    if ($('form')[0]) {
+        $('#title-field').on('input', expandInputField);
 
-    content_field = $('#content-field');
-    content_field.css('overflow', 'hidden');
-    min_textarea_height = getMinTextareaHeight(content_field);
-    content_field.css('height', min_textarea_height);
-    $(window).resize(function() {
+        content_field = $('#content-field');
+        content_field.css('overflow', 'hidden');
         min_textarea_height = getMinTextareaHeight(content_field);
-    });
-    content_field.on('input', function() {
-        expandTextArea.call(this, min_textarea_height);
-    });
+        content_field.css('height', min_textarea_height);
+        $(window).resize(function() {
+            min_textarea_height = getMinTextareaHeight(content_field);
+        });
+        content_field.on('input', function() {
+            expandTextArea.call(this, min_textarea_height);
+        });
+    }
 });
 
