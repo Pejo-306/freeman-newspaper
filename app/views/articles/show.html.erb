@@ -34,6 +34,14 @@
       </div>
     </div>
     <hr>
+    <div class="row">
+      <div class="col-12">
+        <% @article.topics.each do |topic| %>
+          <span class="tag badge badge-light"><%= topic.name %></span>
+        <% end %>
+      </div>
+    </div>
+    <hr>
     <% if !current_user.nil? && current_user.author? && @article.author == current_author %>
       <div class="row">
         <div class="col-12 col-md-4 offset-md-8">
