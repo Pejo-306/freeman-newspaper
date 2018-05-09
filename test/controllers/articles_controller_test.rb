@@ -103,7 +103,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_template 'articles/new'
   end
   
-  test 'should raise an error if the topics parameter is missing' do
+  test 'should raise an error if the topics parameter is missing on article creation' do
     log_in_as @author
     assert_raises ActionController::ParameterMissing do
       post articles_path, params: { article: { title: 'Hello World',
@@ -112,7 +112,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should raise an error if the topics parameter contains a topic which does not exist' do
+  test 'should raise an error if the topics parameter contains a non-existent topic on article creation' do
     log_in_as @author
     assert_raises ActionController::UnpermittedParameters do
       post articles_path, params: { article: { title: 'Hello World',
@@ -124,17 +124,20 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   test 'should not update article when not logged in' do
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to login_url
   end
@@ -143,17 +146,20 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     log_in_as @normal_user
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to login_url
   end
@@ -162,17 +168,20 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     log_in_as @other_author
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to root_url
   end
@@ -181,17 +190,20 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     log_in_as @author
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: '',
-                     content: '' }
+                     content: '' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_template 'articles/edit'
   end
 
@@ -201,14 +213,38 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       assert_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'Hello World',
-                     content: 'Sample content' }
+                     content: 'Sample content' }, 
+          topics: "#{@sample_topic.name}, "
         }
       end
     end
     @article.reload
     assert_equal 'Hello World', @article.title
     assert_equal 'Sample content', @article.content
+    assert_equal [@sample_topic], @article.topics
     assert_response :redirect
+  end
+
+  test 'should raise an error if the topics parameter is missing on article update' do
+    log_in_as @author
+    assert_raises ActionController::ParameterMissing do
+      patch article_path(@article), params: {
+        article: { title: 'Hello World',
+                   content: 'Sample Content' },
+        topics: ''
+      }
+    end
+  end
+
+  test 'should raise an error if the topics parameter contains a non-existent topic on article update' do
+    log_in_as @author
+    assert_raises ActionController::UnpermittedParameters do
+      patch article_path(@article), params: {
+        article: { title: 'Hello World',
+                  content: 'Sample Content' },
+        topics: 'something very invalid, '
+      }
+    end
   end
 
   test 'should not delete article when not logged in' do

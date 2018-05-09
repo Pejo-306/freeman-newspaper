@@ -2,10 +2,11 @@ require 'test_helper'
 
 class ArticlesUpdateTest < ActionDispatch::IntegrationTest
   setup do
-    @author = users(:sample_author)
-    @other_author = users(:other_author)
-    @non_author = users(:michael)
-    @article = articles(:sample_article)
+    @author = users :sample_author
+    @other_author = users :other_author
+    @non_author = users :michael
+    @article = articles :sample_article
+    @sample_topic = topics :sample_topic
   end
 
   test 'attempt to access article update page as an anonymous user' do
@@ -39,17 +40,20 @@ class ArticlesUpdateTest < ActionDispatch::IntegrationTest
   test 'attempt to alter an article as an anonymous user' do
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to login_url
     assert_not flash.empty?
@@ -60,17 +64,20 @@ class ArticlesUpdateTest < ActionDispatch::IntegrationTest
     log_in_as @non_author
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to login_url
     assert_not flash.empty?
@@ -82,17 +89,20 @@ class ArticlesUpdateTest < ActionDispatch::IntegrationTest
     log_in_as @other_author
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'invalid',
-                     content: 'invalid' }
+                     content: 'invalid' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_response :redirect
     assert_redirected_to root_url
     assert_not flash.empty?
@@ -104,17 +114,20 @@ class ArticlesUpdateTest < ActionDispatch::IntegrationTest
     log_in_as @author
     title = @article.title
     content = @article.content
+    topics = @article.topics
     travel 1.hours do
       assert_no_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: '',
-                     content: '' }
+                     content: '' },
+          topics: topics.map { |topic| topic.name }.join(', ') + ', '
         }
       end
     end
     @article.reload
     assert_equal title, @article.title
     assert_equal content, @article.content
+    assert_equal topics, @article.topics
     assert_template 'articles/edit'
     assert_select "form[action='/articles/#{@article.id}']"
     assert_select 'div#error-explanation'
@@ -126,13 +139,15 @@ class ArticlesUpdateTest < ActionDispatch::IntegrationTest
       assert_changes '@article.reload.updated_at' do
         patch article_path(@article), params: {
           article: { title: 'Hello',
-                     content: 'World' }
+                     content: 'World' },
+          topics: "#{@sample_topic.name}, "
         }
       end
     end
     @article.reload
     assert_equal 'Hello', @article.title
     assert_equal 'World', @article.content
+    assert_equal [@sample_topic], @article.topics
     assert_response :redirect
     assert_redirected_to article_path(@article)
     assert_not flash.empty?

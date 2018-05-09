@@ -23,10 +23,10 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     @article.author = current_author
     if params[:topics].blank?
-      # user has not associated a topic with this article
+      # User has not associated a topic with this article
       raise ActionController::ParameterMissing.new :topics
     else
-      # take from 0 to -3 character because the topic names' string
+      # Take from 0 to -3 character because the topic names' string
       # ends with ', '
       topic_names = params[:topics][0..-3].split ', '
       topic_names.each do |name| 
@@ -46,10 +46,19 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-    if params[:topics]
+    if params[:topics].blank?
+      # User has not associated a topic with this article
+      raise ActionController::ParameterMissing.new :topics
+    else
+      # Take from 0 to -3 character because the topic names' string
+      # ends with ', '
       topics = []
-      params[:topics].each { |id| topics << Topic.find(id) }
-      @article.topics = topics
+      topic_names = params[:topics][0..-3].split ', '
+      topic_names.each do |name| 
+        topic = Topic.find_by_name(name)
+        raise ActionController::UnpermittedParameters.new [name] if topic.nil?
+        topics << Topic.find_by_name(name)
+      end
     end
 
     if @article.author != current_author
@@ -57,6 +66,7 @@ class ArticlesController < ApplicationController
                        'because you are not its author'
       redirect_to root_url
     elsif @article.update_attributes(article_params)
+      @article.topics = topics
       flash[:success] = 'Article has successfully been updated'
       redirect_to article_path(@article)
     else
