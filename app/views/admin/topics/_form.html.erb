@@ -1,0 +1,21 @@
+<%= form_for(topic, url: yield(:form_url)) do |f| %>
+  <%= render 'layouts/error_messages', object: topic %>
+
+  <% @fields.each do |field, placeholder| %>
+    <% value = topic.send(field) %>
+    <% if value == !!value # field is of boolean  type %>
+      <%= render 'layouts/form_check', f: f, field: field %>
+    <% else %>
+      <%= render 'layouts/form_field', f: f, field: field,
+                  field_type: get_form_field_type(Topic.columns_hash[field.to_s].type),
+                  placeholder: placeholder %>
+    <% end %>
+  <% end %>
+  
+  <div class="form-group row">
+    <div class="col-12">
+      <%= f.submit yield(:button_text), class: submit_classes %>
+    </div>
+  </div>
+<% end %>
+

@@ -1,0 +1,39 @@
+<li class="list-group-item">
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-4">
+      <div class="d-flex h-100 align-items-center">
+        <span><%= link_to topic.display,
+                          admin_topic_path(topic) %></span>
+        <span class="badge badge-primary">
+          <%= link_to 'edit', edit_admin_topic_path(topic) %>
+        
+        </span>
+        <span class="badge badge-danger">
+          <%= link_to 'delete', admin_topic_path(topic),
+                                method: :delete, data: { confirm: 'Are you sure?' } %>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-6 offset-lg-2 col-xl-4 offset-xl-4">
+      <div class="row">
+        <div class="col-4">
+          <span>Created</span>
+        </div>
+        <div class="col-8">
+          <span><%= topic.created_at %></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <span>Last updated</span>
+        </div>
+        <div class="col-8">
+          <span><%= topic.updated_at %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+

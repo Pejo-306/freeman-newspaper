@@ -1,0 +1,64 @@
+<% provide(:title, @topic.display) %>
+
+<div class="row">
+  <div class="col-12 col-md-8">
+    <div class="d-flex justify-content-center justify-content-md-start">
+      <h1>Topic: <%= @topic.display %></h1>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 offset-md-2">
+    <div class="d-flex h-100 justify-content-md-end align-items-center">
+      <%= link_to 'Edit', edit_admin_topic_path(@topic),
+                          class: 'btn btn-primary btn-block' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="row"> 
+      <div class="col-6 col-md-4">
+        <span>Created:</span>
+      </div>
+      <div class="col-6 col-md-8">
+        <div class="d-flex justify-content-end justify-content-md-start">
+          <span id="created_at"><%= @topic.created_at %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row"> 
+      <div class="col-6 col-md-4">
+        <span>Last updated:</span>
+      </div>
+      <div class="col-6 col-md-8">
+        <div class="d-flex justify-content-end justify-content-md-start">
+          <span id="updated_at"><%= @topic.updated_at %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+
+<div id="fields-row" class="row">
+  <div class="col-12">
+    <% @fields.each do |field, _| %>
+      <% value = @topic.send(field) %>
+      <p id="<%= field %>">
+        <strong><%= field %></strong>: <%=  value.nil? ? '<null>' : value %>
+      </p>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-4 offset-md-8">
+    <div class="d-flex justify-content-end">
+      <%= link_to 'Back to index page', admin_topics_path,
+                                        class: 'btn btn-primary btn-block' %>
+    </div>
+  </div>
+</div>
+

@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class Admin::<%= @controller_name.pluralize %>ControllerTest < ActionDispatch::IntegrationTest
+  # NOTE: your users fixtures file must include a fixture whose name is
+  #       'admin'; said fixture must have admin privileges 
   # NOTE: your model fixtures file must include a fixture whose name is
   #       'sample_<record_name>' (e.g. 'sample_book', 'sample_user', etc.)
   #       as well as more than 20 (depends on pagination test) other samples
@@ -9,7 +11,7 @@ class Admin::<%= @controller_name.pluralize %>ControllerTest < ActionDispatch::I
   # NOTE: Please, manually complete the record creation and update tests
 
   setup do
-    @admin = users(:john)
+    @admin = users(:admin)
     log_in_as @admin
     <% sample_record = "sample_#{@record_name}" %>
     <%= "@#{sample_record}" %> = <%= @record_name.pluralize %>(<%= ":#{sample_record}" %>)

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     # WARNING: the admin:model_manager generator depends on the comment bellow
     #          UNDER NO CIRCUMSTANCES should you alter said comment
     # -- INCLUDE RESOURCE ROUTES UNDER THIS LINE --
+		resources :topics
     resources :users
   end
 end

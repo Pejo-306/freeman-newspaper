@@ -35,10 +35,12 @@ Description:
       - an authentication system with a User model must be implemented. Said
         User model must have an admin attribute of boolean type which
         distinguishes superusers from normal users. Furthermore, at least
-        on fixture which has admin privileges is required
+        one fixture which has admin privileges is required
       - tests require that you provide a sample record fixture with the name
         'sample_<model name>'. Furthermore, pagination tests need at least
         20 other fixtures to pass
+      - tests also require that you provide a sample user record who is
+        referenced as 'admin' and has admin privileges
       - some of the generated tests must be completed by hand (TODOs have
         been left in places which you must provide certain data)
 

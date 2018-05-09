@@ -1,0 +1,37 @@
+<% provide(:title, 'Edit topic') %>
+<% provide(:form_url, admin_topic_path(@topic)) %>
+<% provide(:button_text, 'Apply changes') %>
+
+<div class="container-fluid form-container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center text-center">
+        <h1>Edit topic<br><%= @topic.display %></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <%= render 'form', topic: @topic %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <span>
+          <%= link_to 'Back to index page', admin_topics_path %>
+        </span>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <span>
+          <%= link_to 'View information', admin_topic_path(@topic) %>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+

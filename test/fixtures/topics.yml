@@ -6,3 +6,8 @@ art_topic:
   id: 2
   name: Art
 
+<% 30.times do |n| %>
+topic_<%= n %>:
+  name: <%= "name_#{n}" %>
+<% end %>
+

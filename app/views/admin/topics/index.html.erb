@@ -1,0 +1,41 @@
+<% provide(:title, 'All topics') %>
+
+<div class="row">
+  <div class="col-12 col-md-4">
+    <div class="d-flex justify-content-center justify-content-md-start">
+      <h1>All topics</h1>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 offset-md-6">
+    <div class="d-flex h-100 justify-content-md-end align-items-center">
+      <%= link_to 'New topic', new_admin_topic_path,
+                 class: 'btn btn-primary btn-block' %>
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-center justify-content-md-start">
+      <%= will_paginate @topics, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ul id="pagination-items" class="list-group">
+      <%= render @topics %>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-center justify-content-md-start">
+      <%= will_paginate @topics, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    </div>
+  </div>
+</div>
+
