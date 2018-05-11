@@ -79,7 +79,7 @@ class ArticlesCreationTest < ActionDispatch::IntegrationTest
     article = Article.last
     assert_equal 'Unique this title it is', article.title
     assert_equal 'And so is this content', article.content
-    assert_equal @author.id, article.author.id
+    assert_equal @author.id, article.column.author.id
     assert_response :redirect
     assert_redirected_to articles_path
     assert_not flash.empty?

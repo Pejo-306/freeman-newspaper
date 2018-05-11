@@ -42,7 +42,7 @@
       </div>
     </div>
     <hr>
-    <% if !current_user.nil? && current_user.author? && @article.author == current_author %>
+    <% if !current_user.nil? && current_user.author? && @article.column.author == current_author %>
       <div class="row">
         <div class="col-12 col-md-4 offset-md-8">
           <%= link_to 'Delete', article_path(@article),

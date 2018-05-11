@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
-    if @article.author != current_author
+    if @article.column.author != current_author
       flash[:danger] = 'You do not have permission to alter this article ' +
                        'because you are not its author'
       redirect_to root_path
@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.author = current_author
+    @article.column = current_column
     if params[:topics].blank?
       # User has not associated a topic with this article
       raise ActionController::ParameterMissing.new :topics
@@ -61,7 +61,7 @@ class ArticlesController < ApplicationController
       end
     end
 
-    if @article.author != current_author
+    if @article.column.author != current_author
       flash[:danger] = 'You do not have permission to alter this article ' +
                        'because you are not its author'
       redirect_to root_url
@@ -76,7 +76,7 @@ class ArticlesController < ApplicationController
 
   def destroy
     article = Article.find(params[:id])
-    if article.author != current_author
+    if article.column.author != current_author
       flash[:danger] = 'You do not have permission to delete this article ' +
                        'because you are not its author'
       redirect_to root_url

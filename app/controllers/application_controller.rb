@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include WebDesignHelper
   include AuthorsHelper
+  include ColumnsHelper
 
   protect_from_forgery with: :exception
 end
