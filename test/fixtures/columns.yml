@@ -1,4 +1,4 @@
 sample_column:
   id: 1
-  author_id: 1
+  author: sample_author
 
