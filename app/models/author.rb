@@ -1,5 +1,4 @@
 class Author < User
-  has_many :articles
   has_one :column
   before_save :set_defaults
 

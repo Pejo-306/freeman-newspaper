@@ -1,6 +1,6 @@
 sample_article:
   id: 1
+  column_id: 1
   title: Hello World
   content: Hello World!
-  author: sample_author
 
