@@ -8,26 +8,6 @@ admin:
   activated_at: <%= Time.zone.now %>
   author: false
 
-sample_author:
-  name: Sample
-  surname: Author
-  email: sample_author@example.com
-  password_digest: <%= User.digest('password') %>
-  admin: false
-  activated: true
-  activated_at: <%= Time.zone.now %>
-  author: true
-
-other_author:
-  name: Other
-  surname: Author
-  email: other_author@example.com
-  password_digest: <%= User.digest('password') %>
-  admin: false
-  activated: true
-  activated_at: <%= Time.zone.now %>
-  author: true
-
 john:
   name: John
   surname: Smith

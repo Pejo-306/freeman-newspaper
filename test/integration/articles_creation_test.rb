@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ArticlesCreationTest < ActionDispatch::IntegrationTest
   setup do
-    @author = users(:sample_author)
-    @non_author = users(:michael)
-    @sample_topic = topics(:sample_topic)
+    @author = authors :sample_author
+    @non_author = users :michael
+    @sample_topic = topics :sample_topic
   end
 
   test 'attempt to access article creation page as an anonymous user' do

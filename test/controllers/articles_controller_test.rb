@@ -2,11 +2,11 @@ require 'test_helper'
 
 class ArticlesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @article = articles(:sample_article)
-    @author = users(:sample_author)
-    @other_author = users(:other_author)
-    @normal_user = users(:michael)
-    @sample_topic = topics(:sample_topic)
+    @article = articles :sample_article
+    @author = authors :sample_author
+    @other_author = authors :other_author
+    @normal_user = users :michael
+    @sample_topic = topics :sample_topic
   end
 
   test 'should get show' do

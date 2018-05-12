@@ -2,8 +2,8 @@ require 'test_helper'
 
 class ArticlesUpdateTest < ActionDispatch::IntegrationTest
   setup do
-    @author = users :sample_author
-    @other_author = users :other_author
+    @author = authors :sample_author
+    @other_author = authors :other_author
     @non_author = users :michael
     @article = articles :sample_article
     @sample_topic = topics :sample_topic

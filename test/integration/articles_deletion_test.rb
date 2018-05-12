@@ -2,10 +2,10 @@ require 'test_helper'
 
 class ArticlesDeletionTest < ActionDispatch::IntegrationTest
   setup do
-    @author = users(:sample_author)
-    @other_author = users(:other_author)
-    @non_author = users(:michael)
-    @article = articles(:sample_article)
+    @author = authors :sample_author
+    @other_author = authors :other_author
+    @non_author = users :michael
+    @article = articles :sample_article
   end
 
   test 'attempt to delete an article as an anonymous user' do

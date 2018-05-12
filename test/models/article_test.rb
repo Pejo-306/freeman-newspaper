@@ -27,8 +27,7 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   test 'should belong to a column' do
-    @article.valid?
-    assert_not_nil @article.column, @article.errors.messages
+    assert_not_nil @article.column
     assert @article.valid?
     @article.column = nil
     assert_not @article.valid?

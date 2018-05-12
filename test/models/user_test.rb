@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @user = users(:john)
+    @user = users :john
   end
 
   test 'should be valid' do
@@ -78,6 +78,14 @@ class UserTest < ActiveSupport::TestCase
     @user.email = mixed_case_email
     @user.save
     assert_equal mixed_case_email.downcase, @user.reload.email
+  end
+
+  test 'should not have a biography' do
+    assert @user.valid?
+    assert_nil @user.biography
+    @user.biography = 'Hello World'
+    assert_not_nil @user.biography
+    assert_not @user.valid?, @user.biography
   end
 
   test 'password should be present' do
