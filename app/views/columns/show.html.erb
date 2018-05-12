@@ -1,0 +1,34 @@
+<% provide :title, "Column of #{@column.author.full_name}" %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= content_tag :h1, "#{@column.author.full_name}'s column" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <%= content_tag :p, @column.author.biography, id: 'author-biography' %>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <%= content_tag :h3, "Articles:" %>
+      </div>
+      <ul class="list-group-item">
+        <% @column.articles.each do |article| %>
+          <div class="row">
+            <div class="col-12">
+              <%= link_to article.title, article_path(article) %>
+            </div>
+          </div>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
