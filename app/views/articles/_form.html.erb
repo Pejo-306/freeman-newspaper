@@ -5,6 +5,14 @@
     <div class="col-12">
       <div class="form-group row">
         <div class="col-12">
+          <%= f.file_field :thumbnail, accept: 'image/jpeg,image/gif,image/png' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group row">
+        <div class="col-12">
           <div class="d-flex justify-content-center">
             <%= f.text_field :title, id: 'title-field',
                                      class: 'form-control',

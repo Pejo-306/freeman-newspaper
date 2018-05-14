@@ -2,6 +2,14 @@
 
 <article class="row">
   <div class="col-12">
+    <div class="image-container">
+      <div id="thumbnail-container">
+          <%= image_tag @article.thumbnail.url if @article.thumbnail? %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-center">

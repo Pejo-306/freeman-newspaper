@@ -24,3 +24,27 @@ article form {
   text-align: center;
 }
 
+#thumbnail-container {
+  width: 100%;
+  overflow: hidden;
+  border: .1rem solid $bs-light-grey-color;
+  border-radius: .5rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: none;
+    object-position: center;
+    padding: .2rem;
+  }
+}
+
+.image-container {
+  width: 100%;
+  padding: .8rem;
+  border: .1rem solid $bs-light-grey-color;
+  border-radius: .5rem;
+}
+

@@ -38,6 +38,9 @@ gem 'faker'
 # Pagination
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+# Image upload
+gem 'carrierwave', '1.2.2'
+gem 'mini_magick', '4.7.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
