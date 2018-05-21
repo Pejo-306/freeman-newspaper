@@ -19,13 +19,16 @@ $(document).on 'turbolinks:load', ->
     # file upload
     $('#article_thumbnail').change (e) ->
       for f in @files
+        # prevent files larger than 5MB in size to be uploaded
         size_in_megabytes = f.size/1024/1024
         if size_in_megabytes > 5
           alert 'Maximum file size is 5MB. Please, choose a smaller file.'
           return
         
+        # open the image file and display its contents
         reader = new FileReader()
         reader.onload = ((file) ->
+          # change image label
           $('#thumbnail-filename span').text file.name
           return (e) ->
             $('label[for=article_thumbnail] img').attr 'src', @result
