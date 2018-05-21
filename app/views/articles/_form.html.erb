@@ -5,6 +5,14 @@
     <div class="col-12">
       <div class="form-group row">
         <div class="col-12">
+          <div class="image-container">
+            <h3 id="thumbnail-filename" class="d-flex align-items-center justify-content-center">
+              <span>thumbnail-placeholder.png</span>
+            </h3>
+            <div id="thumbnail-container">
+              <%= f.label :thumbnail, image_tag('thumbnail-placeholder.png') %>
+            </div>
+          </div>
           <%= f.file_field :thumbnail, accept: 'image/jpeg,image/gif,image/png' %>
         </div>
       </div>

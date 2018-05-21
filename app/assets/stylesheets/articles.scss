@@ -1,3 +1,5 @@
+@import "utilities/variables";
+
 p#content {
   font-size: 1.5rem;
 
@@ -24,20 +26,28 @@ article form {
   text-align: center;
 }
 
+#thumbnail-filename {
+  height: 3rem;
+  font-size: 2rem;
+  margin: 0;
+}
+
 #thumbnail-container {
   width: 100%;
+  height: $thumbnail-height;
   overflow: hidden;
   border: .1rem solid $bs-light-grey-color;
   border-radius: .5rem;
   margin-bottom: 3rem;
-  margin-top: 3rem;
 
-  img {
+  label[for=article_thumbnail] {
     width: 100%;
     height: 100%;
-    object-fit: none;
-    object-position: center;
-    padding: .2rem;
+
+    img {
+      max-width: 100%;
+      padding: .2rem;
+    }
   }
 }
 
@@ -46,5 +56,9 @@ article form {
   padding: .8rem;
   border: .1rem solid $bs-light-grey-color;
   border-radius: .5rem;
+}
+
+input#article_thumbnail {
+  display: none;
 }
 
