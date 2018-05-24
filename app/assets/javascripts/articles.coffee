@@ -10,11 +10,11 @@ resize_thumbnail = (container_identifier) ->
   return
 
 $(window).resize (e) ->
-  resize_thumbnail '#thumbnail-container'
+  resize_thumbnail '.thumbnail-container'
   return
 
 $(document).on 'turbolinks:load', ->
-  resize_thumbnail '#thumbnail-container'
+  resize_thumbnail '.thumbnail-container'
   if window.File and window.FileReader and window.FileList and window.Blob
     # file upload
     $('#article_thumbnail').change (e) ->
@@ -37,7 +37,7 @@ $(document).on 'turbolinks:load', ->
         reader.readAsDataURL f
       return
     
-    $('label[for=article_thumbnail] img').load (e) ->
+    $('.img-tag-container img').load (e) ->
       label = @parentElement
       # reset margins that have been set by previously loaded images
       @style.marginTop = @style.marginRight = @style.marginBottom = @style.marginLeft = '0px'

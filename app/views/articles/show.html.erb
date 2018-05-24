@@ -1,14 +1,16 @@
 <% provide(:title, @article.title) %>
 
 <article class="row">
-  <% unless @article.thumbnail.file.nil? %>
+  <% if @article.thumbnail? %>
     <div class="col-12">
       <div class="image-container">
         <h3 id="thumbnail-filename" class="d-flex align-items-center justify-content-center">
           <%= content_tag :span, @article.thumbnail.file.filename %>
         </h3>
-        <div id="thumbnail-container">
-          <%= image_tag @article.thumbnail.url if @article.thumbnail? %>
+        <div class="thumbnail-container">
+          <div class="img-tag-container">
+            <%= image_tag @article.thumbnail.url %>
+          </div>
         </div>
       </div>
     </div>

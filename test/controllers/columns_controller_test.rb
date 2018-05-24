@@ -6,7 +6,7 @@ class ColumnsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get show' do
-    get column_path(@column)
+    get column_path(@column.author.full_name)
     assert_response :success
     assert_template 'columns/show'
   end

@@ -2,11 +2,48 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "utilities/variables";
+
 p#author-biography {
   font-size: 1.25rem;
 
   &::first-letter {
     font-size: 225%;
+  }
+}
+
+ul#articles-list {
+  width: 100%;
+  border: none;
+  
+  h3 {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+}
+
+.article-record {
+  border: .1rem solid $bs-light-grey-color;
+  border-radius: .5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.column-article-content {
+  font-size: 1.25rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &::first-letter {
+    font-size: 250%;
+  }
+}
+
+a.article-link {
+  &, &:hover, &:active {
+    color: $primary-inverse-color;
+    text-decoration: none;
   }
 }
 
