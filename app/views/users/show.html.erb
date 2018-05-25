@@ -10,36 +10,61 @@
       </div>
     </div>
     <hr>
-
     <div class="row">
       <div class="col-3">
-        <%= content_tag(:span, "Name:") %>
+        <%= content_tag :span, "Name:" %>
       </div>
       <div class="col-9 text-truncate" data-toggle="tooltip"
            title="<%= @user.name %>">
-        <%= content_tag(:span, @user.name) %>
+        <%= content_tag :span, @user.name %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-3">
-        <%= content_tag(:span, "Surname:") %>
+        <%= content_tag :span, "Surname:" %>
       </div>
       <div class="col-9 text-truncate" data-toggle="tooltip"
            title="<%= @user.surname %>">
-        <%= content_tag(:span, @user.surname) %>
+        <%= content_tag :span, @user.surname %>
       </div>
     </div>
 
     <div class="row">
       <div class="col-3">
-        <%= content_tag(:span, "Email:") %>
+        <%= content_tag :span, "Email:" %>
       </div>
       <div class="col-9 text-truncate" data-toggle="tooltip"
            title="<%= @user.email %>">
-        <%= content_tag(:span, @user.email) %>
+        <%= content_tag :span, @user.email %>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-3">
+        <%= content_tag :span, 'Author:' %>
+      </div>
+      <div class="col-9 text-truncate" data-toggle="tooltip"
+           title="Author status">
+        <%= content_tag :span, (@user.author? ? '&#10003;' : '&#10005;').html_safe %>
+      </div>
+    </div>
+
+    <% if !current_user.nil? && current_user == @user && !@user.author? %>
+      <hr>
+      <div class="row">
+        <div class="col-12">
+          <%= form_for @user, url: user_path(@user) do |f| %>
+            <%= f.hidden_field :author, value: 'true' %>
+            <div class="form-group row">
+              <div class="col-12">
+                <%= f.submit 'Become an author', class: submit_classes %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="col-12 col-lg-8">

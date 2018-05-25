@@ -35,7 +35,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if params[:user][:author] == 'true'
+      @user.update_attributes(author: true)
+      Column.create(author: Author.find(@user.id))
+      flash[:success] = 'Congratulations! You are now an author!'
+      redirect_to @user
+    elsif @user.update_attributes(user_params)
       flash[:success] = 'Profile updated'
       redirect_to @user
     else
