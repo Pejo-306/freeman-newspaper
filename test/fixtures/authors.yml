@@ -2,6 +2,8 @@ sample_author:
   name: Sample
   surname: Author
   email: sample_author@example.com
+  created_at: <%= Time.zone.now - 40.days %>
+  updated_at: <%= Time.zone.now - 40.days %>
   biography: 'Sample author'
   password_digest: <%= User.digest('password') %>
   admin: false
@@ -13,6 +15,8 @@ other_author:
   name: Other
   surname: Author
   email: other_author@example.com
+  created_at: <%= Time.zone.now - 40.days %>
+  updated_at: <%= Time.zone.now - 40.days %>
   biography: 'Other author'
   password_digest: <%= User.digest('password') %>
   admin: false

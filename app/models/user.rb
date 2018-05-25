@@ -12,6 +12,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false } 
   validates :biography, absence: true, unless: proc { |model| model.class != User }
   validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
+  validate :thirty_days_old?
 
   before_save :downcase_email
   before_create :create_activation_digest
@@ -91,6 +92,13 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.new_token
     self.activation_digest = User.digest(activation_token)
+  end
+
+  # Update author status if older than 30 days
+  def thirty_days_old?
+    if author? && Time.zone.now - created_at < 30.days
+      errors.add :created_at, 'should be at least 30 days old'
+    end
   end
 end
 

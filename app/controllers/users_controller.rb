@@ -35,9 +35,15 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if params[:user][:author] == 'true'
-      @user.update_attributes(author: true)
-      Column.create(author: Author.find(@user.id))
-      flash[:success] = 'Congratulations! You are now an author!'
+      if Time.zone.now - @user.created_at > 30.days
+        @user.update_attributes(author: true)
+        Column.create(author: Author.find(@user.id))
+        flash[:success] = 'Congratulations! You are now an author!'
+      else
+        flash[:danger] = "Your account is not old enough " +
+                         "(#{(Time.zone.now - @user.created_at).to_i / 1.day} days old) " +
+                         "to have author status"
+      end
       redirect_to @user
     elsif @user.update_attributes(user_params)
       flash[:success] = 'Profile updated'
@@ -70,8 +76,10 @@ class UsersController < ApplicationController
   # Forbid an arbitrary user from editing any other users' information
   def correct_user
     @user = User.find(params[:id])
-    flash[:danger] = 'You do not have permission to alter this account'
-    redirect_to(root_url) unless current_user?(@user)
+    unless current_user? @user
+      flash[:danger] = 'You do not have permission to alter this account'
+      redirect_to root_url
+    end
   end
 end
 

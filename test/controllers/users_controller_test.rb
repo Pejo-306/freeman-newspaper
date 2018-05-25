@@ -177,6 +177,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Congratulations! You are now an author!', flash[:success]
   end
 
+  test "should not alter the user's author status if their account is not 30 days old" do
+    log_in_as @user
+    assert_not @user.author?
+    travel -(Time.zone.now - @user.created_at) + 10.days do
+      assert_no_difference 'Column.count' do
+        patch user_path(@user), params: { user: { author: 'true' } }
+      end
+      @user.reload
+      assert_not @user.author?
+      assert_not flash.empty?
+      assert_equal 'Your account is not old enough (10 days old) to have author status',
+                   flash[:danger]
+    end
+  end
+
   test 'should not allow the user to edit the admin attribute' do
     log_in_as @other_user
     assert_not @other_user.admin?
