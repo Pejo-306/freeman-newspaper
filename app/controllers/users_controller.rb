@@ -7,10 +7,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    unless @user.activated?
-      redirect_to root_url
+    @user = !params[:id].nil? ? User.find(params[:id]) : current_user
+    if @user.nil?
+      flash[:danger] = "Please, log in to access your profile's page"
+      store_location
+      redirect_to login_url
     end
+    redirect_to root_url unless @user.nil? || @user.activated?
   end
 
   def new

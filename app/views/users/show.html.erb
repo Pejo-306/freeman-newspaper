@@ -50,8 +50,11 @@
       </div>
     </div>
 
-    <% if !current_user.nil? && current_user == @user && !@user.author? %>
+    <% if !current_user.nil? && current_user == @user %>
       <hr>
+    <% end %>
+
+    <% if !current_user.nil? && current_user == @user && !@user.author? %>
       <div class="row">
         <div class="col-12">
           <%= form_for @user, url: user_path(@user) do |f| %>
