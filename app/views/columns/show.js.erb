@@ -1,0 +1,11 @@
+$('#articles-list').append('<%= j render @articles %>');
+<% if @articles.next_page %>
+  $('.pagination').replaceWith(
+      '<%= j will_paginate @articles,
+                           rendered: WillPaginate::ActionView::Bootstrap4LinkRenderer %>'
+  );
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>
+

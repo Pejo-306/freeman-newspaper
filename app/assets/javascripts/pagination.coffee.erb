@@ -1,0 +1,15 @@
+jQuery ->
+  if $('#infinite-scrolling').exists()
+    $(window).scroll (e) ->
+      tolerance = 300
+      more_articles_url = $('.pagination .next_page a').attr 'href'
+      if more_articles_url &&
+          $(window).scrollTop() > $(document).height() - $(window).height() - 300
+        # display a loading gif
+        $('.pagination').html(
+          '<%= image_tag asset_path('ajax-loader.gif'), alt: 'Loading...', title: 'Loading...' %>'
+        )
+        $.getScript more_articles_url
+      return
+    return
+

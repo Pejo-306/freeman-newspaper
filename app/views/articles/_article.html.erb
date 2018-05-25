@@ -1,0 +1,47 @@
+<li class="list-group-item">
+  <div class="row article-record">
+    <div class="col-12">
+      <%= link_to article_path(article), class: 'article-link' do %>
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <h3 class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start">
+              <%= content_tag :span, article.title %>
+            </h3>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="d-flex h-100 align-items-center justify-content-start justify-content-lg-end">
+              <span>Posted:</span>
+            </p>
+          </div>
+          <div class="col-6 col-lg-3">
+            <p class="d-flex h-100 align-items-center justify-content-end justify-content-lg-start">
+              <%= content_tag :span, article.created_at %>
+            </p>
+          </div>
+        </div>
+        <hr>
+        <% if article.thumbnail? %>
+          <div class="row">
+            <div class="col-12">
+              <div class="w-100">
+                <div class="thumbnail-container">
+                  <div class="img-tag-container">
+                    <%= image_tag article.thumbnail.url %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+        <div class="row">
+          <div class="col-12">
+            <%= content_tag :p, article.content,
+                            class: 'rm-margin column-article-content' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</li>
+
