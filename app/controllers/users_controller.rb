@@ -56,7 +56,7 @@ class UsersController < ApplicationController
       column.destroy
     end
     user.destroy
-    flash[:succes] = 'User deleted'
+    flash[:success] = 'User deleted'
     redirect_to users_url
   end
 
@@ -70,6 +70,7 @@ class UsersController < ApplicationController
   # Forbid an arbitrary user from editing any other users' information
   def correct_user
     @user = User.find(params[:id])
+    flash[:danger] = 'You do not have permission to alter this account'
     redirect_to(root_url) unless current_user?(@user)
   end
 end
