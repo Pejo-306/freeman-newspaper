@@ -65,6 +65,19 @@
         </div>
       </div>
     <% end %>
+
+    <% if !current_user.nil? && current_user == @user %>
+      <div class="row">
+        <div class="col-12">
+          <% warning_msg = 'Deleting your account is irreversible! Are you sure?' %>
+          <% warning_msg += "\nAll your articles will also be deleted!" if @user.author? %>
+          <%= link_to 'Delete account', user_path(@user),
+                      method: :delete, data: { confirm: warning_msg },
+                      class: 'btn btn-danger btn-block' %>
+
+        </div>
+      </div> 
+    <% end %>
   </div>
 
   <div class="col-12 col-lg-8">
