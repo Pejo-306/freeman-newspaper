@@ -132,6 +132,51 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal surname, @user.surname
   end
 
+  test "should only alter an account's author status when the right parameter is posted" do
+    log_in_as @user
+    assert_not @user.author?
+    assert_no_difference 'Column.count' do
+      patch user_path(@user), params: { user: { name: 'Sample name' } }
+    end
+    @user.reload
+    assert_not @user.author?
+  end
+
+  test 'should not allow anonymous users to alter the author status of any account' do
+    assert_not @user.author?
+    assert_not @other_user.author?
+    assert_no_difference 'Column.count' do
+      patch user_path(@user), params: { user: { author: 'true' } }
+      patch user_path(@other_user), params: { user: { author: 'true' } }
+    end
+    @user.reload
+    @other_user.reload
+    assert_not @user.author?
+    assert_not @other_user.author?
+  end
+
+  test 'should allow only the owner of an account to alter its author status' do
+    log_in_as @other_user
+    assert_not @user.author?
+    assert_no_difference 'Column.count' do
+      patch user_path(@user), params: { user: { author: 'true' } }
+    end
+    @user.reload
+    assert_not @user.author?
+  end
+
+  test 'should give the user author status and create a column' do
+    log_in_as @user
+    assert_not @user.author?
+    assert_difference 'Column.count', 1 do
+      patch user_path(@user), params: { user: { author: 'true' } }
+    end
+    @user.reload
+    assert @user.author?
+    assert_not flash.empty?
+    assert_equal 'Congratulations! You are now an author!', flash[:success]
+  end
+
   test 'should not allow the user to edit the admin attribute' do
     log_in_as @other_user
     assert_not @other_user.admin?
