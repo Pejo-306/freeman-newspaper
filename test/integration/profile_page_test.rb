@@ -26,6 +26,7 @@ class ProfilePageTest < ActionDispatch::IntegrationTest
     assert_select 'span', text: @user.name
     assert_select 'span', text: @user.surname
     assert_select 'span', text: @user.email
+    assert_select 'p',    text: @user.biography
     assert_select 'a[href=?]', user_path(@user), text: 'Delete account'
   end
 end

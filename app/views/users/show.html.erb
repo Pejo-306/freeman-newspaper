@@ -81,10 +81,19 @@
         </div>
       </div> 
     <% end %>
+
+    <% if @user.author? %>
+      <hr>
+      <div class="row">
+        <div class="col-12">
+          <%= content_tag :p, @user.biography, id: 'user-page-author-biography' %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="col-12 col-lg-8">
-
+    <%# news feed? %>
   </div>
 </div>
 
