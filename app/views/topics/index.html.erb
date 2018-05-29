@@ -1,0 +1,17 @@
+<% provide :title, 'Topics' %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <%= render @topics %>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= will_paginate @topics, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

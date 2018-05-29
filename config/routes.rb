@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :edit, :create, :update]
   resources :articles
   resources :columns, only: :show, param: :author_id
+  resources :topics, only: [:index, :show], param: :name
 
   # Admin
   get '/admin', to: 'admin#index'
