@@ -2,7 +2,11 @@ class TopicsController < ApplicationController
   before_action :require_login, only: :exists
 
   def index
-    @topics = Topic.paginate(page: params[:page], per_page: 6).order('RANDOM()')
+    @topics = Topic.paginate(page: params[:page], per_page: 6)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def exists

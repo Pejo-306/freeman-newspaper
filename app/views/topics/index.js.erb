@@ -1,0 +1,11 @@
+$('#topics-list').append('<%= j render @topics %>');
+<% if @topics.next_page %>
+  $('.pagination').replaceWith(
+      '<%= j will_paginate @topics,
+                           renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>'
+      );
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>
+
