@@ -3,7 +3,6 @@ jQuery ->
     $(window).scroll (e) ->
       tolerance = 300
       more_records_url = $('.pagination .next_page a').attr 'href'
-      console.log more_records_url
       if more_records_url &&
           $(window).scrollTop() > $(document).height() - $(window).height() - tolerance
         # display a loading gif

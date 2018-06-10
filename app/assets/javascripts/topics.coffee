@@ -53,6 +53,16 @@ add_topic_tag = (name) ->
   $('#topic-field-data').val "#{$('#topic-field-data').val()}#{name}, "
   return
 
+color_subelements = (parent, colors) ->
+  $(parent).children().each (index) ->
+    topic_holder = $(@).children().first()
+
+    if not topic_holder.hasClass('colored_topic_holder')
+      topic_holder.css 'background-color', Colors.get_random_color(colors)
+      topic_holder.addClass 'colored_topic_holder'
+    return
+  return
+
 $(document).on 'click', '.tag-delete-link', (e) ->
   # prevent link redirect
   e.preventDefault()
@@ -144,5 +154,12 @@ $(document).on 'turbolinks:load', ->
     return
 
   set_input_field_width('#topic-field-input')
+
+  # color preloaded elements
+  color_subelements '#topics-list', Colors.universal_colors
+  # color dynamically added DOM elements
+  $('#topics-list').on 'DOMSubtreeModified', ->
+    color_subelements @, Colors.universal_colors
+    return
   return
 
