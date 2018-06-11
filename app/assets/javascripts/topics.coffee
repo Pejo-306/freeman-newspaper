@@ -55,7 +55,7 @@ add_topic_tag = (name) ->
 
 color_subelements = (parent, colors) ->
   $(parent).children().each (index) ->
-    topic_holder = $(@).children().first()
+    topic_holder = $(@).children().children().first()
 
     if not topic_holder.hasClass('colored_topic_holder')
       topic_holder.css 'background-color', Colors.get_random_color(colors)
@@ -161,5 +161,22 @@ $(document).on 'turbolinks:load', ->
   $('#topics-list').on 'DOMSubtreeModified', ->
     color_subelements @, Colors.universal_colors
     return
+  return
+
+# adjust color on hover
+$(document).on 'mouseenter', '.topic-holder', ->
+  topic_holder = $(@)
+  color = topic_holder.css 'background-color'
+  hex_color = Colors.rgbToHex.apply(this, Colors.split_rgb_string(color))
+
+  topic_holder.css 'background-color', Colors.shadeHexColor(hex_color, -0.2)
+  return
+
+$(document).on 'mouseleave', '.topic-holder', ->
+  topic_holder = $(@)
+  color = topic_holder.css 'background-color'
+  hex_color = Colors.rgbToHex.apply(this, Colors.split_rgb_string(color))
+
+  topic_holder.css 'background-color', Colors.shadeHexColor(hex_color, 0.2)
   return
 

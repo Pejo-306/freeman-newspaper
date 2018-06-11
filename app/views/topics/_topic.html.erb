@@ -1,6 +1,8 @@
 <div class="col-12 col-md-6">
-  <div class="topic-holder">
-    <%= content_tag :h3, topic.name, class: 'topic-name' %>
-  </div>
+  <%= link_to topic_path(topic.name), class: 'topic-link' do %>
+    <div class="topic-holder">
+      <%= content_tag :h3, topic.name, class: 'topic-name' %>
+    </div>
+  <% end %>
 </div>
 

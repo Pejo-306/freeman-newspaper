@@ -51,8 +51,8 @@
   width: 60%;
   padding-top: 60%;
   margin: 2rem 20%;
-  background-color: red;
   border-radius: .4rem;
+  @include transition(background-color, .15s ease-in-out);
 
   & .topic-name {
     position: absolute;
