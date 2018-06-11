@@ -22,6 +22,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     end
     first_page_of_topics.each do |topic|
       assert_select 'h3.topic-name', text: topic.name
+      assert_select 'a.topic-link[href=?]', topic_path(topic.name)
     end
   end
 
