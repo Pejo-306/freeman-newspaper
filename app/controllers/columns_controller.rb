@@ -5,7 +5,7 @@ class ColumnsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @author.author?
     @column = @author.column
     @articles = @column.articles.paginate(page: params[:page], per_page: 10)
-                .order('updated_at DESC')
+                  .order('updated_at DESC')
     respond_to do |format|
       format.html
       format.js
