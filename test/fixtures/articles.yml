@@ -4,3 +4,11 @@ sample_article:
   title: Hello World
   content: Hello World!
 
+<% 30.times do |n| %>
+sample_topic_article_<%= n %>:
+  id: <%= n + 3000 %>
+  column_id: 1
+  title: <%= "I'm article #{n}" %> 
+  content: <%= "I'm article #{n}" %>
+<% end %>
+

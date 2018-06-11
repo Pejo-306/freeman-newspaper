@@ -25,6 +25,30 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should get show' do
+    get topic_path(@topic.name)
+    assert_response :success
+    assert_template 'topics/show'
+  end
+
+  test 'should paginate articles on topic show page' do
+    get topic_path(@topic.name)
+    assert_select 'main nav.pagination', count: 1
+    first_page_of_articles = Article.joins(:topics).where('topic_id = ?', @topic.id)
+                             .paginate(page: 1, per_page: 10)
+                             .order('updated_at DESC')
+    assert_select '#articles-list' do
+      assert_select 'li', 10
+    end
+    first_page_of_articles.each do |article|
+      assert_select 'a[href=?]', article_path(article)
+      assert_select 'span', text: article.title
+      assert_select 'p', text: article.content
+      assert_select 'img[src=?]', article.thumbnail.url if article.thumbnail?
+      assert_includes article.topics, @topic
+    end
+  end
+
   test 'should not get exists as an anonymous user' do
     get @topic_exists.call @topic.name 
     assert_response :redirect

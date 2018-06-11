@@ -2,3 +2,9 @@ sample_article_topic:
   article_id: 1
   topic_id: 1
   
+<% 30.times do |n| %>
+sample_topic_article_<%= n %>:
+  article_id: <%= n + 3000 %>
+  topic_id: 1
+<% end %>
+

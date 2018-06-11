@@ -24,15 +24,19 @@ class ColumnsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'p#author-biography', text: @column.author.biography
   end
 
-  test "should display the column's articles" do
+  test "should paginate the column's articles" do
+    # TODO: fix this now
     get column_path @column.author
-    assert_select 'ul#articles-list' do
-      assert_select 'li', count: @column.articles.count
-      @column.articles.each do |article|
-        assert_select 'a.article-link[href=?]', article_path(article)
-        assert_select 'h3', text: article.title
-        assert_select 'p.column-article-content', text: article.content
-      end
+    assert_select 'main nav.pagination', count: 1
+    first_page_of_articles = @column.articles.paginate(page: 1, per_page: 10)
+    assert_select '#articles-list' do
+      assert_select 'li', 10
+    end
+    first_page_of_articles.each do |article|
+      assert_select 'a.article-link[href=?]', article_path(article)
+      assert_select 'h3', text: article.title
+      assert_select 'p', text: article.content
+      assert_select 'img[src=?]', article.thumbnail.url if article.thumbnail?
     end
   end
 end
