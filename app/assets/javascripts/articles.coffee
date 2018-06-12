@@ -14,6 +14,7 @@ $(window).resize (e) ->
   return
 
 $(document).on 'turbolinks:load', ->
+  # thumbnail display and upload
   resize_thumbnail '.thumbnail-container'
   if window.File and window.FileReader and window.FileList and window.Blob
     # file upload
@@ -55,5 +56,20 @@ $(document).on 'turbolinks:load', ->
       return
   else
     alert 'The File APIs are not fully supported in this browser.'
+
+  # form style
+  if $('form.new_article').exists() or $('form.edit_article').exists()
+    $('#title-field').on 'input', Forms.expand_input_field
+
+    content_field = $('#content-field')
+    content_field.css 'overflow', 'hidden'
+    min_textarea_height = Forms.get_min_textarea_height(content_field)
+    content_field.css 'height', min_textarea_height
+    $(window).resize ->
+      min_textarea_height = Forms.get_min_textarea_height(content_field)
+      return
+    content_field.on 'input', ->
+      Forms.expand_text_area.call this, min_textarea_height
+      return
   return
 

@@ -13,12 +13,12 @@
 
   .comment {
     margin: 1rem 0;
-    border: .1rem solid $secondary-color;
+    border: .1rem solid $darker-light-grey-color;
     border-radius: .5rem;
 
     .comment-header {
       padding: .5rem;
-      border-bottom: .1rem solid $secondary-color;
+      border-bottom: .1rem solid $darker-light-grey-color;
       color: $primary-inverse-color;
       background-color: $light-secondary-color;
 
@@ -43,7 +43,7 @@
     }
   }
   
-  p.comment-content {
+  .comment-content {
     margin: 1rem 0;
     font-size: 1.5rem;
     word-wrap: break-word;
@@ -51,6 +51,22 @@
     @include media-breakpoint-down(sm) {
       font-size: 1.2rem;
     }
+  }
+}
+
+// TODO: remove margin on form-group
+
+form .comment-header {
+  background-color: $light-grey-color !important;
+}
+
+textarea.comment-content {
+  border: none;
+  padding: 0;
+  min-height: 3rem;
+
+  &:focus {
+    box-shadow: none
   }
 }
 

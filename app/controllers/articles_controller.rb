@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find params[:id]
     @comments = @article.comments.paginate page: params[:page], per_page: 10
+    @new_comment = Comment.new article: @article, user: current_user
 
     respond_to do |format|
       format.html
