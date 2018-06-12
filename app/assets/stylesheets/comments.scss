@@ -1,0 +1,51 @@
+@import "utilities/variables";
+
+.comment-container {
+  padding: 3rem;
+  margin: 3rem;
+  border: .1rem solid $bs-light-grey-color;
+  border-radius: .5rem;
+
+  @include media-breakpoint-down(sm) {
+    padding: 3rem 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .comment {
+    margin: 1rem 0;
+    border: .1rem solid $secondary-color;
+    border-radius: .5rem;
+
+    .comment-header {
+      padding: .5rem;
+      border-bottom: .1rem solid $secondary-color;
+      color: $primary-inverse-color;
+      background-color: $light-secondary-color;
+
+      & > .col-12 {
+        margin: 0;
+
+        @include media-breakpoint-down(sm) {
+          margin-top: 1rem;
+          padding-bottom: 1rem;
+        }
+
+        &:first-child {
+          border-right: .1rem solid $dark-secondary-color;
+          border-bottom: none;
+
+          @include media-breakpoint-down(sm) {
+            border-right: none;
+            border-bottom: .1rem solid $secondary-color;
+          }
+        }
+      }
+    }
+  }
+  
+  p.comment-content {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+}
+

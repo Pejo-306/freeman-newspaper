@@ -1,0 +1,20 @@
+<div class="row comment">
+  <div class="col-12">
+    <div class="row comment-header">
+      <div class="col-12 col-md-6">
+        <%= content_tag :h5, "#{comment.user.full_name} wrote",
+                        class: 'rm-margin text-center' %>
+      </div>
+      <div class="col-12 col-md-6">
+        <%= content_tag :p, "#{comment.created_at}",
+                        class: 'rm-margin text-center' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <%= content_tag :p, comment.content, class: 'comment-content rm-margin' %>
+      </div>
+    </div>
+  </div>
+</div>
+

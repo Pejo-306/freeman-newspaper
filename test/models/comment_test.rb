@@ -21,7 +21,7 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test 'should be less than 140 characters long' do
-    @comment.content = 'a' * 140
+    @comment.content = 'a' * 280
     assert @comment.valid?
     @comment.content += 'a'
     assert_not @comment.valid?

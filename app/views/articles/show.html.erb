@@ -66,6 +66,21 @@
         </div>
       </div>
     <% end %>
+    <div class="row">
+      <div class="col-12">
+        <div class="comment-container">
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <h3>Comments</h3>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <%= render @article.comments %>
+        </div>
+      </div>
+    </div>
   </div>
 </article>
 
