@@ -3,7 +3,13 @@ class ArticlesController < ApplicationController
   before_action :require_author_status, except: [:index, :show]
 
   def show
-    @article = Article.find(params[:id])
+    @article = Article.find params[:id]
+    @comments = @article.comments.paginate page: params[:page], per_page: 10
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -11,7 +17,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = Article.find(params[:id])
+    @article = Article.find params[:id]
     if @article.column.author != current_author
       flash[:danger] = 'You do not have permission to alter this article ' +
                        'because you are not its author'

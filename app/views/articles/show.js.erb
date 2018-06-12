@@ -1,0 +1,11 @@
+$('.comment-container').append('<%= j render @comments %>');
+<% if @comments.next_page %>
+  $('.pagination').replaceWith(
+      '<%= j will_paginate @comments,
+                           rendered: WillPaginate::ActionView::Bootstrap4LinkRenderer %>'
+  );
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>
+

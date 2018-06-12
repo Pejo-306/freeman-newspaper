@@ -44,8 +44,13 @@
   }
   
   p.comment-content {
-    font-size: 1.5rem;
     margin: 1rem 0;
+    font-size: 1.5rem;
+    word-wrap: break-word;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 1.2rem;
+    }
   }
 }
 

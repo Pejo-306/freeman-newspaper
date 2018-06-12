@@ -77,7 +77,17 @@
             </div>
           </div>
           <hr>
-          <%= render @article.comments %>
+          <%= render @comments %>
+          <div class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <div id="infinite-scrolling">
+                  <%= will_paginate @comments,
+                                    renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
