@@ -54,10 +54,10 @@
   }
 }
 
-// TODO: remove margin on form-group
-
-form .comment-header {
-  background-color: $light-grey-color !important;
+form.new_comment {
+  .comment-header {
+    background-color: $light-grey-color !important;
+  }
 }
 
 textarea.comment-content {

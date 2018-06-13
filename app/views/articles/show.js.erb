@@ -1,4 +1,4 @@
-$('.comment-container').append('<%= j render @comments %>');
+$('.comment-holder').append('<%= j render @comments %>');
 <% if @comments.next_page %>
   $('.pagination').replaceWith(
       '<%= j will_paginate @comments,

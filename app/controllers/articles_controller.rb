@@ -4,8 +4,9 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find params[:id]
-    @comments = @article.comments.paginate page: params[:page], per_page: 10
-    @new_comment = Comment.new article: @article, user: current_user
+    @comments = @article.comments.paginate(page: params[:page], per_page: 6)
+                  .order('updated_at DESC')
+    @new_comment = Comment.new
 
     respond_to do |format|
       format.html
@@ -94,10 +95,28 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def comment
+    @article = Article.find params[:id]
+    @comment = Comment.new comment_params
+    @comment.user = current_user
+    @comment.article = @article
+
+    if @comment.save
+      flash[:success] = 'Comment has been posted'
+      redirect_to article_path(@article)
+    else
+      render 'articles/show'
+    end
+  end
+
   private
 
   def article_params
     params.require(:article).permit(:title, :content, :thumbnail)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:content)
   end
 end
 
