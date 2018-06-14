@@ -7,6 +7,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     @other_author = authors :other_author
     @normal_user = users :michael
     @sample_topic = topics :sample_topic
+
+    @comment_path = -> (article_id) { URI.encode "#{article_path article_id}/comments" }
   end
 
   test 'should get show' do
@@ -280,6 +282,35 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :redirect
     assert_redirected_to articles_path
+  end
+
+  test 'should not create a comment if the user is not logged in' do
+    assert_no_difference 'Comment.count' do
+      post @comment_path.call(@article.id), params: {
+        id: @article.id,
+        comment: { content: 'Hello World' }
+      }
+    end
+  end
+
+  test 'should not create a comment if invalid data is posted' do
+    log_in_as @normal_user
+    assert_no_difference 'Comment.count' do
+      post @comment_path.call(@article.id), params: {
+        id: @article.id,
+        comment: { content: '  ' }
+      }
+    end
+  end
+
+  test 'should create a comment if valid data is posted' do
+    log_in_as @normal_user
+    assert_difference 'Comment.count', 1 do
+      post @comment_path.call(@article.id), params: {
+        id: @article.id,
+        comment: { content: 'Hello World' }
+      }
+    end
   end
 end
 

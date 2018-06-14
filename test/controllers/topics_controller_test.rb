@@ -4,6 +4,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users :michael
     @topic = topics :sample_topic
+
     @topic_exists = -> (name) { URI.encode "/topics/exists/#{name}" }
   end
 

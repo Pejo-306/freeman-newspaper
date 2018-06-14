@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :require_login, except: [:index, :show]
-  before_action :require_author_status, except: [:index, :show]
+  before_action :require_author_status, except: [:index, :show, :comment]
 
   def show
     @article = Article.find params[:id]
@@ -103,10 +103,10 @@ class ArticlesController < ApplicationController
 
     if @comment.save
       flash[:success] = 'Comment has been posted'
-      redirect_to article_path(@article)
     else
-      render 'articles/show'
+      flash[:danger] = 'Invalid input data for comment'
     end
+    redirect_to article_path(@article)
   end
 
   private

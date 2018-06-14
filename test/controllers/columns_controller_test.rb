@@ -25,7 +25,6 @@ class ColumnsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should paginate the column's articles" do
-    # TODO: fix this now
     get column_path @column.author
     assert_select 'main nav.pagination', count: 1
     first_page_of_articles = @column.articles.paginate(page: 1, per_page: 10)
