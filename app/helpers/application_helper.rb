@@ -27,6 +27,18 @@ module ApplicationHelper
     Time.zone.now.year
   end
 
+  # Provide the difference in time between two dates
+  def time_diff(from_date, to_date, format: 'seconds')
+    timedelta = (from_date - to_date).to_i.abs
+    timedelta /=
+    case format
+    when 'seconds' then 1.0
+    when 'minutes' then 60.0
+    when 'hours' then 3600.0
+    when 'days' then 86400.0
+    end
+  end
+
   # Provide the title of a page
   def site_title(page_title = '', base_title: "The Freeman's newspaper")
     if !request.nil? && request.original_fullpath['admin']

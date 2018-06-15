@@ -7,6 +7,16 @@ class ApplicationHelperTest < ActionView::TestCase
     end 
   end
 
+  test 'should return a time delta in different formats' do
+    current_date = Time.zone.now
+    travel_to (1.days + 3.hours).ago do
+      assert_includes 97190..97210, time_diff(current_date, Time.zone.now)
+      assert_includes 1615..1625, time_diff(current_date, Time.zone.now, format: 'minutes')
+      assert_equal 27, time_diff(current_date, Time.zone.now, format: 'hours')
+      assert_equal 1.125, time_diff(current_date, Time.zone.now, format: 'days')
+    end
+  end
+
   test "should provide the site's base title when no page title is given" do
     assert_equal "The Freeman's newspaper", site_title
   end
