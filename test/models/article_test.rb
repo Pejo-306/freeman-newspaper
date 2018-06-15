@@ -26,6 +26,26 @@ class ArticleTest < ActiveSupport::TestCase
     assert @article.invalid?, 'Content is not present'
   end
 
+  test 'views count should be present' do
+    assert @article.valid?
+    @article.views = nil
+    assert_not @article.valid?
+  end
+
+  test 'should initialize the views count as 0' do
+    article = Article.new
+    assert_equal 0, article.views
+  end
+
+  test 'views count should be non-negative' do
+    @article.views = -1
+    assert_not @article.valid?
+    @article.views = 0
+    assert @article.valid?
+    @article.views = 1
+    assert @article.valid?
+  end
+
   test 'should belong to a column' do
     assert_not_nil @article.column
     assert @article.valid?
