@@ -24,19 +24,33 @@
         </div>
         <div class="col-12">
           <div class="row">
-            <div class="col-6 col-lg-2">
-              <p class="rm-margin">Posted:</p>
+            <div class="col-6 col-lg-3">
+              <%= content_tag :p, "Posted " +
+                                  "(#{time_diff(Time.zone.now, @article.created_at, format: 'days').to_i} days ago): ",
+                                  class: 'rm-margin' %>
             </div>
-            <div class="col-6 col-lg-4">
-              <p class="text-right text-lg-left rm-margin"><%= @article.created_at %></p>
+            <div class="col-6 col-lg-3">
+              <%= content_tag :p, "#{@article.created_at}",
+                              class: 'text-right text-lg-left rm-margin' %>
             </div>
           </div>
           <div class="row">
-            <div class="col-6 col-lg-2">
-              <p class="rm-margin">Last updated:</p>
+            <div class="col-6 col-lg-3">
+              <%= content_tag :p, "Last updated " +
+                                  "(#{time_diff(Time.zone.now, @article.updated_at, format: 'days').to_i} days ago): ",
+                                  class: 'rm-margin' %>
             </div>
-            <div class="col-6 col-lg-4">
-              <p class="text-right text-lg-left rm-margin"><%= @article.updated_at %></p>
+            <div class="col-6 col-lg-3">
+              <%= content_tag :p, "#{@article.updated_at}",
+                              class: 'text-right text-lg-left rm-margin' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 col-lg-3">
+              <p class="rm-margin">Views:</p>
+            </div>
+            <div class="col-6 col-lg-3">
+              <p class="text-right text-lg-left rm-margin"><%= @article.views %></p>
             </div>
           </div>
         </div>
@@ -72,7 +86,7 @@
           <div class="row">
             <div class="col-12">
               <div class="d-flex justify-content-center">
-                <h3>Comments</h3>
+                <%= content_tag :h3, "Comments (#{@article.comments.count})" %>
               </div>
             </div>
           </div>

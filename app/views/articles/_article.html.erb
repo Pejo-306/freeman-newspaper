@@ -10,12 +10,13 @@
           </div>
           <div class="col-6 col-lg-3">
             <p class="d-flex h-100 align-items-center justify-content-start justify-content-lg-end">
-              <span>Posted:</span>
+              <%= content_tag :span,
+                              "Posted (#{time_diff(Time.zone.now, article.created_at, format: 'days').to_i} days ago)" %>
             </p>
           </div>
           <div class="col-6 col-lg-3">
             <p class="d-flex h-100 align-items-center justify-content-end justify-content-lg-start">
-              <%= content_tag :span, article.created_at %>
+              <%= content_tag :span, "#{article.created_at}" %>
             </p>
           </div>
         </div>
@@ -38,6 +39,17 @@
           <div class="col-12">
             <%= content_tag :p, article.content,
                             class: 'rm-margin column-article-content' %>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-6">
+            <%= content_tag :p, "Views: #{article.views}",
+                            class: 'rm-margin text-left' %>
+          </div>
+          <div class="col-6">
+            <%= content_tag :p, "Comments: #{article.comments.count}",
+                            class: 'rm-margin text-right' %>
           </div>
         </div>
       <% end %>
