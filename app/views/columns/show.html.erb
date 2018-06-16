@@ -15,12 +15,25 @@
       </div>
     </div>
     <hr>
+    <% unless @relevant_articles.empty? %>
+      <div class="row">
+        <div class="col-12">
+          <%= content_tag :h3, "Most relevant articles:" %>
+        </div>
+        <div class="col-12">
+          <ul class="articles-list list-group">
+            <%= render @relevant_articles %>
+          </ul>
+        </div>
+      </div>
+      <hr>
+    <% end %>
     <div class="row">
       <div class="col-12">
         <%= content_tag :h3, "Articles:" %>
       </div>
       <div class="col-12">
-        <ul id="articles-list" class="list-group">
+        <ul class="articles-list list-group">
           <%= render @articles %>
         </ul>
       </div>

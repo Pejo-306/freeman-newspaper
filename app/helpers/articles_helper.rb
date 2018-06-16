@@ -11,7 +11,7 @@ module ArticlesHelper
 
   def most_relevant_articles(articles, num: 3, max_days: 30)
     # retrieve only the newest articles
-    article_subset = articles.where('created_at > :start_date',
+    article_subset = articles.where('articles.created_at > :start_date',
                                     { start_date: Time.zone.now - max_days.days })
 
     # calculate the heuristic values for each article of the subset
@@ -23,11 +23,12 @@ module ArticlesHelper
     # select only the top rated 'num' of articles
     selected_article_ids = []
     num.times do |_|
+      break if heuristic_values.empty?
       heuristic_key = heuristic_values.keys.max
       selected_article_ids << heuristic_values[heuristic_key]
       heuristic_values.delete heuristic_key
     end
-    article_subset.find selected_article_ids
+    !selected_article_ids.empty? ? article_subset.find(selected_article_ids) : Article.none
   end
 end
 

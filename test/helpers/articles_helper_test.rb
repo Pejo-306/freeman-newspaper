@@ -18,5 +18,10 @@ class ArticlesHelperTest < ActionView::TestCase
                         .order('created_at DESC').first 3
     article_subset.each { |article| assert_includes last_3_articles, article }
   end
+
+  test 'should return an empty relation if there are no recent articles' do
+    article_subset = most_relevant_articles @recent_articles, num: 3, max_days: 0
+    assert_equal 0, article_subset.count
+  end
 end
 

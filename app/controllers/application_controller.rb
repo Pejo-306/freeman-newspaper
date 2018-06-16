@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include WebDesignHelper
   include AuthorsHelper
   include ColumnsHelper
-  include ArticleHelper
+  include ArticlesHelper
 
   protect_from_forgery with: :exception
 end
