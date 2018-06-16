@@ -10,12 +10,12 @@ class Article < ApplicationRecord
 
   mount_uploader :thumbnail, ThumbnailUploader
 
-  after_initialize :init
+  after_initialize :set_defaults
 
   private
 
-  def init
-    self.views = 0
+  def set_defaults
+    self.views ||= 0
   end
 
   def thumbnail_size

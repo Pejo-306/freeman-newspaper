@@ -3,6 +3,7 @@ sample_article:
   column_id: 1
   title: Hello World
   content: Hello World!
+  views: 0
 
 <% 30.times do |n| %>
 sample_topic_article_<%= n %>:
@@ -10,5 +11,16 @@ sample_topic_article_<%= n %>:
   column_id: 1
   title: <%= "I'm article #{n}" %> 
   content: <%= "I'm article #{n}" %>
+  views: 0
+<% end %>
+
+<% 15.times do |n| %>
+recent_article_<%= n %>:
+  column_id: 1
+  title: <%= "I'm a recent article #{n}" %>
+  content: <%= "I'm a recent article" %>
+  views: <%= (n+1)**2 %>
+  created_at: <%= n.days.ago %>
+  updated_at: <%= n.days.ago %>
 <% end %>
 
