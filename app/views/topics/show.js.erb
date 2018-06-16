@@ -1,4 +1,4 @@
-$('#articles-list').append('<%= j render @articles %>');
+$('#all-articles').append('<%= j render @articles %>');
 <% if @articles.next_page %>
   $('.pagination').replaceWith(
       '<%= j will_paginate @articles,

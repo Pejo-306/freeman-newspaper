@@ -21,7 +21,7 @@
           <%= content_tag :h3, "Most relevant articles:" %>
         </div>
         <div class="col-12">
-          <ul class="articles-list list-group">
+          <ul id="relevant-articles" class="articles-list list-group">
             <%= render @relevant_articles %>
           </ul>
         </div>
@@ -33,7 +33,7 @@
         <%= content_tag :h3, "Articles:" %>
       </div>
       <div class="col-12">
-        <ul class="articles-list list-group">
+        <ul id="all-articles" class="articles-list list-group">
           <%= render @articles %>
         </ul>
       </div>

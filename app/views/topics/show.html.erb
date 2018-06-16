@@ -1,35 +1,52 @@
 <% provide :title, "Topic: #{@topic.name}" %>
 
-<% unless @relevant_articles.empty? %>
-  <div class="row">
-    <div class="col-12">
-      <%= content_tag :h3, "Most relevant articles:" %>
-    </div>
-    <div class="col-12">
-      <ul class="articles-list list-group">
-        <%= render @relevant_articles %>
-      </ul>
-    </div>
-  </div>
-  <hr>
-<% end %>
 <div class="row">
   <div class="col-12">
-    <div class="d-flex justify-content-center">
-      <%= content_tag :h1, "Topic: #{@topic.name}" %>
-    </div>
-  </div>
-  <div class="col-12">
-    <ul class="articles-list list-group">
-      <%= render @articles %>
-    </ul>
-  </div>
-  <div class="col-12">
-    <div class="d-flex justify-content-center">
-      <div id="infinite-scrolling">
-        <%= will_paginate @articles, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= content_tag :h1, "Topic: #{@topic.name}" %>
+        </div>
       </div>
     </div>
+    <% if @articles.empty? %>
+      <div class="row">
+        <div class="col-12">
+          <p class="rm-margin text-center">There are currently no articles</p>
+        </div>
+      </div>
+    <% else %>
+      <% unless @relevant_articles.empty? %>
+        <div class="row">
+          <div class="col-12">
+            <%= content_tag :h3, "Most relevant articles:" %>
+          </div>
+          <div class="col-12">
+            <ul id="relevant-articles" class="articles-list list-group">
+              <%= render @relevant_articles %>
+            </ul>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+      <div class="row">
+        <div class="col-12">
+          <%= content_tag :h3, "Articles:" %>
+        </div>
+        <div class="col-12">
+          <ul id="all-articles" class="articles-list list-group">
+            <%= render @articles %>
+          </ul>
+        </div>
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <div id="infinite-scrolling">
+              <%= will_paginate @articles, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
