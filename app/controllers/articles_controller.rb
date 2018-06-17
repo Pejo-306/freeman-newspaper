@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
-  before_action :require_login, except: [:index, :show]
-  before_action :require_author_status, except: [:index, :show, :comment]
+  before_action :require_login, except: [:index, :show, :add_view]
+  before_action :require_author_status, except: [:index, :show, :comment, :add_view]
 
   def show
     @article = Article.find params[:id]
@@ -107,6 +107,14 @@ class ArticlesController < ApplicationController
       flash[:danger] = 'Invalid input data for comment'
     end
     redirect_to article_path(@article)
+  end
+
+  def add_view
+    article = Article.find params[:id]
+    # Note: the 'update_column' method is user here to
+    # skip updating the 'updated_at' attribute
+    article.update_column :views, article.views + 1
+    head :no_content
   end
 
   private

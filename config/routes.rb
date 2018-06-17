@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   delete '/logout',                 to: 'sessions#destroy'
   get    '/profile',                to: 'users#show' 
   get    '/topics/exists/:name',    to: 'topics#exists'
+  get    '/articles/:id/add-view/', to: 'articles#add_view'
   post   '/articles/:id/comments/', to: 'articles#comment'
   resources :users, except: [:new, :create]
   resources :account_activations, only: :edit

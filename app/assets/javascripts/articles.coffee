@@ -71,5 +71,15 @@ $(document).on 'turbolinks:load', ->
     content_field.on 'input', ->
       Forms.expand_text_area.call this, min_textarea_height
       return
+
+  # add a view once the user has read the whole article
+  if $('article p#content').exists()
+    article = $('article')
+    endpoint = article.innerHeight() - $('.comment-row').height() - $(window).height()
+    $(window).on 'scroll', ->
+      if $(window).scrollTop() > endpoint
+        $.get "#{window.location.pathname}/add-view"
+        $(window).off 'scroll'
+      return
   return
 

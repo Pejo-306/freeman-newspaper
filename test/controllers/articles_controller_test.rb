@@ -9,6 +9,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     @sample_topic = topics :sample_topic
 
     @comment_path = -> (article_id) { URI.encode "#{article_path article_id}/comments" }
+    @add_view_path = -> (article_id) { URI.encode "#{article_path article_id}/add-view" }
   end
 
   test 'should get show' do
@@ -311,6 +312,23 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
         comment: { content: 'Hello World' }
       }
     end
+  end
+
+  test 'should increment the view counter' do
+    assert_difference '@article.reload.views', 1 do
+      get @add_view_path.call(@article.id)
+    end
+  end
+
+  test "should not change the 'updated_at' time stamp when incrementing the view counter" do
+    assert_no_difference '@article.reload.updated_at' do
+      get @add_view_path.call(@article.id)
+    end
+  end
+
+  test 'should not display any content when incrementing the view counter' do
+      get @add_view_path.call(@article.id)
+      assert_response 204 
   end
 end
 
