@@ -9,7 +9,7 @@ class ArticlesHelperTest < ActionView::TestCase
   test 'should calculate the heuristic value of an article' do
     @article.views = 100
     @article.created_at = 1.days.ago
-    assert_includes 52.5..52.8, heuristic_article_value(@article)
+    assert_includes 53.5..53.75, heuristic_article_value(@article)
   end
 
   test 'should return the most relevant articles' do
