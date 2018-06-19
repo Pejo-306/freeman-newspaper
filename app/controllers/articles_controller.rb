@@ -1,9 +1,10 @@
 class ArticlesController < ApplicationController
-  before_action :require_login, except: [:index, :show, :add_view]
-  before_action :require_author_status, except: [:index, :show, :comment, :add_view]
+  before_action :require_login, except: [:show, :add_view]
+  before_action :require_author_status, except: [:show, :comment, :add_view]
 
   def show
-    @article = Article.find params[:id]
+    @author = Author.find params[:author_id]
+    @article = @author.column.articles.find params[:id]
     @comments = @article.comments.paginate(page: params[:page], per_page: 6)
                   .order('updated_at DESC')
     @new_comment = Comment.new
@@ -15,11 +16,13 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @author = Author.find params[:author_id]
     @article = Article.new
   end
 
   def edit
-    @article = Article.find params[:id]
+    @author = Author.find params[:author_id]
+    @article = @author.column.articles.find params[:id]
     if @article.column.author != current_author
       flash[:danger] = 'You do not have permission to alter this article ' +
                        'because you are not its author'
@@ -28,7 +31,8 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
+    @author = Author.find params[:author_id]
+    @article = Article.new article_params
     @article.column = current_column
     if params[:topics].blank?
       # User has not associated a topic with this article
@@ -46,14 +50,15 @@ class ArticlesController < ApplicationController
 
     if @article.save
       flash[:success] = 'Article has been posted'
-      redirect_to articles_path
+      redirect_to articles_path(@author)
     else
       render 'new'
     end
   end
 
   def update
-    @article = Article.find(params[:id])
+    @author = Author.find params[:author_id]
+    @article = @author.column.articles.find params[:id]
     if params[:topics].blank?
       # User has not associated a topic with this article
       raise ActionController::ParameterMissing.new :topics
@@ -76,27 +81,30 @@ class ArticlesController < ApplicationController
     elsif @article.update_attributes(article_params)
       @article.topics = topics
       flash[:success] = 'Article has successfully been updated'
-      redirect_to article_path(@article)
+      redirect_to article_path(@author, @article)
     else
       render 'edit'
     end
   end
 
   def destroy
-    article = Article.find(params[:id])
+    author = Author.find params[:author_id]
+    article = author.column.articles.find params[:id]
     if article.column.author != current_author
       flash[:danger] = 'You do not have permission to delete this article ' +
                        'because you are not its author'
       redirect_to root_url
     else
+      article.comments.each { |comment| comment.destroy }
       article.destroy
       flash[:success] = 'Article has successfully been deleted'
-      redirect_to articles_path
+      redirect_to articles_path(author)
     end
   end
 
   def comment
-    @article = Article.find params[:id]
+    @author = Author.find params[:author_id]
+    @article = @author.column.articles.find params[:id]
     @comment = Comment.new comment_params
     @comment.user = current_user
     @comment.article = @article
@@ -106,11 +114,12 @@ class ArticlesController < ApplicationController
     else
       flash[:danger] = 'Invalid input data for comment'
     end
-    redirect_to article_path(@article)
+    redirect_to article_path(@author, @article)
   end
 
   def add_view
-    article = Article.find params[:id]
+    author = Author.find params[:author_id]
+    article = author.column.articles.find params[:id]
     # Note: the 'update_column' method is user here to
     # skip updating the 'updated_at' attribute
     article.update_column :views, article.views + 1

@@ -9,7 +9,7 @@
 <% else %>
   <div class="row comment">
     <div class="col-12">
-      <%= form_for(@new_comment, url: "#{article_path(@article)}/comments/") do |f| %>
+      <%= form_for(@new_comment, url: "#{article_path(@author, @article)}/comments/") do |f| %>
         <%= render 'layouts/error_messages', object: @new_comment %>
 
         <div class="row comment-header">

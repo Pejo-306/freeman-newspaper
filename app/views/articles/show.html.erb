@@ -74,7 +74,7 @@
     <% if !current_user.nil? && current_user.author? && @article.column.author == current_author %>
       <div class="row">
         <div class="col-12 col-md-4 offset-md-8">
-          <%= link_to 'Delete', article_path(@article),
+          <%= link_to 'Delete', article_path(@author, @article),
                                 method: :delete, data: { confirm: 'Are you sure?' },
                                 class: 'btn btn-primary btn-block' %>
         </div>

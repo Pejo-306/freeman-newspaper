@@ -1,21 +1,24 @@
 Rails.application.routes.draw do
   root   'static_pages#home' 
-  get    '/about',                  to: 'static_pages#about'
-  get    '/signup',                 to: 'users#new'
-  post   '/signup',                 to: 'users#create'
-  get    '/login',                  to: 'sessions#new'
-  post   '/login',                  to: 'sessions#create'
-  delete '/logout',                 to: 'sessions#destroy'
-  get    '/profile',                to: 'users#show' 
-  get    '/topics/exists/:name',    to: 'topics#exists'
-  get    '/articles/:id/add-view/', to: 'articles#add_view'
-  post   '/articles/:id/comments/', to: 'articles#comment'
+  get    '/about',                        to: 'static_pages#about'
+  get    '/signup',                       to: 'users#new'
+  post   '/signup',                       to: 'users#create'
+  get    '/login',                        to: 'sessions#new'
+  post   '/login',                        to: 'sessions#create'
+  delete '/logout',                       to: 'sessions#destroy'
+  get    '/profile',                      to: 'users#show' 
+  get    '/topics/exists/:name',          to: 'topics#exists'
   resources :users, except: [:new, :create]
   resources :account_activations, only: :edit
   resources :password_resets, only: [:new, :edit, :create, :update]
-  resources :articles
-  resources :columns, only: :show, param: :author_id
   resources :topics, only: [:index, :show], param: :name
+  resources :columns, only: :show, param: :author_id
+  scope '/columns/:author_id' do
+    get  '/articles', to: 'columns#show', as: 'articles'
+    resources :articles, except: :index
+    get  '/articles/:id/add-view', to: 'articles#add_view'
+    post '/articles/:id/comments', to: 'articles#comment'
+  end
 
   # Admin
   get '/admin', to: 'admin#index'

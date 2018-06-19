@@ -10,7 +10,7 @@ class ArticlesDeletionTest < ActionDispatch::IntegrationTest
 
   test 'attempt to delete an article as an anonymous user' do
     assert_no_difference 'Article.count' do
-      delete article_path(@article)
+      delete article_path(@article.column.author, @article)
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -21,7 +21,7 @@ class ArticlesDeletionTest < ActionDispatch::IntegrationTest
   test 'attempt to delete an article as a non-author user' do
     log_in_as @non_author
     assert_no_difference 'Article.count' do
-      delete article_path(@article)
+      delete article_path(@article.column.author, @article)
     end
     assert_response :redirect
     assert_redirected_to login_url
@@ -33,7 +33,7 @@ class ArticlesDeletionTest < ActionDispatch::IntegrationTest
   test "attempt to delete an article from another author's" do
     log_in_as @other_author
     assert_no_difference 'Article.count' do
-      delete article_path(@article)
+      delete article_path(@article.column.author, @article)
     end
     assert_response :redirect
     assert_redirected_to root_url
@@ -45,7 +45,7 @@ class ArticlesDeletionTest < ActionDispatch::IntegrationTest
   test 'delete an article' do
     log_in_as @author
     assert_difference 'Article.count', -1 do
-      delete article_path(@article)
+      delete article_path(@article.column.author, @article)
     end
     assert_response :redirect
     assert_redirected_to articles_path
