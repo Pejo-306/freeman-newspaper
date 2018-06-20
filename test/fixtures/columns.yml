@@ -1,4 +1,5 @@
 sample_column:
   id: 1
   author: sample_author
+  heuristic_value: 0
 
