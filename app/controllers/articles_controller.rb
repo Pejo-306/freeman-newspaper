@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :require_login, except: [:show, :add_view]
   before_action :require_author_status, except: [:show, :comment, :add_view]
+  before_action :check_last_post_date, only: [:new, :create]
 
   def show
     @author = Author.find params[:author_id]

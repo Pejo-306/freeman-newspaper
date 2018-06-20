@@ -41,11 +41,39 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
+  test 'should not get new after author has posted within 24 hours' do
+    log_in_as @author
+    assert_difference 'Article.count', 1 do
+      new_article = Article.create title: 'hello', 
+                                   content: 'world', 
+                                   column: @author.column
+    end
+    travel 23.hours + 59.minutes do
+      get new_article_path(@author)
+      assert_response :redirect
+      assert_redirected_to articles_path(@author)
+    end
+  end
+
   test 'should get new when logged in as an author' do
     log_in_as @author
     get new_article_path(@article.column.author)
     assert_response :success
     assert_template 'articles/new'
+  end
+
+  test "should get new after the author's last post is at least a day old"  do
+    log_in_as @author
+    assert_difference 'Article.count', 1 do
+      new_article = Article.create title: 'hello', 
+                                   content: 'world', 
+                                   column: @author.column
+    end
+    travel 24.hours + 1.minutes do
+      get new_article_path(@author)
+      assert_response :success
+      assert_template 'articles/new'
+    end
   end
 
   test 'should not get edit when not logged in' do
@@ -122,6 +150,46 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_template 'articles/new'
+  end
+
+  test 'should not create a new article after author has posted within 24 hours' do
+    log_in_as @author
+    assert_difference 'Article.count', 1 do
+      new_article = Article.create title: 'hello', 
+                                   content: 'world', 
+                                   column: @author.column
+    end
+    travel 23.hours + 59.minutes do
+      assert_no_difference 'Article.count' do
+        post articles_path(@author), params: { 
+          article: { title: 'Hello World',
+                     content: 'Sample content' },
+          topics: "#{@sample_topic.name}, " 
+        }
+      end
+      assert_response :redirect
+      assert_redirected_to articles_path(@author)
+    end
+  end
+
+  test "should create a new article after author's last post is at least a day old" do 
+    log_in_as @author
+    assert_difference 'Article.count', 1 do
+      new_article = Article.create title: 'hello', 
+                                   content: 'world', 
+                                   column: @author.column
+    end
+    travel 24.hours + 1.minutes do
+      assert_difference 'Article.count', 1 do
+        post articles_path(@author), params: { 
+          article: { title: 'Hello World',
+                     content: 'Sample content' },
+          topics: "#{@sample_topic.name}, " 
+        }
+      end
+      assert_response :redirect
+      assert_redirected_to articles_path(@author)
+    end
   end
   
   test 'should raise an error if the topics parameter is missing on article creation' do

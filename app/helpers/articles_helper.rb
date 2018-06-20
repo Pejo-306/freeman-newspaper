@@ -9,6 +9,7 @@ module ArticlesHelper
       Math.exp(time_diff(Time.zone.now, article.created_at, format: 'days') / 1.5)
   end
 
+  # Pick a number of the most relevant articles
   def most_relevant_articles(articles, num: 3, max_days: 30)
     # retrieve only the newest articles
     article_subset = articles.where('articles.created_at > :start_date',
@@ -32,6 +33,19 @@ module ArticlesHelper
       article_ids.delete_at heuristic_index
     end
     !selected_article_ids.empty? ? article_subset.find(selected_article_ids) : Article.none
+  end
+
+  # Prevent authors from posting more than once a day
+  def check_last_post_date
+    if logged_in?
+      last_post_date = current_author.column.articles.last.created_at
+      time_delta = time_diff Time.zone.now, last_post_date, format: 'hours'
+      if time_delta < 24  # author has attempted to post in less than 24 hours
+        flash[:danger] = "You can only post one article per day " +
+                         "(#{24 - time_delta.round} hours left)"
+        redirect_to articles_path(current_author)
+      end
+    end
   end
 end
 
