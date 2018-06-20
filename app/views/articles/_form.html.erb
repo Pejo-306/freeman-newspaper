@@ -88,8 +88,18 @@
   </div>
   <hr>
   <div class="form-group row">
-    <div class="col-12 col-md-4 offset-md-8">
-      <%= f.submit yield(:button_text), class: submit_classes %>
+    <div class="col-12 col-md-4">
+    <% if @article.new_record?  # new action %>
+      <%= link_to 'Back to articles page', articles_path(@author),
+                  class: 'btn btn-primary btn-block btn-margin'%>
+    <% else  # edit action %>
+      <%= link_to 'Back to show page', article_path(@author, @article),
+                  class: 'btn btn-primary btn-block btn-margin'%>
+    <% end %>
+    </div>
+    <div class="col-12 col-md-4 offset-md-4">
+      <%= f.submit yield(:button_text), 
+                  class: "#{submit_classes} btn-margin" %>
     </div>
   </div>
 <% end %>

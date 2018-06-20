@@ -73,10 +73,14 @@
     <hr>
     <% if !current_user.nil? && current_user.author? && @article.column.author == current_author %>
       <div class="row">
-        <div class="col-12 col-md-4 offset-md-8">
+        <div class="col-12 col-md-4">
+          <%= link_to 'Edit', edit_article_path(@author, @article), 
+                              class: 'btn btn-primary btn-block btn-margin' %>
+        </div>
+        <div class="col-12 col-md-4 offset-md-4">
           <%= link_to 'Delete', article_path(@author, @article),
                                 method: :delete, data: { confirm: 'Are you sure?' },
-                                class: 'btn btn-primary btn-block' %>
+                                class: 'btn btn-primary btn-block btn-margin' %>
         </div>
       </div>
     <% end %>

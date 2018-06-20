@@ -1,6 +1,12 @@
 @Colors =
   # TODO: include the proper universal colors
-  universal_colors: ['red', 'blue', 'green', 'magenta', 'orange']
+  universal_colors: [
+    '#ff3300', '#b32400', '#ff704d', # red
+    '#0080ff', '#0059b3', '#4da6ff', # blue
+    '#33cc33', '#70db70', '#248f24', # green
+    '#c33cbf', '#d576d2', '#892a85', # magenta
+    '#ff8000', '#ffa64d', '#b35900'  # orange
+  ]
 
   get_random_color: (colors) ->
     return colors[Math.floor(Math.random() * colors.length)]

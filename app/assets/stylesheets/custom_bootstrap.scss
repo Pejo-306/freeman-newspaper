@@ -18,6 +18,10 @@
   }
 }
 
+.btn-margin {
+  margin: .5rem 0;
+}
+
 .dropdown .dropdown-item {
   @include transition(background-color, .2s);
 

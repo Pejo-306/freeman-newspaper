@@ -38,6 +38,7 @@ module ArticlesHelper
   # Prevent authors from posting more than once a day
   def check_last_post_date
     if logged_in?
+      return if current_author.column.articles.count == 0
       last_post_date = current_author.column.articles.last.created_at
       time_delta = time_diff Time.zone.now, last_post_date, format: 'hours'
       if time_delta < 24  # author has attempted to post in less than 24 hours
