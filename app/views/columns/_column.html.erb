@@ -1,0 +1,30 @@
+<div class="col-12 col-md-6">
+  <%= link_to column_path(column.author), class: 'column-link' do %>
+    <div class="column-container">
+      <div class="column-header row">
+        <div class="col-12">
+          <%= content_tag :h5, "#{column.author.full_name}'s column",
+                               class: 'rm-margin text-center' %>
+        </div>
+      </div>
+      <div class="column-biography row">
+        <div class="col-12">
+          <%= content_tag :p, column.author.biography,
+                              class: 'rm-margin' %>
+        </div>
+      </div>
+      <hr>
+      <div class="column-statistics row">
+        <div class="col-6">
+          <%= content_tag :p, "Articles: #{column.articles.count}",
+                              class: 'rm-margin text-left' %>
+        </div>
+        <div class="col-6">
+          <%= content_tag :p, "Views: #{column.articles.sum('views')}",
+                              class: 'rm-margin text-right' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

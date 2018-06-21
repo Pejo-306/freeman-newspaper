@@ -24,3 +24,18 @@ other_author:
   activated_at: <%= Time.zone.now %>
   author: true
 
+<% 20.times do |n| %>
+<%= "sample_author_#{n}:" %>
+  name: <%= "Name #{n}" %>
+  surname: <%= "Surname #{n}" %>
+  email: <%= "sample_author_#{n}@example.com" %>
+  created_at: <%= Time.zone.now - 40.days %>
+  updated_at: <%= Time.zone.now - 40.days %>
+  biography: <%= "Sample author #{n}" %>
+  password_digest: <%= User.digest('password') %>
+  admin: false
+  activated: true
+  activated_at: <%= Time.zone.now %>
+  author: true
+<% end %>
+

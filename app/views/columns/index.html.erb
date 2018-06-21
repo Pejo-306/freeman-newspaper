@@ -1,0 +1,31 @@
+<% provide :title, 'Columns' %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= content_tag :h1, "Columns" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <%= content_tag :h3, "All columns:" %>
+      </div>
+      <div class="col-12">
+        <div id="all-columns" class="row">
+          <%= render @columns %>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <div id="infinite-scrolling">
+            <%= will_paginate @columns, renderer: WillPaginate::ActionView::Bootstrap4LinkRenderer %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

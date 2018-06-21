@@ -1,4 +1,13 @@
 class ColumnsController < ApplicationController
+  def index
+    @columns = Column.paginate page: params[:page], per_page: 8
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def show
     @author = Author.find params[:author_id]
     # Display a 404 error page for non-author user ids

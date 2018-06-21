@@ -5,6 +5,29 @@ class ColumnsControllerTest < ActionDispatch::IntegrationTest
     @column = columns :sample_column
   end
 
+  test 'should get index' do
+    get columns_path
+    assert_response :success
+    assert_template 'columns/index'
+  end
+
+  test 'should paginate all columns' do
+    get columns_path
+    assert_select 'main nav.pagination', count: 1
+    first_page_of_columns = Column.paginate page: 1, per_page: 8
+    assert_select '#all-columns' do
+      assert_select '.column-container', 8
+    end
+    first_page_of_columns.each do |column|
+      assert_select 'a[href=?]', column_path(column.author) do
+        assert_select 'h5', "#{column.author.full_name}'s column"
+        assert_select 'p', column.author.biography
+        assert_select 'p', "Articles: #{column.articles.count}"
+        assert_select 'p', "Views: #{column.articles.sum('views')}"
+      end
+    end
+  end
+
   test "should raise an error if the specified id is not an author's" do
     assert_raises ActiveRecord::RecordNotFound do
       # no record has an id of 0

@@ -44,10 +44,51 @@ ul.articles-list {
   }
 }
 
-a.article-link {
+a.article-link, a.column-link {
   &, &:hover, &:active {
     color: $primary-inverse-color;
     text-decoration: none;
+  }
+}
+
+.column-container {
+  margin: 1rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+  border: .1rem solid $bs-light-grey-color; border-radius: .5rem;
+  box-shadow: none;
+  @include transition(box-shadow, .15s ease-in-out);
+
+  &:hover { 
+    box-shadow: .5rem 0rem 1rem $light-secondary-color,
+                0rem .5rem 1rem $light-secondary-color,
+                -.5rem 0rem 1rem $light-secondary-color,
+                0rem -.5rem 1rem $light-secondary-color;
+  }
+
+  .column-header {
+    padding: .5rem;
+    border-bottom: .1rem solid $darker-light-grey-color;
+    color: $primary-inverse-color;
+    background-color: $light-secondary-color;
+  }
+
+  .column-biography {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    p {
+      font-size: 1.25rem;
+
+      &::first-letter {
+        font-size: 200%;
+      }
+    }
+  }
+  
+  .column-statistics {
+    margin: .5rem;
   }
 }
 

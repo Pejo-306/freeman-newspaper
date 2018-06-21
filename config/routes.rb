@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :account_activations, only: :edit
   resources :password_resets, only: [:new, :edit, :create, :update]
   resources :topics, only: [:index, :show], param: :name
-  resources :columns, only: :show, param: :author_id
+  resources :columns, only: [:index, :show], param: :author_id
   scope '/columns/:author_id' do
     get  '/articles', to: 'columns#show', as: 'articles'
     resources :articles, except: :index
