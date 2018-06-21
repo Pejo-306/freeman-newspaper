@@ -7,26 +7,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @author = authors :sample_author
   end
 
-  test 'should redirect index when not logged in' do
-    get users_path
-    assert_response :redirect
-    assert_redirected_to login_url
-  end
-
-  test 'should get index when logged in' do
-    log_in_as @user
-    get users_path
-    assert_response :success
-    assert_template 'users/index'
-  end
-
-  test 'should display only activated users on index page' do
-    @other_user.update_attribute(:activated, false)
-    log_in_as @user
-    get users_path
-    assert_select 'a', text: @other_user.full_name, count: 0
-  end
-
   test 'should get show' do
     get user_path(@user)
     assert_response :success
@@ -226,7 +206,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_equal 'User deleted', flash[:success]
     assert_response :redirect
-    assert_redirected_to users_url
+    assert_redirected_to root_url
   end
 
   test 'should delete author and all of their articles and their column' do
@@ -241,7 +221,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not flash.empty?
     assert_equal 'User deleted', flash[:success]
     assert_response :redirect
-    assert_redirected_to users_url
+    assert_redirected_to root_url
   end
 end
 

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   delete '/logout',                       to: 'sessions#destroy'
   get    '/profile',                      to: 'users#show' 
   get    '/topics/exists/:name',          to: 'topics#exists'
-  resources :users, except: [:new, :create]
+  resources :users, except: [:index, :new, :create]
   resources :account_activations, only: :edit
   resources :password_resets, only: [:new, :edit, :create, :update]
   resources :topics, only: [:index, :show], param: :name
