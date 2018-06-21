@@ -17,5 +17,18 @@
       </div>
     </div>
   </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= content_tag :h1, 'Topics' %>
+        </div>
+      </div>
+    </div>
+    <div id="topics-list" class="row">
+      <%= render @topics %>
+      <%= render 'topics/topic_index' %>
+    </div>
+  </div>
 </div>
 
