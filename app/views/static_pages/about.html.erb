@@ -11,9 +11,67 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <p class="rm-margin">
-          The Freeman's newspaper is a... (I'm too lazy to write a proper about) 
-        </p>
+        <pre class="rm-margin">
+This project is a RESTful Rails App developed to give me experience in the field
+of web development as well as in particular the Ruby web framework Rails.
+
+The Freeman's newspaper is an online website of a newspaper where everyone
+can post articles and browse other people's content. Posting and browsing
+content on the website is completely free of charge.
+
+- <%= link_to 'GitHub repo', 'https://github.com/Pejo-306/freeman-newspaper' %>
+- <%= link_to 'Heroku host', 'https://limitless-forest-89598.herokuapp.com/' %>
+
+<h4>Getting started</h4>
+These instructions will get you a copy of the project up and running on your
+local machine for development and testing purposes.
+
+<h5>Prerequisites</h5>
+The most recent build of this project is built with:
+
+<span class="debug_dump">Ruby 2.4.2
+Rails 5.1.6</span>
+
+<h5>Installation</h5>
+First, clone the repository:
+
+<span class="debug_dump">$ git clone https://github.com/Pejo-306/freeman-newspaper.git</span>
+
+Second, install the necessary gems:
+
+<span class="debug_dump">$ bundle install --without production</span>
+
+Next, migrate the database:
+
+<span class="debug_dump">$ rails db:migrate</span>
+
+Finally, run the test suite to verify that everything is working as intended:
+
+<span class="debug_dump">$ rails test</span>
+
+If all tests pass, then you should be able to run the app on a local server:
+
+<span class="debug_dump">$ rails server</span>
+
+<h4>Running the tests</h4>
+Tests (whether separate groups or individual ones) can be run via the rails
+'test' command (See <%= link_to 'Testing Rails Applications', 'http://guides.rubyonrails.org/testing.html' %>)
+for more details:
+
+<span class="debug_dump">$ rails test # runs all tests</span>
+
+Furthermore, this project utilizes the ruby gem 'guard' which allows you to
+watch for changes and automatically run tests:
+
+<span class="debug_dump">$ bundle exec guard</span>
+
+<h4>Built with</h4>
+- <%= link_to 'Ruby on Rails', 'https://rubyonrails.org/' %> - The web framework used for this project
+
+<h4>License</h4>
+All source code in this repository is available under the MIT License.
+See <%= link_to 'LICENSE.md', 'https://github.com/Pejo-306/freeman-newspaper/blob/master/LICENSE' %> for more details.
+        </pre>
       </div>
     </div>
   </div>
