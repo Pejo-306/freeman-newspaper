@@ -1,6 +1,7 @@
 class ColumnsController < ApplicationController
   def index
     @columns = Column.paginate page: params[:page], per_page: 8
+    @recently_relevant_columns = most_relevant_columns Column.all
 
     respond_to do |format|
       format.html

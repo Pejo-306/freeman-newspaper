@@ -10,7 +10,7 @@ module ColumnsHelper
   end
 
   # Pick a number of the most relevant columns
-  def most_relevant_columns(columns, num: 4, max_days: 30)
+  def most_relevant_columns(columns, num: 4, max_days: 60)
     # retrieve only the newest columns
     column_subset = columns.where('columns.created_at > :start_date',
                                   { start_date: max_days.days.ago })

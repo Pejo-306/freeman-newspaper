@@ -9,6 +9,19 @@
         </div>
       </div>
     </div>
+    <% unless @recently_relevant_columns.empty? %>
+      <div class="row">
+        <div class="col-12">
+          <%= content_tag :h3, "Recently relevant columns:" %>
+        </div>
+        <div class="col-12">
+          <div id="recently-relevant-columns" class="row">
+            <%= render @recently_relevant_columns %>
+          </div>
+        </div>
+      </div>
+      <hr>
+    <% end %>
     <div class="row">
       <div class="col-12">
         <%= content_tag :h3, "All columns:" %>
