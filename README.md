@@ -74,5 +74,5 @@ $ bundle exec guard
 
 ## License
 All source code in this repository is available under the MIT License.
-See [LICENSE.md](LICENSE.md) for more details.
+See [LICENSE](LICENSE) for more details.
 
