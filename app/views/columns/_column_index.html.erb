@@ -1,0 +1,28 @@
+<div class="col-12 col-md-6">
+  <%= link_to columns_path, class: 'column-link' do %>
+    <div class="column-container">
+      <div class="column-header row">
+        <div class="col-12">
+          <h5 class="rm-margin text-center">All columns</h5>
+        </div>
+      </div>
+      <div class="column-biography row">
+        <div class="col-12">
+          <p class="rm-margin">See more columns by clicking here</p>
+        </div>
+      </div>
+      <hr>
+      <div class="column-statistics row">
+        <div class="col-6">
+          <%= content_tag :p, "Articles: #{Article.count}",
+                              class: 'rm-margin text-left' %>
+        </div>
+        <div class="col-6">
+          <%= content_tag :p, "Views: #{Article.sum('views')}",
+                              class: 'rm-margin text-right' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

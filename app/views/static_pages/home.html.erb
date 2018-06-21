@@ -30,5 +30,20 @@
       <%= render 'topics/topic_index' %>
     </div>
   </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <%= content_tag :h1, 'Top rated columns' %>
+        </div>
+      </div>
+      <div class="col-12">
+        <div id="columns-list" class="row">
+          <%= render @columns %>
+          <%= render 'columns/column_index' %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
