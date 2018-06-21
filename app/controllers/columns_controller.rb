@@ -2,6 +2,7 @@ class ColumnsController < ApplicationController
   def index
     @columns = Column.paginate page: params[:page], per_page: 8
     @recently_relevant_columns = most_relevant_columns Column.all
+    @top_rated_columns = most_relevant_columns Column.all, max_days: nil
 
     respond_to do |format|
       format.html

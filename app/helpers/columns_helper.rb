@@ -11,9 +11,14 @@ module ColumnsHelper
 
   # Pick a number of the most relevant columns
   def most_relevant_columns(columns, num: 4, max_days: 60)
-    # retrieve only the newest columns
-    column_subset = columns.where('columns.created_at > :start_date',
-                                  { start_date: max_days.days.ago })
+    if max_days.nil?
+      # use all columns
+      column_subset = columns
+    else 
+      # retrieve only the newest columns
+      column_subset = columns.where('columns.created_at > :start_date',
+                                    { start_date: max_days.days.ago })
+    end
 
     # heuristically evaluate each retrieved column
     heuristic_values = []

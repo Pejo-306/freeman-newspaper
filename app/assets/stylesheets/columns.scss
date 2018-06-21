@@ -6,6 +6,9 @@
 
 p#author-biography {
   font-size: 1.25rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 
   &::first-letter {
     font-size: 225%;

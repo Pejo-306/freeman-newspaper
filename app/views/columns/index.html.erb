@@ -9,6 +9,19 @@
         </div>
       </div>
     </div>
+    <% unless @top_rated_columns.empty? %>
+      <div class="row">
+        <div class="col-12">
+          <%= content_tag :h3, "Top rated columns of all time:" %>
+        </div>
+        <div class="col-12">
+          <div id="top-rated-columns" class="row">
+            <%= render @top_rated_columns %>
+          </div>
+        </div>
+      </div>
+      <hr>
+    <% end %>
     <% unless @recently_relevant_columns.empty? %>
       <div class="row">
         <div class="col-12">
