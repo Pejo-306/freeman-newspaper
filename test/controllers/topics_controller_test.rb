@@ -43,7 +43,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
       assert_select 'li', 10
     end
     first_page_of_articles.each do |article|
-      assert_select 'a[href=?]', article_path(article.column, article)
+      assert_select 'a[href=?]', article_path(article.column.author, article)
       assert_select 'span', text: article.title
       assert_select 'p', text: article.content
       assert_select 'img[src=?]', article.thumbnail.url if article.thumbnail?

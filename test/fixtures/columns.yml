@@ -1,11 +1,9 @@
 sample_column:
   id: 1
   author: sample_author
-  heuristic_value: 0
 
 <% 20.times do |n| %>
 <%= "sample_column_#{n}:" %>
   author: <%= "sample_author_#{n}" %>
-  heuristic_value: 0
 <% end %>
 
