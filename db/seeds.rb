@@ -78,5 +78,46 @@ if Rails.env.development?
     author.column = column
     author.save!
   end
+elsif Rails.env.production?
+  # website's official account
+  # NOTE: change this password immediately after seeding the database
+  biography = "This is the website's official account. " +
+              "Occasional articles containing important information and " +
+              "announcements will be posted here."
+  official_account = Author.create!(name: "The Freeman's",
+                                    surname: 'newspaper',
+                                    email: 'freeman_official@example.com',
+                                    biography: biography,
+                                    password: 'password',  
+                                    password_confirmation: 'password',
+                                    created_at: 30.days.ago,
+                                    updated_at: 30.days.ago,
+                                    admin: true, 
+                                    activated: true, 
+                                    activated_at: 30.days.ago,
+                                    author: true)
+
+  column = Column.create!(author: official_account)
+  official_account.column = column
+  official_account.save!
+
+  # create a bunch of one-word topics
+  filepath = Rails.root.join 'app/assets/topic.txt'
+  File.readlines(filepath).each { |line| Topic.create!(name: line.strip) }
+
+  # the first official account's post
+  content = "Hello! You've just visited the Freeman's newspaper - " +
+            "where everyone can post articles.\n"
+            "Of course you may also prefer to just read through other" + 
+            "people's content. In that case, there are many topics to explore, " + 
+            "many columns to visit, many authors to admire for their effort. " +
+            "Don't be afraid to take a look around!"
+  article = Article.create!(title: "Welcome to the Freeman's newspaper",
+                            content: content,
+                            column: column)
+  article.topics << Topic.find_by_name('Official')
+  article.save!
+  column.articles << article
+  column.save! 
 end
 
