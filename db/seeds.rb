@@ -102,7 +102,7 @@ elsif Rails.env.production?
   official_account.save!
 
   # create a bunch of one-word topics
-  filepath = Rails.root.join 'app/assets/topic.txt'
+  filepath = Rails.root.join 'app/assets/topics.txt'
   File.readlines(filepath).each { |line| Topic.create!(name: line.strip) }
 
   # the first official account's post
