@@ -17,11 +17,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find params[:id]
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new user_params
     if @user.save
       @user.send_activation_email
       flash[:info] = 'Please check your email to activate your account.'
@@ -32,7 +32,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find params[:id]
+    @user = Author.find(params[:id]) if @user.author?
     if params[:user][:author] == 'true'
       if Time.zone.now - @user.created_at > 30.days
         @user.update_attributes(author: true)
@@ -45,6 +46,7 @@ class UsersController < ApplicationController
       end
       redirect_to @user
     elsif @user.update_attributes(user_params)
+      @user = User.find params[:id]
       flash[:success] = 'Profile updated'
       redirect_to @user
     else
@@ -53,9 +55,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
+    user = User.find params[:id]
     if user.author?
-      author = Author.find(user.id)
+      author = Author.find user.id
       column = author.column
       column.articles.each { |article| article.destroy }
       column.destroy
