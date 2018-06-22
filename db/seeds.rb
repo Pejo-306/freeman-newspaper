@@ -107,7 +107,7 @@ elsif Rails.env.production?
 
   # the first official account's post
   content = "Hello! You've just visited the Freeman's newspaper - " +
-            "where everyone can post articles.\n"
+            "where everyone can post articles.\n" +
             "Of course you may also prefer to just read through other" + 
             "people's content. In that case, there are many topics to explore, " + 
             "many columns to visit, many authors to admire for their effort. " +
